@@ -13,6 +13,12 @@ nbtscan -r <ip_range>
 smbclient \\\\<ip>\\<share> -U "<user>%<password>"
 ```
 
+## smbclient with domain username and password
+#plateform/linux #target/remote #port/445 #protocol/smb #cat/ATTACK/CONNECT  
+```
+smbclient \\\\<ip>\\<share> -U "<domain>/<user>%<password>"
+```
+
 ## smbclient sessions without password
 #plateform/linux #target/remote #port/445 #protocol/smb #cat/ATTACK/CONNECT  
 ```

@@ -3,7 +3,18 @@
 % wpscan, wordpress
 
 #plateform/linux #target/remote #cat/RECON 
-## wpscan with docker and burp proxy
+## wpscan BruteForce User
 ```
-sudo docker run -it --network host --rm wpscanteam/wpscan --proxy http://127.0.0.1:8080 --url <url> --disable-tls-checks -e ap,tt,cb,dbe,u1-20,m --api-token <wpscan_apitoken>
+wpscan --url <url> -U '<user>' -P '<wordlist>' -t <threads>
+```
+#plateform/linux #target/remote #cat/RECON 
+## wpscan Enumerate Users
+```
+wpscan --url <url> -e u --random-user-agent
+```
+
+#plateform/linux #target/remote #cat/RECON 
+## wpscan Vulnerable themes,plugins with api key
+```
+wpscan --url <url> -e u,vp,vt --api-token '<YOUR_API_TOKEN>' --random-user-agent
 ```

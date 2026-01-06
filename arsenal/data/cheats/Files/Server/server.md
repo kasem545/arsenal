@@ -2,12 +2,6 @@
 
 % server
 
-## python Simple HTTP server
-#plateform/linux #target/serve  #cat/ATTACK/LISTEN-SERVE 
-```bash
-python -m SimpleHTTPServer <lport>
-```
-
 ## python3 Simple HTTP server
 #plateform/linux #target/serve  #cat/ATTACK/LISTEN-SERVE 
 ```bash

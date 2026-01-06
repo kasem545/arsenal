@@ -17,7 +17,7 @@ impacket-secretsdump '<domain>/<user>:<password>'@<ip>
 ## secretsdump local dump - extract hash from sam database
 #plateform/linux #target/local #cat/POSTEXPLOIT/CREDS_RECOVER 
 ```
-impacket-secretsdump  -system <SYSTEM_FILE|SYSTEM> -sam <SAM_FILE|SAM> LOCAL
+impacket-secretsdump -system <SYSTEM_FILE|SYSTEM> -sam <SAM_FILE|SAM> LOCAL
 ```
 
 ## secretsdump local dump - extract hash from ntds.dit

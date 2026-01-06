@@ -1,3 +1,4 @@
+setuptools
 libtmux
 docutils
 pyperclip

@@ -46,12 +46,6 @@ Enter-PSSession -ComputerName <computername> -Credential <domain>\<username>
 .\PsExec.exe \\<computername> -u <domain>\<username> -p <password> -h -d powershell.exe "enable-psremoting -force"  
 ```
 
-## evil-winrm install
-#target/local #cat/UTILS 
-```
-gem install evil-winrm
-```
-
 ## evil-winrm use
 #plateform/linux  #target/remote #cat/ATTACK/CONNECT 
 ```
