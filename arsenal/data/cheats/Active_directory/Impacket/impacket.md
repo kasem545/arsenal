@@ -6,37 +6,37 @@
 #plateform/linux #target/remote #cat/RECON 
 
 ```
-lookupsid.py <domain>/<user>:<password>@<ip>
+impacket-lookupsid <domain>/<user>:<password>@<ip>
 ```
 
 ## reg - query registry info remotely
 #plateform/linux #target/remote #cat/RECON 
 ```
-reg.py <domain>/<user>:<password>@<ip> query -keyName HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows -s
+impacket-reg <domain>/<user>:<password>@<ip> query -keyName HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows -s
 ```
 
 ## rpcdump - list rpc endpoint
 #plateform/linux #target/remote #cat/RECON 
 ```
-rpcdump.py <domain>/<user>:<password>@<ip>
+impacket-rpcdump <domain>/<user>:<password>@<ip>
 ```
 
-## services.py - (start, stop, delete, read status, config, list, create and change any service) remote
+## impacket-services - (start, stop, delete, read status, config, list, create and change any service) remote
 #plateform/linux #target/remote #cat/RECON  #cat/ATTACK/EXPLOIT  
 ```
-services.py <domain>/<user>:<password>@<ip> <action>
+impacket-services <domain>/<user>:<password>@<ip> <action>
 ``` 
 
 ## getarch - find target architecture (64 or 32 bits)
 #plateform/linux #target/remote #cat/RECON 
 ```
-getArch.py -target <ip>
+impacket-getArch -target <ip>
 ```
 
 ## netview - enumeration tool (ip/shares/sessions/logged users) - need dns set
 #plateform/linux #target/remote #cat/RECON 
 ```
-netview.py <domain>/<user> -target <ip> -users <users_file>
+impacket-netview <domain>/<user> -target <ip> -users <users_file>
 ```
 
 

