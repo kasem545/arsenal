@@ -1,3 +1,5 @@
+#Maintainer: @kasem_shibli <https://x.com/kasem_shibli>
+
 #!/usr/bin/python3
 from pathlib import Path
 

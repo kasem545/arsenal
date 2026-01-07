@@ -1,3 +1,5 @@
+#Maintainer: @kasem_shibli <https://x.com/kasem_shibli>
+
 #!/usr/bin/env python3
 """
 Packaging setup for Arsenal
@@ -15,11 +17,13 @@ setup(
     packages=find_packages(),
     install_requires=REQUIREMENTS,
     include_package_data=True,
-    url='https://github.com/Orange-Cyberdefense/arsenal',
+    url='https://github.com/kasem545/arsenal',
     license='GPL-3.0',
     author='Guillaume Muh, mayfly',
     author_email='no-reply@orange.com',
     description='Arsenal is just a quick inventory, reminder and launcher for pentest commands. ',
+    maintainer='Kasem Shibli',
+    maintainer_email='kasem545@proton.me',
     long_description=README,
     long_description_content_type='text/markdown',
     keywords=[

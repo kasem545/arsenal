@@ -1,3 +1,5 @@
+#Maintainer: @kasem_shibli <https://x.com/kasem_shibli>
+
 import os
 from os.path import dirname, abspath, expanduser, join
 

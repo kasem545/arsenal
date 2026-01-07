@@ -1,16 +1,14 @@
-#Maintainer: Viking @Vikingfr <https://twitter.com/Vikingfr>
-#Maintainer: Mayfly @M4yFly <https://twitter.com/M4yFly>
-#Maintainer: Erick Sanchez Vera "T1erno" <erickdeveloper2000@outlook com>
+#Maintainer: Viking @kasem_shibli <https://twitter.com/kasem_shibli>
 
 pkgname=arsenal
-pkgver=1.2.1
+pkgver=1.3.0
 pkgrel=1
 pkgdesc='Arsenal is just a quick inventory and launcher for hacking programs'
-url='https://github.com/Orange-Cyberdefense/arsenal'
+url='https://github.com/kasem545/arsenal'
 arch=('any')
 license=('GPL')
 depends=('python>=3.7')
-source=(${pkgname}::git+https://github.com/Orange-Cyberdefense/arsenal.git)
+source=(${pkgname}::git+https://github.com/kasem545/arsenal.git)
 sha512sums=('SKIP')
 
 build() {
