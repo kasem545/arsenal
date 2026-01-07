@@ -159,6 +159,13 @@ class CheatslistMenu:
         nbinfowin.addstr(info, curses.color_pair(Gui.BASIC_COLOR))
         nbinfowin.refresh()
 
+        hotkey_hint = "[Ctrl+Y: Copy]"
+        hint_x = (self.width - len(hotkey_hint)) // 2
+        if hint_x > len(info):
+            hintwin = curses.newwin(nlines, len(hotkey_hint) + 1, y, hint_x)
+            hintwin.addstr(hotkey_hint, curses.color_pair(Gui.COL2_COLOR))
+            hintwin.refresh()
+
         # print cheatsheet filename (bottom right)
         if self.selected_cheat() is not None:
             cheat_file = self.selected_cheat().filename
@@ -376,6 +383,14 @@ class CheatslistMenu:
                         self.xcursor = self.x_init + len(self.input_buffer)
                         self.position = 0
                         self.page_position = 0
+            elif c == 25:
+
+                if self.selected_cheat() is not None:
+                    try:
+                        import pyperclip
+                        pyperclip.copy(self.selected_cheat().command)
+                    except ImportError:
+                        pass
             elif 20 <= c < 127:
                 i = self.xcursor - self.x_init
                 self.input_buffer = self.input_buffer[:i] + chr(c) + self.input_buffer[i:]
@@ -733,6 +748,14 @@ class ArgslistMenu:
                     self.xcursor = self.x_init + len(fzf[0])
                 except ImportError:
                     pass
+            elif c == 25:
+                # Ctrl+Y: Copy command to clipboard
+                if Gui.cmd.build():
+                    try:
+                        import pyperclip
+                        pyperclip.copy(Gui.cmd.cmdline)
+                    except ImportError:
+                        pass
             elif c == curses.KEY_BACKSPACE or c == 127 or c == 8:
                 if self.check_move_cursor(-1):
                     i = self.xcursor - self.x_init - 1
