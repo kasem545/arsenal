@@ -133,7 +133,7 @@ class App:
                 import libtmux
 
                 # Debug log file
-                debug_log = open("/tmp/arsenal_debug.log", "w")
+                debug_log = open("/var/log/arsenal_debug.log", "w")
 
                 def debug(msg):
                     debug_log.write(f"{msg}\n")
