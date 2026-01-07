@@ -88,7 +88,8 @@ class Command:
                     self.cmdline += cmdparts[i // 2]
                 else:
                     self.cmdline += argsval[(i - 1) // 2]
-            curses.endwin()
+            # Note: Removed curses.endwin() to allow GUI to restart in tmux mode
+            # The wrapper() function handles cleanup when Arsenal actually exits
 
         # build ok ?
         return "" not in argsval

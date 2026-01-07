@@ -72,6 +72,80 @@ class App:
 
         # create gui object
         gui = arsenal_gui.Gui()
+
+        # Load cheat list
+        for value in cheatsheets.values():
+            if gui.cheats_menu is None:
+                gui.cheats_menu = arsenal_gui.CheatslistMenu()
+            gui.cheats_menu.globalcheats.append(value)
+
+        # Load global vars if they exist
+        if os.path.exists(config.savevarfile):
+            with open(config.savevarfile, 'r') as f:
+                arsenal_gui.Gui.arsenalGlobalVars = json.load(f)
+
+        # For tmux mode, use continuous GUI mode
+        if args.tmux:
+            try:
+                import libtmux
+
+                # Debug log file
+                debug_log = open("/tmp/arsenal_debug.log", "w")
+
+                def debug(msg):
+                    debug_log.write(f"{msg}\n")
+                    debug_log.flush()
+
+                def tmux_handler(cmd):
+                    """Handler function to send commands to tmux pane"""
+                    try:
+                        debug(f"Sending command to tmux: {cmd.cmdline}")
+                        server = libtmux.Server()
+                        session = server.sessions[-1]  # Updated API for libtmux >= 0.17
+                        window = session.active_window  # Updated API for libtmux >= 0.31
+                        panes = window.panes
+                        debug(f"Found {len(panes)} panes")
+
+                        if len(panes) == 1:
+                            # split window to get more pane
+                            debug("Splitting window...")
+                            pane = window.split(attach=False)  # Updated API for libtmux >= 0.33
+                            time.sleep(0.3)
+                        else:
+                            pane = panes[-1]
+                            debug(f"Using existing pane: {pane.pane_id}")
+
+                        # send command to other pane (Arsenal stays focused)
+                        if args.exec:
+                            debug("Executing command with Enter")
+                            pane.send_keys(cmd.cmdline)
+                        else:
+                            debug("Prefilling command without Enter")
+                            pane.send_keys(cmd.cmdline, enter=False)
+
+                        debug("Command sent successfully")
+                        return True  # Success
+                    except libtmux.exc.LibTmuxException as e:
+                        debug(f"Arsenal tmux error: {e}")
+                        return False  # Failure
+                    except Exception as e:
+                        debug(f"Arsenal unexpected error: {e}")
+                        import traceback
+                        debug(traceback.format_exc())
+                        return False  # Failure
+
+                # Run GUI in continuous mode with wrapper
+                debug("Starting Arsenal in continuous tmux mode...")
+                wrapper(lambda stdscr: gui.run_continuous(stdscr, tmux_handler, args.prefix))
+                debug("Arsenal tmux mode exited")
+                debug_log.close()
+                return
+
+            except ImportError:
+                print("Arsenal: libtmux not installed. Falling back to standard mode.")
+                # Fall through to standard mode
+
+        # Standard (non-tmux) mode
         while True:
             # launch gui
             cmd = gui.run(cheatsheets, args.prefix)
@@ -132,36 +206,10 @@ class App:
                 break
 
             # OPT: Exec
-            elif args.exec and not args.tmux:
+            elif args.exec:
                 os.system(cmd.cmdline)
                 break
 
-            elif args.tmux:
-                try:
-                    import libtmux
-                    try:
-                        server = libtmux.Server()
-                        session = server.list_sessions()[-1]
-                        window = session.attached_window
-                        panes = window.panes
-                        if len(panes) == 1:
-                            # split window to get more pane
-                            pane = window.split_window(attach=False)
-                            time.sleep(0.3)
-                        else:
-                            pane = panes[-1]
-                        # send command to other pane and switch pane
-                        if args.exec:
-                            pane.send_keys(cmd.cmdline)
-                        else:
-                            pane.send_keys(cmd.cmdline, enter=False)
-                            pane.select_pane()
-                    except libtmux.exc.LibTmuxException:
-                        self.prefil_shell_cmd(cmd)
-                        break
-                except ImportError:
-                    self.prefil_shell_cmd(cmd)
-                    break
             # DEFAULT: Prefill Shell CMD
             else:
                 self.prefil_shell_cmd(cmd)

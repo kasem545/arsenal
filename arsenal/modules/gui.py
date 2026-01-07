@@ -840,6 +840,67 @@ class Gui:
         if config.PREFIX_GLOBALVAR_NAME in Gui.arsenalGlobalVars:
             Gui.cmd.cmdline = f"{Gui.arsenalGlobalVars[config.PREFIX_GLOBALVAR_NAME]} {Gui.cmd.cmdline}"
 
+    def run_continuous(self, stdscr, tmux_handler, has_prefix):
+        """
+        Continuous mode for tmux - keeps GUI alive across multiple commands
+        :param stdscr: curses screen
+        :param tmux_handler: callback function to handle tmux command sending
+        :param has_prefix: whether to apply prefix to commands
+        """
+        # Debug logging
+        debug_log = open("/tmp/arsenal_gui_debug.log", "a")
+        def debug(msg):
+            debug_log.write(f"{msg}\n")
+            debug_log.flush()
+
+        debug("run_continuous started")
+        Gui.init_colors()
+
+        iteration = 0
+        while True:
+            iteration += 1
+            debug(f"Iteration {iteration}: Starting menu")
+
+            # Run the cheats menu to get a command
+            self.cheats_menu.run(stdscr)
+
+            debug(f"Iteration {iteration}: Menu returned, Gui.cmd = {Gui.cmd}")
+
+            if Gui.cmd is None:
+                # User pressed ESC/F10 to exit
+                debug("Gui.cmd is None, exiting")
+                break
+
+            debug(f"Iteration {iteration}: Command = {Gui.cmd.cmdline}")
+
+            # Handle internal commands
+            if Gui.cmd.cmdline[0] == '>':
+                debug("Internal command detected")
+                if Gui.cmd.cmdline == ">exit":
+                    debug("Exit command, breaking")
+                    break
+                # Other internal commands handled here if needed
+                # For now, just continue
+                debug("Continuing after internal command")
+                continue
+
+            # Apply prefix if needed
+            if has_prefix:
+                debug("Applying prefix")
+                self.prefix_cmdline_with_prefix()
+
+            debug(f"Calling tmux_handler with: {Gui.cmd.cmdline}")
+            # Send command via tmux handler
+            if not tmux_handler(Gui.cmd):
+                # Handler failed, exit loop
+                debug("tmux_handler returned False, exiting")
+                break
+
+            debug(f"Iteration {iteration}: Command sent, looping back")
+
+        debug("run_continuous exiting")
+        debug_log.close()
+
     def run(self, cheatsheets, has_prefix):
         """
         Gui entry point
