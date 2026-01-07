@@ -82,7 +82,8 @@ class CheatslistMenu:
         """
         win_height, win_width = win.getmaxyx()
         prompt = '> '
-        max_width = win_width - len(prompt) - len("\n")
+        pin_indicator = 2
+        max_width = win_width - len(prompt) - pin_indicator - len("\n")
 
         title = cheat.tags if cheat.tags != '' else cheat.str_title
 
@@ -125,10 +126,7 @@ class CheatslistMenu:
             win.addstr(' ' * len(prompt), curses.color_pair(Gui.BASIC_COLOR))
 
         if is_fav:
-            try:
-                win.addstr("* ", curses.color_pair(Gui.COL2_COLOR))
-            except curses.error:
-                pass
+            win.addstr("* ", curses.color_pair(Gui.COL2_COLOR))
         else:
             win.addstr("  ", curses.color_pair(Gui.BASIC_COLOR))
 
