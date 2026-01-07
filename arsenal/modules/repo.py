@@ -146,7 +146,7 @@ def show_repos():
         print("")
         print("Add repos with:")
         print("  arsenal repo add denisidoro/cheats")
-        print("  arsenal repo add Orange-Cyberdefense/arsenal-cheats")
+        print("  arsenal repo add denisidoro/navi-tldr-pages")
         return
     
     print(f"Installed repos ({len(repos)}):")
