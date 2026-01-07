@@ -1037,7 +1037,7 @@ class Gui:
         :param has_prefix: whether to apply prefix to commands
         """
         # Debug logging
-        debug_log = open("/var/log/arsenal_gui_debug.log", "a")
+        debug_log = open("/tmp/arsenal_gui_debug.log", "a")
         def debug(msg):
             debug_log.write(f"{msg}\n")
             debug_log.flush()
