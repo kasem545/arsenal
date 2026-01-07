@@ -4,7 +4,7 @@ import math
 import json
 import re
 from curses import wrapper
-from os.path import commonprefix, exists, isdir
+from os.path import commonprefix, exists, isdir, expanduser, join
 from os import sep
 import glob
 
@@ -408,7 +408,7 @@ class CheatslistMenu:
                         self.position = 0
                         self.page_position = 0
             elif c == 25:
-
+                # Ctrl+Y: Copy selected command to clipboard
                 if self.selected_cheat() is not None:
                     try:
                         import pyperclip
@@ -872,33 +872,47 @@ class Gui:
         self.cheats_menu = None
 
     @staticmethod
+    def _get_history_file():
+        return getattr(config, 'historyfile', join(expanduser("~"), ".arsenal_history.json"))
+
+    @staticmethod
+    def _get_favorites_file():
+        return getattr(config, 'favoritesfile', join(expanduser("~"), ".arsenal_favorites.json"))
+
+    @staticmethod
+    def _get_max_history():
+        return getattr(config, 'MAX_HISTORY_SIZE', 50)
+
+    @staticmethod
     def load_history():
-        if exists(config.historyfile):
-            with open(config.historyfile, 'r') as f:
+        histfile = Gui._get_history_file()
+        if exists(histfile):
+            with open(histfile, 'r') as f:
                 Gui.command_history = json.load(f)
 
     @staticmethod
     def save_history():
-        with open(config.historyfile, 'w') as f:
-            json.dump(Gui.command_history[:config.MAX_HISTORY_SIZE], f)
+        with open(Gui._get_history_file(), 'w') as f:
+            json.dump(Gui.command_history[:Gui._get_max_history()], f)
 
     @staticmethod
     def add_to_history(cmd_key):
         if cmd_key in Gui.command_history:
             Gui.command_history.remove(cmd_key)
         Gui.command_history.insert(0, cmd_key)
-        Gui.command_history = Gui.command_history[:config.MAX_HISTORY_SIZE]
+        Gui.command_history = Gui.command_history[:Gui._get_max_history()]
         Gui.save_history()
 
     @staticmethod
     def load_favorites():
-        if exists(config.favoritesfile):
-            with open(config.favoritesfile, 'r') as f:
+        favfile = Gui._get_favorites_file()
+        if exists(favfile):
+            with open(favfile, 'r') as f:
                 Gui.favorites = set(json.load(f))
 
     @staticmethod
     def save_favorites():
-        with open(config.favoritesfile, 'w') as f:
+        with open(Gui._get_favorites_file(), 'w') as f:
             json.dump(list(Gui.favorites), f)
 
     @staticmethod
