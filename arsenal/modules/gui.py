@@ -168,7 +168,7 @@ class CheatslistMenu:
         nbinfowin.refresh()
 
         # print hotkey hints (center)
-        hotkey_hint = "[^E:Edit ^Y:Copy ^R:History ^F:Favorites ^P:Pin]"
+        hotkey_hint = "[^E:Edit ^Y:Copy ^H:History ^F:Favorites ^P:Pin]"
         hint_x = (self.width - len(hotkey_hint)) // 2
         if hint_x > len(info) and self.width > 60:
             hintwin = curses.newwin(nlines, len(hotkey_hint) + 1, y, hint_x)
@@ -367,12 +367,19 @@ class CheatslistMenu:
             elif c == curses.KEY_DOWN:
                 # Move DOWN
                 self.move_position(1)
-            elif c == curses.KEY_BACKSPACE or c == 127 or c == 8:
+            elif c == 8:
+                # Ctrl+H: Filter by history
+                if self.input_buffer == "!history":
+                    self.input_buffer = ""
+                else:
+                    self.input_buffer = "!history"
+                self.position = 0
+                self.page_position = 0
+            elif c == curses.KEY_BACKSPACE or c == 127:
                 if self.check_move_cursor(-1):
                     i = self.xcursor - self.x_init - 1
                     self.input_buffer = self.input_buffer[:i] + self.input_buffer[i + 1:]
                     self.xcursor -= 1
-                    # new search -> reset position
                     self.position = 0
                     self.page_position = 0
             elif c == curses.KEY_DC or c == 127:
@@ -414,14 +421,6 @@ class CheatslistMenu:
                         pyperclip.copy(self.selected_cheat().command)
                     except ImportError:
                         pass
-            elif c == 18:
-                # Ctrl+R: Filter by history
-                if self.input_buffer == "!history":
-                    self.input_buffer = ""
-                else:
-                    self.input_buffer = "!history"
-                self.position = 0
-                self.page_position = 0
             elif c == 16:
                 # Ctrl+P: Toggle pin/favorite on selected command
                 if self.selected_cheat() is not None:
