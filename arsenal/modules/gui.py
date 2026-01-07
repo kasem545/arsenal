@@ -168,7 +168,7 @@ class CheatslistMenu:
         nbinfowin.refresh()
 
         # print hotkey hints (center)
-        hotkey_hint = "[^E:Select ^Y:Copy ^R:History ^F:Favorites ^B:Mark]"
+        hotkey_hint = "[^E:Edit ^Y:Copy ^R:History ^F:Favorites ^P:Pin]"
         hint_x = (self.width - len(hotkey_hint)) // 2
         if hint_x > len(info) and self.width > 60:
             hintwin = curses.newwin(nlines, len(hotkey_hint) + 1, y, hint_x)
@@ -422,8 +422,8 @@ class CheatslistMenu:
                     self.input_buffer = "!history"
                 self.position = 0
                 self.page_position = 0
-            elif c == 2:
-                # Ctrl+B: Toggle bookmark/favorite on selected command
+            elif c == 16:
+                # Ctrl+P: Toggle pin/favorite on selected command
                 if self.selected_cheat() is not None:
                     cheat = self.selected_cheat()
                     cmd_key = cheat.str_title + cheat.name
