@@ -168,7 +168,7 @@ class CheatslistMenu:
         nbinfowin.refresh()
 
         # print hotkey hints (center)
-        hotkey_hint = "[^Y:Copy ^R:History ^F:Favorites ^P:+Pin]"
+        hotkey_hint = "[^Y:Copy ^R:History ^F:Favorites ^M:Mark]"
         hint_x = (self.width - len(hotkey_hint)) // 2
         if hint_x > len(info) and self.width > 60:
             hintwin = curses.newwin(nlines, len(hotkey_hint) + 1, y, hint_x)
@@ -340,7 +340,7 @@ class CheatslistMenu:
             self.cheats = self.search()
             self.draw(stdscr)
             c = stdscr.getch()
-            if c == curses.KEY_ENTER or c == 10 or c == 13:
+            if c == curses.KEY_ENTER or c == 5:
                 if self.selected_cheat() is not None:
                     cheat = self.selected_cheat()
                     cmd_key = cheat.str_title + cheat.name
@@ -421,8 +421,8 @@ class CheatslistMenu:
                     self.input_buffer = "!history"
                 self.position = 0
                 self.page_position = 0
-            elif c == 16:
-                # Ctrl+P: Toggle pin on selected command
+            elif c == 13:
+                # Ctrl+M: Toggle modify/favorite on selected command
                 if self.selected_cheat() is not None:
                     cheat = self.selected_cheat()
                     cmd_key = cheat.str_title + cheat.name
@@ -756,10 +756,8 @@ class ArgslistMenu:
             stdscr.refresh()
             self.draw(stdscr)
             c = stdscr.getch()
-            if c == curses.KEY_ENTER or c == 10 or c == 13:
-                # try to build the cmd
-                # if cmd build is ok -> exit
-                # else continue in args menu
+            # Ctrl+E: Confirm and build command
+            if c == curses.KEY_ENTER or c == 5:
                 if Gui.cmd.build():
                     break
             elif c == curses.KEY_F10 or c == 27:
