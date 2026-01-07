@@ -330,8 +330,9 @@ class CheatslistMenu:
                     stdscr.refresh()
                     break
             elif c == curses.KEY_F10 or c == 27:
-                Gui.cmd = None
-                break  # Exit the while loop
+                if Gui.confirm_exit(stdscr):
+                    Gui.cmd = None
+                    break
             elif c == 339 or c == curses.KEY_PPAGE:
                 # Page UP
                 self.move_page(-1)
@@ -857,6 +858,27 @@ class Gui:
         if len(str_value) >= max_size:
             result_string = str_value[:max_size - 4] + '...'
         return result_string
+
+    @staticmethod
+    def confirm_exit(stdscr):
+        height, width = stdscr.getmaxyx()
+        msg = "Exit Arsenal? [Y/n]"
+        box_width = len(msg) + 4
+        box_height = 3
+        y = (height - box_height) // 2
+        x = (width - box_width) // 2
+
+        confirm_win = curses.newwin(box_height, box_width, y, x)
+        confirm_win.border()
+        confirm_win.addstr(1, 2, msg, curses.color_pair(Gui.INFO_NAME_COLOR))
+        confirm_win.refresh()
+
+        while True:
+            c = stdscr.getch()
+            if c in (ord('y'), ord('Y'), curses.KEY_ENTER, 10, 13):
+                return True
+            elif c in (ord('n'), ord('N'), 27):
+                return False
 
     @staticmethod
     def prefix_cmdline_with_prefix():
