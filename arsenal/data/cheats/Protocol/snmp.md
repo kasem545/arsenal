@@ -19,7 +19,7 @@ nmap -sU --open -p 161 --script=snmp-brute <ip> --script-args snmp-brute.communi
 ## onesixtyone
 #cat/RECON 
 ```
-echo public > community; echo private >> community; echo manager >> community; onesixtyone -c community -i ips; rm community
+onesixtyone -c <wordlist> <target>
 ```
 
 ## snmpwalk entire tree
