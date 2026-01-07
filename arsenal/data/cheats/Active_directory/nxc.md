@@ -12,6 +12,19 @@ https://www.netexec.wiki/
 nxc smb <ip>
 ```
 
+## nxc - generate hosts file
+#plateform/linux #target/remote #port/445 #protocol/smb #cat/RECON
+```bash
+nxc smb <ip> --generate-hosts-file <name>
+```
+
+## nxc - generate KRB5 file
+#plateform/linux #target/remote #port/445 #protocol/smb #cat/RECON
+```bash
+nxc smb <ip> --generate-krb5-file <name>
+export KRB5_CONFIG=<NAME>
+```
+
 ## nxc - enumerate password policy
 #plateform/linux #target/remote #port/445 #port/139 #protocol/smb #cat/RECON
 

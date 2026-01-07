@@ -39,9 +39,9 @@ This project is inspired by navi (<https://github.com/denisidoro/navi>) because 
 - Add prefix to commands generated (with -f)
 
 ## Install & Launch
-- with pip :
+- with pipx :
 ```
-python3 -m pip install arsenal-cli
+pipx install git+https://github.com/kasem545/arsenal@dev
 ```
 
 - run (we also advice you to add this alias : `alias a='arsenal'`)
@@ -51,7 +51,7 @@ arsenal
 
 - manually:
 ```
-git clone https://github.com/Orange-Cyberdefense/arsenal.git
+git clone --branch dev https://github.com/kasem545/arsenal.git
 cd arsenal
 python3 -m pip install -r requirements.txt
 ./run
@@ -60,17 +60,6 @@ python3 -m pip install -r requirements.txt
 Inside your .bashrc or .zshrc add the path to `run` to help you do that you could launch the addalias.sh script
 ```
 ./addalias.sh
-```
-
-- Also if you are an Arch user you can install from the AUR:
-```bash
-git clone https://aur.archlinux.org/arsenal.git
-cd arsenal 
-makepkg -si
-```
-- Or with an AUR helper like yay:
-```bash
-yay -S arsenal
 ```
 
 ## Launch in tmux mode
