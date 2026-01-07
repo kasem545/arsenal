@@ -4,6 +4,7 @@ import os
 import fcntl
 import termios
 import re
+import sys
 import time
 from curses import wrapper
 
@@ -12,6 +13,7 @@ from . import __version__
 from .modules import config
 from .modules import cheat
 from .modules import check
+from .modules import repo
 from .modules import gui as arsenal_gui
 
 
@@ -25,6 +27,13 @@ class App:
         arsenal
         arsenal --copy
         arsenal --print
+
+        Repo management:
+        arsenal repo add denisidoro/cheats
+        arsenal repo list
+        arsenal repo remove denisidoro/cheats
+        arsenal repo update
+        arsenal repo browse
 
         You can manage global variables with:
         >set GLOBALVAR1=<value>
@@ -40,6 +49,21 @@ class App:
             epilog=examples,
             formatter_class=argparse.RawTextHelpFormatter
         )
+
+        subparsers = parser.add_subparsers(dest='command', help='sub-commands')
+
+        repo_parser = subparsers.add_parser('repo', help='Manage cheatsheet repositories')
+        repo_subparsers = repo_parser.add_subparsers(dest='repo_command', help='repo commands')
+
+        repo_add = repo_subparsers.add_parser('add', help='Add a cheatsheet repo')
+        repo_add.add_argument('repo_name', help='Repository (e.g., denisidoro/cheats)')
+
+        repo_remove = repo_subparsers.add_parser('remove', help='Remove a cheatsheet repo')
+        repo_remove.add_argument('repo_name', help='Repository to remove')
+
+        repo_subparsers.add_parser('list', help='List installed repos')
+        repo_subparsers.add_parser('update', help='Update all repos')
+        repo_subparsers.add_parser('browse', help='Browse popular repos')
 
         group_out = parser.add_argument_group('output [default = prefill]')
         group_out.add_argument('-p', '--print', action='store_true', help='Print the result')
@@ -58,14 +82,33 @@ class App:
     def run(self):
         args = self.get_args()
 
-        # load cheatsheets
-        cheatsheets = cheat.Cheats().read_files(config.CHEATS_PATHS, config.FORMATS,
-                                                config.EXCLUDE_LIST)
+        if args.command == 'repo':
+            self.handle_repo_command(args)
+            return
+
+        cheats_obj = cheat.Cheats()
+        all_paths = config.CHEATS_PATHS + getattr(config, 'NAVI_CHEATS_PATHS', []) + repo.get_all_repo_paths()
+        cheatsheets = cheats_obj.read_files(all_paths, config.FORMATS, config.EXCLUDE_LIST)
 
         if args.check:
             check.check(cheatsheets)
         else:
             self.start(args, cheatsheets)
+
+    def handle_repo_command(self, args):
+        if args.repo_command == 'add':
+            repo.add_repo(args.repo_name)
+        elif args.repo_command == 'remove':
+            repo.remove_repo(args.repo_name)
+        elif args.repo_command == 'list':
+            repo.show_repos()
+        elif args.repo_command == 'update':
+            repo.update_repo()
+        elif args.repo_command == 'browse':
+            repo.browse_repos()
+        else:
+            print("Usage: arsenal repo <add|remove|list|update|browse>")
+            print("Run 'arsenal repo --help' for more info")
 
     def start(self, args, cheatsheets):
         arsenal_gui.Gui.with_tags = args.no_tags
@@ -258,8 +301,7 @@ class App:
             message += "If you want this workaround to survive a reboot,\n" 
             message += "add the following configuration to sysctl.conf file and reboot :\n"
             message += "echo \"dev.tty.legacy_tiocsti=1\" >> /etc/sysctl.conf\n"
-            message = "===============================\n"
-
+            message += "More details about this bug here: https://github.com/Orange-Cyberdefense/arsenal/issues/77"
             print(message)
         # restore TTY attribute for stdin
         termios.tcsetattr(stdin, termios.TCSADRAIN, oldattr)
