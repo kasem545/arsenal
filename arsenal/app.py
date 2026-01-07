@@ -102,7 +102,26 @@ class App:
                         debug(f"Sending command to tmux: {cmd.cmdline}")
                         server = libtmux.Server()
                         session = server.sessions[-1]  # Updated API for libtmux >= 0.17
-                        window = session.active_window  # Updated API for libtmux >= 0.31
+
+                        # Get the current window where arsenal is running
+                        current_pane_id = os.environ.get('TMUX_PANE')
+                        window = None
+                        if current_pane_id:
+                            debug(f"Looking for current pane: {current_pane_id}")
+                            for win in session.windows:
+                                for p in win.panes:
+                                    if p.pane_id == current_pane_id:
+                                        window = win
+                                        debug(f"Found current window: {window.window_id}")
+                                        break
+                                if window:
+                                    break
+
+                        # Fallback to active window if current window not found
+                        if not window:
+                            debug("Current window not found, using active window")
+                            window = session.active_window
+
                         panes = window.panes
                         debug(f"Found {len(panes)} panes")
 
