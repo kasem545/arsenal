@@ -340,8 +340,7 @@ class CheatslistMenu:
             self.cheats = self.search()
             self.draw(stdscr)
             c = stdscr.getch()
-            # Ctrl+E: Select command
-            if c == curses.KEY_ENTER or c == 5:
+            if c == curses.KEY_ENTER or c == 10 or c == 13 or c == 5:
                 if self.selected_cheat() is not None:
                     cheat = self.selected_cheat()
                     cmd_key = cheat.str_title + cheat.name
@@ -756,8 +755,7 @@ class ArgslistMenu:
             stdscr.refresh()
             self.draw(stdscr)
             c = stdscr.getch()
-            # Ctrl+E: Confirm and build command
-            if c == curses.KEY_ENTER or c == 5:
+            if c == curses.KEY_ENTER or c == 10 or c == 13 or c == 5:
                 if Gui.cmd.build():
                     break
             elif c == curses.KEY_F10 or c == 27:
