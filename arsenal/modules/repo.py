@@ -167,10 +167,8 @@ def show_repos():
 def browse_repos():
     print("Popular cheatsheet repos:")
     print("")
-    print("  denisidoro/cheats        - Navi's official cheatsheets")
-    print("  denisidoro/navi-tldr     - TLDR pages for navi")
-    print("  chrisallenlane/cheat     - Community cheatsheets")
-    print("  Orange-Cyberdefense/arsenal-cheats - Pentest cheats")
+    print("  denisidoro/cheats              - Navi's official cheatsheets")
+    print("  denisidoro/navi-tldr-pages     - TLDR pages for navi")
     print("")
     print("Add with: arsenal repo add <owner/repo>")
 
