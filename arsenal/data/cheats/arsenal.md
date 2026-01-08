@@ -7,6 +7,7 @@
 # Install tools
 
 ## Install all the tools (Recommended)
+Install all the required tools
 ```
 wget https://raw.githubusercontent.com/kasem545/MyScripts/refs/heads/main/tools-install-v2.sh
 bash tools-install-v2.sh
