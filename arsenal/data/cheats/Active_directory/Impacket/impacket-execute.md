@@ -72,3 +72,33 @@ Execute command view the task scheduler (using \pipe\atsvc via SMB)
 ```
 impacket-atexec -hashes <hash> '<user>'@<ip> "command"
 ```
+
+# impacket-wmiexec
+
+## impacket-wmiexec - login with creds
+```
+impacket-wmiexec '<DOMAIN>/<USERNAME>:<PASSWORD>@<DC>'
+```
+
+## impacket-wmiexec - login with hash
+```
+impacket-wmiexec -hashes '<HASH>' '<USERNAME>@<DC>'
+```
+
+
+# evil_winrmexec
+
+## evil_winrmexec - login with creds
+```
+evil_winrmexec.py <DOMAIN>@<USERNAME>:'<PASSWORD>'@<DC>
+```
+
+## evil_winrmexec - login with creds
+```
+evil_winrmexec.py <DOMAIN>@<USERNAME>:'<PASSWORD>'@<DC>
+```
+
+## evil_winrmexec - login with Kerberos
+```
+evil_winrmexec.py <DOMAIN>@'<USERNAME>' -k -no-pass
+```

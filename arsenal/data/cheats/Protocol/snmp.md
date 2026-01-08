@@ -16,10 +16,10 @@ nmap -sU --open -p 161 -sC -sV <ip>
 nmap -sU --open -p 161 --script=snmp-brute <ip> --script-args snmp-brute.communitiesdb=<snmp_community_strings_file>
 ```
 
-## onesixtyone
+## snmp - onesixtyone
 #cat/RECON 
 ```
-echo public > community; echo private >> community; echo manager >> community; onesixtyone -c community -i ips; rm community
+onesixtyone -c <wordlist> <target>
 ```
 
 ## snmpwalk entire tree

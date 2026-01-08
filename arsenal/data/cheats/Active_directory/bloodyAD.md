@@ -6,7 +6,7 @@
 bloodyAD --host <dc> -d <domain> -u '<username>' -p '<password>' get object <target_username>
 ```
 
-## bloodyAD - Add User To Group
+## bloodyAD - Add User To Group(AddMember)
 ```bash
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add groupMember <group_name> <member_to_add>
 ```

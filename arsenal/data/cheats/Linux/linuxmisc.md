@@ -14,3 +14,8 @@ sudo kill -9 <PID>
 ```
 for i in <ports>;do nmap -Pn -p $i --host-timeout 201 --max-retries 0 <target-ip>;done
 ```
+
+## ROT13
+```
+echo "<ciphertext>" | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+```

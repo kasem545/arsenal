@@ -9,4 +9,9 @@ fi ;
 cd "$DIR"
 
 export TERM='xterm-256color'
-exec python3 -m arsenal "$@"
+
+if [ -d "$DIR/venv" ] && [ -f "$DIR/venv/bin/python3" ]; then
+    exec "$DIR/venv/bin/python3" -m arsenal "$@"
+else
+    exec python3 -m arsenal "$@"
+fi

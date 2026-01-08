@@ -24,7 +24,7 @@ ssh -R <remote_binding>:<remote_port>:<local_host>:<local_port> <user>@<ip>
 ## SSH proxysocks
 #cat/PIVOT/TUNNEL-PORTFW 
 ```
-ssh -D <socks_port> <user>@<ip>
+ssh -D <socks_port> <user>@<ip> -fN
 ```
 
 ## get public ssh key of server
@@ -43,4 +43,11 @@ msfconsole -x "use scanner/ssh/ssh_enumusers; set RHOSTS <ip>; set USER_FILE <us
 #cat/UTILS 
 ```
 ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 <user>@<ip>
+```
+
+# sshpass
+
+## sshpass - Connect to a remote server with the password, automatically accept unknown ssh keys
+```
+sshpass -p <password> ssh -o StrictHostKeyChecking=no <user>@<ip>
 ```

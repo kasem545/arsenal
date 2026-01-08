@@ -2,8 +2,9 @@ import time
 import curses
 import math
 import json
+import re
 from curses import wrapper
-from os.path import commonprefix, exists, isdir
+from os.path import commonprefix, exists, isdir, expanduser, join
 from os import sep
 import glob
 
@@ -54,10 +55,8 @@ class CheatslistMenu:
         if selected_cheat is not None:
             infowin.addstr(y + 1, x + 2, Gui.draw_string(selected_cheat.name, self.width - 3),
                            curses.color_pair(Gui.INFO_NAME_COLOR))
-            # infowin.addstr(y + 2, x + 2, Gui.draw_string(selected_cheat.description.split('\n')[0], self.width - 3),
-            #                curses.color_pair(Gui.INFO_DESC_COLOR))
-            infowin.addstr(y + 2, x + 2, Gui.draw_string(selected_cheat.printable_command, self.width - 3),
-                           curses.color_pair(Gui.INFO_CMD_COLOR))
+            Gui.draw_highlighted_command(infowin, y + 2, x + 2, 
+                                         selected_cheat.printable_command, self.width - 3)
         infowin.border()
         infowin.refresh()
         return infowin
@@ -83,7 +82,8 @@ class CheatslistMenu:
         """
         win_height, win_width = win.getmaxyx()
         prompt = '> '
-        max_width = win_width - len(prompt) - len("\n")
+        pin_indicator = 2
+        max_width = win_width - len(prompt) - pin_indicator - len("\n")
 
         title = cheat.tags if cheat.tags != '' else cheat.str_title
 
@@ -117,10 +117,18 @@ class CheatslistMenu:
                                    "val": cheat.printable_command,
                                    "color": Gui.COL3_COLOR_SELECT if selected else Gui.COL3_COLOR}}
 
+        cmd_key = cheat.str_title + cheat.name
+        is_fav = Gui.is_favorite(cmd_key)
+
         if selected:
             win.addstr(prompt, curses.color_pair(Gui.CURSOR_COLOR_SELECT))
         else:
             win.addstr(' ' * len(prompt), curses.color_pair(Gui.BASIC_COLOR))
+
+        if is_fav:
+            win.addstr("* ", curses.color_pair(Gui.COL2_COLOR))
+        else:
+            win.addstr("  ", curses.color_pair(Gui.BASIC_COLOR))
 
         for column_name in columns_list:
             win.addstr("{:{}s}".format(Gui.draw_string(columns[column_name]["val"],
@@ -159,17 +167,12 @@ class CheatslistMenu:
         nbinfowin.addstr(info, curses.color_pair(Gui.BASIC_COLOR))
         nbinfowin.refresh()
 
-        # print cheatsheet filename (bottom right)
-        if self.selected_cheat() is not None:
-            cheat_file = self.selected_cheat().filename
-
-            # protection in case screen to small or name too long        
-            if len(cheat_file) > self.width - 16:
-                cheat_file = cheat_file[0:self.width - 17] + ".."
-
-            fileinfowin = curses.newwin(nlines, ncols, y, self.width - (len(cheat_file) + 3))
-            fileinfowin.addstr(cheat_file, curses.color_pair(Gui.BASIC_COLOR))
-            fileinfowin.refresh()
+        hotkey_hint = "[^E:Edit ^Y:Copy ^R:History ^F:Favorites ^P:Pin]"
+        hint_x = (self.width - len(hotkey_hint)) // 2
+        if hint_x > len(info) and self.width > 60:
+            hintwin = curses.newwin(nlines, len(hotkey_hint) + 1, y, hint_x)
+            hintwin.addstr(hotkey_hint, curses.color_pair(Gui.COL2_COLOR))
+            hintwin.refresh()
 
     def match(self, cheat):
         """
@@ -177,9 +180,16 @@ class CheatslistMenu:
         :param cheat: cheat to check
         :return: boolean
         """
-        # if search begin with '>' print only internal CMD
+        cmd_key = cheat.str_title + cheat.name
+
         if self.input_buffer.startswith('>') and not cheat.command.startswith('>'):
             return False
+
+        if self.input_buffer == "!history":
+            return cmd_key in Gui.command_history
+
+        if self.input_buffer == "!fav":
+            return Gui.is_favorite(cmd_key)
 
         for value in self.input_buffer.lower().split(' '):
             is_value_excluded = False
@@ -204,7 +214,12 @@ class CheatslistMenu:
         Return the list of cheatsheet who match the searched term
         :return: list of cheatsheet to show
         """
-        if self.input_buffer != '':
+        if self.input_buffer == "!history":
+            history_order = {k: i for i, k in enumerate(Gui.command_history)}
+            list_cheat = [c for c in self.globalcheats if (c.str_title + c.name) in history_order]
+            list_cheat.sort(key=lambda c: history_order.get(c.str_title + c.name, 999))
+            return list_cheat
+        elif self.input_buffer != '':
             list_cheat = list(filter(self.match, self.globalcheats))
         else:
             list_cheat = self.globalcheats
@@ -299,8 +314,9 @@ class CheatslistMenu:
         Cheats selection menu processing..
         :param stdscr: screen
         """
-        # init
         Gui.init_colors()
+        Gui.load_history()
+        Gui.load_favorites()
         stdscr.clear()
         self.height, self.width = stdscr.getmaxyx()
         self.max_visible_cheats = self.height - 7
@@ -311,20 +327,20 @@ class CheatslistMenu:
             self.cheats = self.search()
             self.draw(stdscr)
             c = stdscr.getch()
-            if c == curses.KEY_ENTER or c == 10 or c == 13:
-                # Process selected command (if not empty)
+            if c == curses.KEY_ENTER or c == 10 or c == 13 or c == 5:
                 if self.selected_cheat() is not None:
-                    Gui.cmd = command.Command(self.selected_cheat(), Gui.arsenalGlobalVars)
-                    # check if arguments are needed
-                    # if len(Gui.cmd.args) != 0:
-                    # args needed -> ask
+                    cheat = self.selected_cheat()
+                    cmd_key = cheat.str_title + cheat.name
+                    Gui.add_to_history(cmd_key)
+                    Gui.cmd = command.Command(cheat, Gui.arsenalGlobalVars)
                     args_menu = ArgslistMenu(self)
                     args_menu.run(stdscr)
                     stdscr.refresh()
                     break
             elif c == curses.KEY_F10 or c == 27:
-                Gui.cmd = None
-                break  # Exit the while loop
+                if Gui.confirm_exit(stdscr):
+                    Gui.cmd = None
+                    break
             elif c == 339 or c == curses.KEY_PPAGE:
                 # Page UP
                 self.move_page(-1)
@@ -342,7 +358,6 @@ class CheatslistMenu:
                     i = self.xcursor - self.x_init - 1
                     self.input_buffer = self.input_buffer[:i] + self.input_buffer[i + 1:]
                     self.xcursor -= 1
-                    # new search -> reset position
                     self.position = 0
                     self.page_position = 0
             elif c == curses.KEY_DC or c == 127:
@@ -376,6 +391,34 @@ class CheatslistMenu:
                         self.xcursor = self.x_init + len(self.input_buffer)
                         self.position = 0
                         self.page_position = 0
+            elif c == 25:
+                # Ctrl+Y: Copy selected command to clipboard
+                if self.selected_cheat() is not None:
+                    try:
+                        import pyperclip
+                        pyperclip.copy(self.selected_cheat().command)
+                    except ImportError:
+                        pass
+            elif c == 16:
+                # Ctrl+P: Toggle pin/favorite on selected command
+                if self.selected_cheat() is not None:
+                    cheat = self.selected_cheat()
+                    cmd_key = cheat.str_title + cheat.name
+                    Gui.toggle_favorite(cmd_key)
+            elif c == 6:
+                if self.input_buffer == "!fav":
+                    self.input_buffer = ""
+                else:
+                    self.input_buffer = "!fav"
+                self.position = 0
+                self.page_position = 0
+            elif c == 18:
+                if self.input_buffer == "!history":
+                    self.input_buffer = ""
+                else:
+                    self.input_buffer = "!history"
+                self.position = 0
+                self.page_position = 0
             elif 20 <= c < 127:
                 i = self.xcursor - self.x_init
                 self.input_buffer = self.input_buffer[:i] + chr(c) + self.input_buffer[i:]
@@ -697,10 +740,7 @@ class ArgslistMenu:
             stdscr.refresh()
             self.draw(stdscr)
             c = stdscr.getch()
-            if c == curses.KEY_ENTER or c == 10 or c == 13:
-                # try to build the cmd
-                # if cmd build is ok -> exit
-                # else continue in args menu
+            if c == curses.KEY_ENTER or c == 10 or c == 13 or c == 5:
                 if Gui.cmd.build():
                     break
             elif c == curses.KEY_F10 or c == 27:
@@ -733,6 +773,14 @@ class ArgslistMenu:
                     self.xcursor = self.x_init + len(fzf[0])
                 except ImportError:
                     pass
+            elif c == 25:
+                # Ctrl+Y: Copy command to clipboard
+                if Gui.cmd.build():
+                    try:
+                        import pyperclip
+                        pyperclip.copy(Gui.cmd.cmdline)
+                    except ImportError:
+                        pass
             elif c == curses.KEY_BACKSPACE or c == 127 or c == 8:
                 if self.check_move_cursor(-1):
                     i = self.xcursor - self.x_init - 1
@@ -786,13 +834,77 @@ class Gui:
     INFO_DESC_COLOR = 0
     INFO_CMD_COLOR = 0
     ARG_NAME_COLOR = 5
+    # syntax highlighting colors
+    SYN_PIPE_COLOR = 2  # green
+    SYN_REDIRECT_COLOR = 3  # yellow/orange
+    SYN_ARG_COLOR = 6  # cyan
+    SYN_FLAG_COLOR = 5  # magenta
+    SYN_VAR_COLOR = 4  # gold
     loaded_menu = False
     with_tags = False
+    command_history = []
+    favorites = set()
 
     DEFAULT_RATIOS = {"tags": 14, "title": 8, "name": 23, "description": 55}
 
     def __init__(self):
         self.cheats_menu = None
+
+    @staticmethod
+    def _get_history_file():
+        return getattr(config, 'historyfile', join(expanduser("~"), ".arsenal_history.json"))
+
+    @staticmethod
+    def _get_favorites_file():
+        return getattr(config, 'favoritesfile', join(expanduser("~"), ".arsenal_favorites.json"))
+
+    @staticmethod
+    def _get_max_history():
+        return getattr(config, 'MAX_HISTORY_SIZE', 50)
+
+    @staticmethod
+    def load_history():
+        histfile = Gui._get_history_file()
+        if exists(histfile):
+            with open(histfile, 'r') as f:
+                Gui.command_history = json.load(f)
+
+    @staticmethod
+    def save_history():
+        with open(Gui._get_history_file(), 'w') as f:
+            json.dump(Gui.command_history[:Gui._get_max_history()], f)
+
+    @staticmethod
+    def add_to_history(cmd_key):
+        if cmd_key in Gui.command_history:
+            Gui.command_history.remove(cmd_key)
+        Gui.command_history.insert(0, cmd_key)
+        Gui.command_history = Gui.command_history[:Gui._get_max_history()]
+        Gui.save_history()
+
+    @staticmethod
+    def load_favorites():
+        favfile = Gui._get_favorites_file()
+        if exists(favfile):
+            with open(favfile, 'r') as f:
+                Gui.favorites = set(json.load(f))
+
+    @staticmethod
+    def save_favorites():
+        with open(Gui._get_favorites_file(), 'w') as f:
+            json.dump(list(Gui.favorites), f)
+
+    @staticmethod
+    def toggle_favorite(cmd_key):
+        if cmd_key in Gui.favorites:
+            Gui.favorites.remove(cmd_key)
+        else:
+            Gui.favorites.add(cmd_key)
+        Gui.save_favorites()
+
+    @staticmethod
+    def is_favorite(cmd_key):
+        return cmd_key in Gui.favorites
 
     @staticmethod
     def init_colors():
@@ -836,9 +948,128 @@ class Gui:
         return result_string
 
     @staticmethod
+    def confirm_exit(stdscr):
+        height, width = stdscr.getmaxyx()
+        msg = "Exit Arsenal? [Y/n]"
+        box_width = len(msg) + 4
+        box_height = 3
+        y = (height - box_height) // 2
+        x = (width - box_width) // 2
+
+        confirm_win = curses.newwin(box_height, box_width, y, x)
+        confirm_win.border()
+        confirm_win.addstr(1, 2, msg, curses.color_pair(Gui.INFO_NAME_COLOR))
+        confirm_win.refresh()
+
+        while True:
+            c = stdscr.getch()
+            if c in (ord('y'), ord('Y'), curses.KEY_ENTER, 10, 13):
+                return True
+            elif c in (ord('n'), ord('N'), 27):
+                return False
+
+    @staticmethod
+    def draw_highlighted_command(win, y, x, cmd_str, max_width):
+        pos = x
+        i = 0
+        tokens = re.split(r'(\||&&|;|>|>>|<|2>&1|\$\([^)]+\)|\$\{[^}]+\}|\$\w+|<[^>]+>|-{1,2}\w+)', cmd_str)
+        for token in tokens:
+            if pos - x >= max_width - 3:
+                break
+            remaining = max_width - (pos - x) - 3
+            if remaining <= 0:
+                break
+            display_token = token[:remaining] if len(token) > remaining else token
+            if not token:
+                continue
+            elif token in ('|', '&&', ';'):
+                color = Gui.SYN_PIPE_COLOR
+            elif token in ('>', '>>', '<', '2>&1'):
+                color = Gui.SYN_REDIRECT_COLOR
+            elif token.startswith('<') and token.endswith('>'):
+                color = Gui.SYN_ARG_COLOR
+            elif token.startswith('-'):
+                color = Gui.SYN_FLAG_COLOR
+            elif token.startswith('$'):
+                color = Gui.SYN_VAR_COLOR
+            else:
+                color = Gui.INFO_CMD_COLOR
+            try:
+                win.addstr(y, pos, display_token, curses.color_pair(color))
+                pos += len(display_token)
+            except curses.error:
+                break
+        if len(cmd_str) > max_width - 3:
+            try:
+                win.addstr(y, x + max_width - 6, "...", curses.color_pair(Gui.BASIC_COLOR))
+            except curses.error:
+                pass
+
+    @staticmethod
     def prefix_cmdline_with_prefix():
         if config.PREFIX_GLOBALVAR_NAME in Gui.arsenalGlobalVars:
             Gui.cmd.cmdline = f"{Gui.arsenalGlobalVars[config.PREFIX_GLOBALVAR_NAME]} {Gui.cmd.cmdline}"
+
+    def run_continuous(self, stdscr, tmux_handler, has_prefix):
+        """
+        Continuous mode for tmux - keeps GUI alive across multiple commands
+        :param stdscr: curses screen
+        :param tmux_handler: callback function to handle tmux command sending
+        :param has_prefix: whether to apply prefix to commands
+        """
+        # Debug logging
+        debug_log = open("/tmp/arsenal_gui_debug.log", "a")
+        def debug(msg):
+            debug_log.write(f"{msg}\n")
+            debug_log.flush()
+
+        debug("run_continuous started")
+        Gui.init_colors()
+
+        iteration = 0
+        while True:
+            iteration += 1
+            debug(f"Iteration {iteration}: Starting menu")
+
+            # Run the cheats menu to get a command
+            self.cheats_menu.run(stdscr)
+
+            debug(f"Iteration {iteration}: Menu returned, Gui.cmd = {Gui.cmd}")
+
+            if Gui.cmd is None:
+                # User pressed ESC/F10 to exit
+                debug("Gui.cmd is None, exiting")
+                break
+
+            debug(f"Iteration {iteration}: Command = {Gui.cmd.cmdline}")
+
+            # Handle internal commands
+            if Gui.cmd.cmdline[0] == '>':
+                debug("Internal command detected")
+                if Gui.cmd.cmdline == ">exit":
+                    debug("Exit command, breaking")
+                    break
+                # Other internal commands handled here if needed
+                # For now, just continue
+                debug("Continuing after internal command")
+                continue
+
+            # Apply prefix if needed
+            if has_prefix:
+                debug("Applying prefix")
+                self.prefix_cmdline_with_prefix()
+
+            debug(f"Calling tmux_handler with: {Gui.cmd.cmdline}")
+            # Send command via tmux handler
+            if not tmux_handler(Gui.cmd):
+                # Handler failed, exit loop
+                debug("tmux_handler returned False, exiting")
+                break
+
+            debug(f"Iteration {iteration}: Command sent, looping back")
+
+        debug("run_continuous exiting")
+        debug_log.close()
 
     def run(self, cheatsheets, has_prefix):
         """

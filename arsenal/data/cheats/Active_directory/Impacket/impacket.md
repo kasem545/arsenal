@@ -15,10 +15,16 @@ impacket-lookupsid <domain>/<user>:<password>@<ip>
 impacket-reg <domain>/<user>:<password>@<ip> query -keyName HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows -s
 ```
 
-## rpcdump - list rpc endpoint
+## rpcdump - Dump RPC endpoints
 #plateform/linux #target/remote #cat/RECON 
 ```
 impacket-rpcdump <domain>/<user>:<password>@<ip>
+```
+
+## rpcdump - Dump RPC endpoints
+#plateform/linux #target/remote #cat/RECON 
+```
+impacket-rpcdump -hashes <hash> <domain>/'<username>':'<password>'@<target>
 ```
 
 ## impacket-services - (start, stop, delete, read status, config, list, create and change any service) remote

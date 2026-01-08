@@ -4,6 +4,7 @@ import os
 import fcntl
 import termios
 import re
+import sys
 import time
 from curses import wrapper
 
@@ -12,6 +13,7 @@ from . import __version__
 from .modules import config
 from .modules import cheat
 from .modules import check
+from .modules import repo
 from .modules import gui as arsenal_gui
 
 
@@ -25,6 +27,13 @@ class App:
         arsenal
         arsenal --copy
         arsenal --print
+
+        Repo management:
+        arsenal repo add denisidoro/cheats
+        arsenal repo list
+        arsenal repo remove denisidoro/cheats
+        arsenal repo update
+        arsenal repo browse
 
         You can manage global variables with:
         >set GLOBALVAR1=<value>
@@ -40,6 +49,21 @@ class App:
             epilog=examples,
             formatter_class=argparse.RawTextHelpFormatter
         )
+
+        subparsers = parser.add_subparsers(dest='command', help='sub-commands')
+
+        repo_parser = subparsers.add_parser('repo', help='Manage cheatsheet repositories')
+        repo_subparsers = repo_parser.add_subparsers(dest='repo_command', help='repo commands')
+
+        repo_add = repo_subparsers.add_parser('add', help='Add a cheatsheet repo')
+        repo_add.add_argument('repo_name', help='Repository (e.g., denisidoro/cheats)')
+
+        repo_remove = repo_subparsers.add_parser('remove', help='Remove a cheatsheet repo')
+        repo_remove.add_argument('repo_name', help='Repository to remove')
+
+        repo_subparsers.add_parser('list', help='List installed repos')
+        repo_subparsers.add_parser('update', help='Update all repos')
+        repo_subparsers.add_parser('browse', help='Browse popular repos')
 
         group_out = parser.add_argument_group('output [default = prefill]')
         group_out.add_argument('-p', '--print', action='store_true', help='Print the result')
@@ -58,20 +82,137 @@ class App:
     def run(self):
         args = self.get_args()
 
-        # load cheatsheets
-        cheatsheets = cheat.Cheats().read_files(config.CHEATS_PATHS, config.FORMATS,
-                                                config.EXCLUDE_LIST)
+        if args.command == 'repo':
+            self.handle_repo_command(args)
+            return
+
+        cheats_obj = cheat.Cheats()
+        all_paths = config.CHEATS_PATHS + getattr(config, 'NAVI_CHEATS_PATHS', []) + repo.get_all_repo_paths()
+        cheatsheets = cheats_obj.read_files(all_paths, config.FORMATS, config.EXCLUDE_LIST)
 
         if args.check:
             check.check(cheatsheets)
         else:
             self.start(args, cheatsheets)
 
+    def handle_repo_command(self, args):
+        if args.repo_command == 'add':
+            repo.add_repo(args.repo_name)
+        elif args.repo_command == 'remove':
+            repo.remove_repo(args.repo_name)
+        elif args.repo_command == 'list':
+            repo.show_repos()
+        elif args.repo_command == 'update':
+            repo.update_repo()
+        elif args.repo_command == 'browse':
+            repo.browse_repos()
+        else:
+            print("Usage: arsenal repo <add|remove|list|update|browse>")
+            print("Run 'arsenal repo --help' for more info")
+
     def start(self, args, cheatsheets):
         arsenal_gui.Gui.with_tags = args.no_tags
 
         # create gui object
         gui = arsenal_gui.Gui()
+
+        # Load cheat list
+        for value in cheatsheets.values():
+            if gui.cheats_menu is None:
+                gui.cheats_menu = arsenal_gui.CheatslistMenu()
+            gui.cheats_menu.globalcheats.append(value)
+
+        # Load global vars if they exist
+        if os.path.exists(config.savevarfile):
+            with open(config.savevarfile, 'r') as f:
+                arsenal_gui.Gui.arsenalGlobalVars = json.load(f)
+
+        if args.tmux:
+            if not os.environ.get('TMUX'):
+                print("Arsenal: Starting tmux session...")
+                arsenal_cmd = "arsenal " + " ".join(sys.argv[1:])
+                os.execvp("tmux", ["tmux", "new-session", "-s", "arsenal", arsenal_cmd])
+                return
+
+            try:
+                import libtmux
+
+                # Debug log file
+                debug_log = open("/tmp/arsenal_debug.log", "w")
+
+                def debug(msg):
+                    debug_log.write(f"{msg}\n")
+                    debug_log.flush()
+
+                def tmux_handler(cmd):
+                    """Handler function to send commands to tmux pane"""
+                    try:
+                        debug(f"Sending command to tmux: {cmd.cmdline}")
+                        server = libtmux.Server()
+                        session = server.sessions[-1]  # Updated API for libtmux >= 0.17
+
+                        # Get the current window where arsenal is running
+                        current_pane_id = os.environ.get('TMUX_PANE')
+                        window = None
+                        if current_pane_id:
+                            debug(f"Looking for current pane: {current_pane_id}")
+                            for win in session.windows:
+                                for p in win.panes:
+                                    if p.pane_id == current_pane_id:
+                                        window = win
+                                        debug(f"Found current window: {window.window_id}")
+                                        break
+                                if window:
+                                    break
+
+                        # Fallback to active window if current window not found
+                        if not window:
+                            debug("Current window not found, using active window")
+                            window = session.active_window
+
+                        panes = window.panes
+                        debug(f"Found {len(panes)} panes")
+
+                        if len(panes) == 1:
+                            # split window to get more pane
+                            debug("Splitting window...")
+                            pane = window.split(attach=False)  # Updated API for libtmux >= 0.33
+                            time.sleep(0.3)
+                        else:
+                            pane = panes[-1]
+                            debug(f"Using existing pane: {pane.pane_id}")
+
+                        # send command to other pane (Arsenal stays focused)
+                        if args.exec:
+                            debug("Executing command with Enter")
+                            pane.send_keys(cmd.cmdline)
+                        else:
+                            debug("Prefilling command without Enter")
+                            pane.send_keys(cmd.cmdline, enter=False)
+
+                        debug("Command sent successfully")
+                        return True  # Success
+                    except libtmux.exc.LibTmuxException as e:
+                        debug(f"Arsenal tmux error: {e}")
+                        return False  # Failure
+                    except Exception as e:
+                        debug(f"Arsenal unexpected error: {e}")
+                        import traceback
+                        debug(traceback.format_exc())
+                        return False  # Failure
+
+                # Run GUI in continuous mode with wrapper
+                debug("Starting Arsenal in continuous tmux mode...")
+                wrapper(lambda stdscr: gui.run_continuous(stdscr, tmux_handler, args.prefix))
+                debug("Arsenal tmux mode exited")
+                debug_log.close()
+                return
+
+            except ImportError:
+                print("Arsenal: libtmux not installed. Falling back to standard mode.")
+                # Fall through to standard mode
+
+        # Standard (non-tmux) mode
         while True:
             # launch gui
             cmd = gui.run(cheatsheets, args.prefix)
@@ -132,36 +273,10 @@ class App:
                 break
 
             # OPT: Exec
-            elif args.exec and not args.tmux:
+            elif args.exec:
                 os.system(cmd.cmdline)
                 break
 
-            elif args.tmux:
-                try:
-                    import libtmux
-                    try:
-                        server = libtmux.Server()
-                        session = server.list_sessions()[-1]
-                        window = session.attached_window
-                        panes = window.panes
-                        if len(panes) == 1:
-                            # split window to get more pane
-                            pane = window.split_window(attach=False)
-                            time.sleep(0.3)
-                        else:
-                            pane = panes[-1]
-                        # send command to other pane and switch pane
-                        if args.exec:
-                            pane.send_keys(cmd.cmdline)
-                        else:
-                            pane.send_keys(cmd.cmdline, enter=False)
-                            pane.select_pane()
-                    except libtmux.exc.LibTmuxException:
-                        self.prefil_shell_cmd(cmd)
-                        break
-                except ImportError:
-                    self.prefil_shell_cmd(cmd)
-                    break
             # DEFAULT: Prefill Shell CMD
             else:
                 self.prefil_shell_cmd(cmd)
@@ -191,7 +306,6 @@ class App:
             message += "If you want this workaround to survive a reboot,\n" 
             message += "add the following configuration to sysctl.conf file and reboot :\n"
             message += "echo \"dev.tty.legacy_tiocsti=1\" >> /etc/sysctl.conf\n"
-            message += "More details about this bug here: https://github.com/Orange-Cyberdefense/arsenal/issues/77"
             print(message)
         # restore TTY attribute for stdin
         termios.tcsetattr(stdin, termios.TCSADRAIN, oldattr)
