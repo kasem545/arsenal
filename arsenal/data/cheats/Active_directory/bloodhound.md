@@ -2,6 +2,25 @@
 
 % bloodhound, Active directory enumeration
 
+## bloodhound - Download BloodHound CLI
+#plateform/linux #target/local #cat/RECON
+https://github.com/SpecterOps/BloodHound
+Passowrd Can be reset with ./bloodhound-cli resetpwd
+```bash
+wget https://github.com/SpecterOps/bloodhound-cli/releases/latest/download/bloodhound-cli-linux-amd64.tar.gz
+tar -xvzf bloodhound-cli-linux-amd64.tar.gz
+./bloodhound-cli install
+```
+
+## bloodhound update
+#plateform/linux #target/local #cat/RECON
+https://github.com/SpecterOps/BloodHound
+
+```bash
+
+bloodhound-cli update
+```
+
 ## bloodhound start
 #plateform/linux #target/local #cat/RECON
 https://github.com/SpecterOps/BloodHound
@@ -20,22 +39,22 @@ https://github.com/SpecterOps/BloodHound
 bloodhound-cli containers  stop
 ```
 
-## bloodhound update
-#plateform/linux #target/local #cat/RECON
-https://github.com/SpecterOps/BloodHound
-
-```bash
-
-bloodhound-cli update
-```
-
 ## bloodhound - collect data
 #plateform/linux #target/remote #port/389 #port/631 #cat/RECON
 https://gitlab.com/kalilinux/packages/bloodhound-ce-python
 
 ```bash
 
-bloodhound-ce-python -d <domain> -u <user> -p <password> -c all -ns <nameserver> --zip
+bloodhound-ce-python -d <domain> -u <user> -p <password> -c all -dc <dc-ip> -ns <nameserver> --zip
+```
+
+## bloodhound - collect data auth with hashe
+#plateform/linux #target/remote #port/389 #port/631 #cat/RECON
+https://gitlab.com/kalilinux/packages/bloodhound-ce-python
+
+```bash
+
+bloodhound-ce-python -d <domain> -u <user> --hashes <hash> -c all -dc <dc-ip> -ns <nameserver> --zip
 ```
 
 ## bloodhound - collect data (alternative)

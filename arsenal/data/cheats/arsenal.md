@@ -4,6 +4,14 @@
 
 #plateform/linux #target/local #cat/INTERNAL 
 
+# Install tools
+
+## Install all the tools (Recommended)
+```
+wget https://raw.githubusercontent.com/kasem545/MyScripts/refs/heads/main/tools-install-v2.sh
+bash tools-install-v2.sh
+```
+
 ## List global variable
 ```
 >show
