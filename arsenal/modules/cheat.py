@@ -1,3 +1,5 @@
+#Maintainer: @kasem_shibli <https://x.com/kasem_shibli>
+
 #!/usr/bin/python3
 from pathlib import Path
 
@@ -431,11 +433,100 @@ class Cheats:
             cheat.printable_command = cheat.command.replace('\\\n', '')
             self.cheatsheets[cheat.str_title + cheat.name] = cheat
 
+    # -----------------------------------------------------------------------------#
+    # Navi .cheat format                                                          #
+    # -----------------------------------------------------------------------------#
+
+    def parse_navi(self, filename):
+        self.firsttitle = ''
+        self.cheatlist = []
+        self.current_tags = ''
+        self.filevars = {}
+        self.titles = []
+        self.new_cheat()
+        self.command_tags_ref = {}
+
+        current_tags = []
+        current_description = ''
+        pending_command = ''
+
+        with open(filename) as f:
+            for line in f.readlines():
+                line = line.rstrip('\n')
+
+                if line.startswith('%'):
+                    if pending_command and current_description:
+                        self._finalize_navi_cheat(
+                            current_tags, current_description, pending_command, filename
+                        )
+                        pending_command = ''
+                        current_description = ''
+                    current_tags = [t.strip() for t in line[1:].split(',')]
+                    if self.firsttitle == '' and current_tags:
+                        self.firsttitle = current_tags[0]
+                    continue
+
+                if line.startswith('@'):
+                    continue
+
+                if line.startswith(';'):
+                    continue
+
+                if line.startswith('#'):
+                    if pending_command and current_description:
+                        self._finalize_navi_cheat(
+                            current_tags, current_description, pending_command, filename
+                        )
+                        pending_command = ''
+                    current_description = line[1:].strip()
+                    continue
+
+                if line.startswith('$'):
+                    match = re.match(r'\$\s*(\w+)\s*:\s*(.+?)(?:\s*---.*)?$', line)
+                    if match:
+                        varname = match.group(1)
+                        varval = match.group(2).strip()
+                        self.filevars[varname] = "$(" + varval + ")"
+                    continue
+
+                if line.strip() and not line.startswith(' ') and current_description:
+                    if pending_command:
+                        self._finalize_navi_cheat(
+                            current_tags, current_description, pending_command, filename
+                        )
+                    pending_command = line.strip()
+
+            if pending_command and current_description:
+                self._finalize_navi_cheat(
+                    current_tags, current_description, pending_command, filename
+                )
+
+        for varname, varval in self.filevars.items():
+            for cheat in self.cheatlist:
+                cheat.variables[varname] = varval
+
+        for cheat in self.cheatlist:
+            cheat.filename = filename
+            cheat.printable_command = cheat.command.replace('\\\n', '')
+            self.cheatsheets[cheat.str_title + cheat.name] = cheat
+
+    def _finalize_navi_cheat(self, tags, description, command, filename):
+        self.new_cheat()
+        self.current_cheat.name = description
+        self.current_cheat.command = command
+        self.current_cheat.description = ''
+        self.current_cheat.tags = ', '.join(tags) if tags else ''
+        self.current_cheat.str_title = tags[0] if tags else ''
+        self.titles = tags[:1] if tags else []
+        self.current_cheat.command_tags = {'source': 'navi'}
+        self.cheatlist.append(self.current_cheat)
+
     def read_files(self, paths, file_formats, exclude_list):
         parsers = {
             "md": self.parse_markdown,
             "rst": self.parse_restructuredtext,
-            "yml": self.parse_yaml
+            "yml": self.parse_yaml,
+            "cheat": self.parse_navi
         }
         paths = [paths] if isinstance(paths, str) else paths
         for path in paths:

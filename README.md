@@ -21,6 +21,9 @@ Authors:
 * Guillaume Muh
 * mayfly
 
+Maintaner:
+* kasem545
+
 This project is inspired by navi (<https://github.com/denisidoro/navi>) because the original version was in bash and too hard to understand to add features
 
 
@@ -39,9 +42,9 @@ This project is inspired by navi (<https://github.com/denisidoro/navi>) because 
 - Add prefix to commands generated (with -f)
 
 ## Install & Launch
-- with pip :
+- with pipx :
 ```
-python3 -m pip install arsenal-cli
+pipx install git+https://github.com/kasem545/arsenal@dev
 ```
 
 - run (we also advice you to add this alias : `alias a='arsenal'`)
@@ -51,7 +54,7 @@ arsenal
 
 - manually:
 ```
-git clone https://github.com/Orange-Cyberdefense/arsenal.git
+git clone --branch dev https://github.com/kasem545/arsenal.git
 cd arsenal
 python3 -m pip install -r requirements.txt
 ./run
@@ -60,17 +63,6 @@ python3 -m pip install -r requirements.txt
 Inside your .bashrc or .zshrc add the path to `run` to help you do that you could launch the addalias.sh script
 ```
 ./addalias.sh
-```
-
-- Also if you are an Arch user you can install from the AUR:
-```bash
-git clone https://aur.archlinux.org/arsenal.git
-cd arsenal 
-makepkg -si
-```
-- Or with an AUR helper like yay:
-```bash
-yay -S arsenal
 ```
 
 ## Launch in tmux mode
@@ -149,14 +141,12 @@ If you want this workaround to survive a reboot, add the following configuration
 ```
 echo "dev.tty.legacy_tiocsti=1" >> /etc/sysctl.conf
 ```
-More information is available in the issue [https://github.com/Orange-Cyberdefense/arsenal/issues/77](https://github.com/Orange-Cyberdefense/arsenal/issues/77)
 
 
 ## Mindmap
-- Active directory mindmap
-  - Due to csp on github when you open the svg, we moved the AD mindmap and the source to this repository : [https://github.com/Orange-Cyberdefense/ocd-mindmaps](https://github.com/Orange-Cyberdefense/ocd-mindmaps)
+- Active Directory Mindmap (SVG file)
 
-[https://orange-cyberdefense.github.io/ocd-mindmaps/img/pentest_ad_dark_2022_11.svg](https://orange-cyberdefense.github.io/ocd-mindmaps/img/pentest_ad_dark_2022_11.svg)
+    [Active_Directory_mindmap.svg](./mindmap/Active_Directory_mindmap.svg)
 
 - AD mindmap black version
 ![](./mindmap/pentest_ad_black.png)

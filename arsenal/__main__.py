@@ -1,3 +1,5 @@
+#Maintainer: @kasem_shibli <https://x.com/kasem_shibli>
+
 """
 Main entry point for running Arsenal as a module.
 """

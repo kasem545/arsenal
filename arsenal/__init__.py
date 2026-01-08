@@ -1,9 +1,11 @@
+#Maintainer: @kasem_shibli <https://x.com/kasem_shibli>
+
 """
 pentest command launcher
 """
 
-__author__ = 'Guillaume Muh, mayfly'
-__author_email__ = 'no-reply@orange.com'
+__author__ = 'Kasem Shibli'
+__author_email__ = 'kasem545@proton.me'
 __license__ = 'GPL-3.0'
-__url__ = 'https://github.com/Orange-Cyberdefense/arsenal'
-__version__ = '1.2.7'
+__url__ = 'https://github.com/kasem545/arsenal'
+__version__ = '1.3.0'

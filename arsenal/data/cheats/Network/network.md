@@ -11,13 +11,7 @@ curl https://ipinfo.io/<ip>
 ## what is my ip
 #plateform/linux  #target/remote  #cat/UTILS  
 ```
-curl https://ipinfo.io/
-```
-
-## what is my ip - plaintext
-#plateform/linux  #target/remote  #cat/UTILS 
-```
-curl https://ipecho.net/plain/
+curl https://ipinfo.io/ip
 ```
 
 % network, portquiz

@@ -9,7 +9,7 @@ nmap -sn <ip_range>
 
 ## nmap - classic scan
 ```
-nmap -sC -sV <ip>
+nmap -sVC <ip>
 ```
 
 ## nmap - read targets from a file
@@ -19,7 +19,7 @@ nmap -iL <targets_file>
 
 ## nmap - classic scan + save
 ```
-nmap -sC -sV -oA <output_file> <ip>
+nmap -sVC -oN <output_file> <ip>
 ```
 
 ## nmap - quick scan top ports 100
