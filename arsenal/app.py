@@ -306,7 +306,6 @@ class App:
             message += "If you want this workaround to survive a reboot,\n" 
             message += "add the following configuration to sysctl.conf file and reboot :\n"
             message += "echo \"dev.tty.legacy_tiocsti=1\" >> /etc/sysctl.conf\n"
-            message += "More details about this bug here: https://github.com/Orange-Cyberdefense/arsenal/issues/77"
             print(message)
         # restore TTY attribute for stdin
         termios.tcsetattr(stdin, termios.TCSADRAIN, oldattr)
