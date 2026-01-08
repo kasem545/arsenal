@@ -127,8 +127,13 @@ class App:
             with open(config.savevarfile, 'r') as f:
                 arsenal_gui.Gui.arsenalGlobalVars = json.load(f)
 
-        # For tmux mode, use continuous GUI mode
         if args.tmux:
+            if not os.environ.get('TMUX'):
+                print("Arsenal: Starting tmux session...")
+                arsenal_cmd = "arsenal " + " ".join(sys.argv[1:])
+                os.execvp("tmux", ["tmux", "new-session", "-s", "arsenal", arsenal_cmd])
+                return
+
             try:
                 import libtmux
 
