@@ -46,6 +46,12 @@ docker logs --tail 100 <container_id> -f
 # Create new network
 docker network create <network_name>
 
+# run Image on local storage
+docker run -it --rm -v "$PWD":/<mnt> -w /docker <DOCKER> <IMAGE>
+
+# run Image on local storage with root directory access
+docker run --rm -it -v /:/host <image> bash
+
 $ image_id: docker images --- --headers 1 --column 3
 $ container_id: docker ps --- --headers 1 --column 1
 
@@ -73,10 +79,3 @@ docker-compose logs -f --tail 100 <service_name>
 
 # Stops containers and removes containers, networks created by up
 docker-compose down
-
-% docker, mysql
-# run mysql container
-docker run --rm --name=<container_name|mysql8> -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -d mysql/mysql-server:<version|latest>
-
-# connect to mysql docker container
-docker exec -ti <container_name> mysql
