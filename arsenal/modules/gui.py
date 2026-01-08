@@ -167,25 +167,12 @@ class CheatslistMenu:
         nbinfowin.addstr(info, curses.color_pair(Gui.BASIC_COLOR))
         nbinfowin.refresh()
 
-        # print hotkey hints (center)
         hotkey_hint = "[^E:Edit ^Y:Copy ^R:History ^F:Favorites ^P:Pin]"
         hint_x = (self.width - len(hotkey_hint)) // 2
         if hint_x > len(info) and self.width > 60:
             hintwin = curses.newwin(nlines, len(hotkey_hint) + 1, y, hint_x)
             hintwin.addstr(hotkey_hint, curses.color_pair(Gui.COL2_COLOR))
             hintwin.refresh()
-
-        # print cheatsheet filename (bottom right)
-        if self.selected_cheat() is not None:
-            cheat_file = self.selected_cheat().filename
-
-            # protection in case screen to small or name too long        
-            if len(cheat_file) > self.width - 16:
-                cheat_file = cheat_file[0:self.width - 17] + ".."
-
-            fileinfowin = curses.newwin(nlines, ncols, y, self.width - (len(cheat_file) + 3))
-            fileinfowin.addstr(cheat_file, curses.color_pair(Gui.BASIC_COLOR))
-            fileinfowin.refresh()
 
     def match(self, cheat):
         """
