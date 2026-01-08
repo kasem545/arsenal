@@ -21,6 +21,9 @@ Authors:
 * Guillaume Muh
 * mayfly
 
+Maintaner:
+* kasem545
+
 This project is inspired by navi (<https://github.com/denisidoro/navi>) because the original version was in bash and too hard to understand to add features
 
 
@@ -138,14 +141,12 @@ If you want this workaround to survive a reboot, add the following configuration
 ```
 echo "dev.tty.legacy_tiocsti=1" >> /etc/sysctl.conf
 ```
-More information is available in the issue [https://github.com/Orange-Cyberdefense/arsenal/issues/77](https://github.com/Orange-Cyberdefense/arsenal/issues/77)
 
 
 ## Mindmap
-- Active directory mindmap
-  - Due to csp on github when you open the svg, we moved the AD mindmap and the source to this repository : [https://github.com/Orange-Cyberdefense/ocd-mindmaps](https://github.com/Orange-Cyberdefense/ocd-mindmaps)
+- Active Directory Mindmap (SVG file)
 
-[https://orange-cyberdefense.github.io/ocd-mindmaps/img/pentest_ad_dark_2022_11.svg](https://orange-cyberdefense.github.io/ocd-mindmaps/img/pentest_ad_dark_2022_11.svg)
+    [Active_Directory_mindmap.svg](./mindmap/Active_Directory_mindmap.svg)
 
 - AD mindmap black version
 ![](./mindmap/pentest_ad_black.png)
