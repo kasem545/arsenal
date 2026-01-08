@@ -144,9 +144,9 @@ echo "dev.tty.legacy_tiocsti=1" >> /etc/sysctl.conf
 
 
 ## Mindmap
-- Active Directory Mindmap (SVG file)
+- Active Directory Mindmap
 
-    [Active_Directory_mindmap.svg](./mindmap/Active_Directory_mindmap.svg)
+    [Active_Directory_mindmap](https://orange-cyberdefense.github.io/ocd-mindmaps/img/mindmap_ad_dark_classic_2025.03.excalidraw.svg)
 
 - AD mindmap black version
 ![](./mindmap/pentest_ad_black.png)
