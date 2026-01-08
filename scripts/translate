@@ -2,13 +2,47 @@
 
 set -euo pipefail
 
-ESCAPE_CHAR="$(printf "\034")"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TLDR_DIR="${TLDR_DIR:-./tldr}"
+OUTPUT_DIR="${OUTPUT_DIR:-./pages}"
+PARALLEL_JOBS="${PARALLEL_JOBS:-$(nproc 2>/dev/null || echo 4)}"
+
+usage() {
+    cat <<EOF
+Usage: $(basename "$0") [OPTIONS]
+
+Convert tldr-pages to Arsenal .cheat format.
+
+Options:
+    -t, --tldr-dir DIR      Path to tldr repo (default: ./tldr)
+    -o, --output-dir DIR    Output directory (default: ./pages)
+    -j, --jobs N            Parallel jobs (default: auto)
+    -h, --help              Show this help
+
+Example:
+    git clone https://github.com/tldr-pages/tldr.git
+    $(basename "$0") -t ./tldr -o ./pages
+EOF
+}
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -t|--tldr-dir) TLDR_DIR="$2"; shift 2 ;;
+        -o|--output-dir) OUTPUT_DIR="$2"; shift 2 ;;
+        -j|--jobs) PARALLEL_JOBS="$2"; shift 2 ;;
+        -h|--help) usage; exit 0 ;;
+        *) echo "Unknown option: $1"; usage; exit 1 ;;
+    esac
+done
+
+if [[ ! -d "$TLDR_DIR/pages" ]]; then
+    echo "Error: tldr repo not found at $TLDR_DIR"
+    echo "Clone it first: git clone https://github.com/tldr-pages/tldr.git"
+    exit 1
+fi
 
 sanitize_variables() {
-    local txt="$(cat)"
-    txt=$(echo "$txt" | python3 ./scripts/trans.py )
-
-    echo "$txt"
+    python3 "$SCRIPT_DIR/trans.py"
 }
 
 format_markdown() {
@@ -20,52 +54,60 @@ format_markdown() {
 }
 
 tags_from_filename() {
-    sed -E 's|[^t]*tldr/pages/||' \
-        | sed 's/\.md//' \
+    local file="$1"
+    echo "$file" \
+        | sed -E "s|.*${TLDR_DIR}/pages/||" \
+        | sed 's/\.md$//' \
         | tr '/' ' ' \
         | awk '{ for (i=NF; i>1; i--) printf("%s ",$i); print $1; }' \
         | sed 's/ /, /g'
 }
 
-comments_from_filename() {
-    echo "; This has been extracted from"
-    printf "; "
-    sed -E 's|[^t]*tldr|https://github.com/tldr-pages/tldr/blob/master|'
-}
-
 format_markdown_file() {
-    local -r filename="$1"
-    echo "$filename" | comments_from_filename
+    local filename="$1"
+    local tags
+    tags=$(tags_from_filename "$filename")
+    
+    echo "; Extracted from https://github.com/tldr-pages/tldr"
+    echo "; Source: ${filename#$TLDR_DIR/}"
     echo
-    printf "%s" "% "
-    echo "$filename" | tags_from_filename
+    echo "% $tags"
     echo
-    cat "$filename" | format_markdown
-}
-
-find_markdowns() {
-    find './tldr/pages' -iname '*.md'
-}
-
-output_filename() {
-    sed "s|^./tldr/|./|" \
-        | sed 's/\.md/.cheat/' 
+    format_markdown < "$filename"
 }
 
 export_markdown() {
-    local -r filename="$1"
-    local -r out="$(echo "$filename" | output_filename)"
+    local filename="$1"
+    local out
+    out=$(echo "$filename" | sed "s|^${TLDR_DIR}/|${OUTPUT_DIR}/|" | sed 's/\.md$/.cheat/')
+    
     mkdir -p "$(dirname "$out")" 2>/dev/null || true
     format_markdown_file "$filename" > "$out"
 }
 
-rm -rf "./pages"
+export -f sanitize_variables format_markdown tags_from_filename format_markdown_file export_markdown
+export SCRIPT_DIR TLDR_DIR OUTPUT_DIR
 
-for f in $(find_markdowns); do
-    printf "Exporting $f: "
-    export_markdown "$f" && echo "success" || echo "failed"
+rm -rf "$OUTPUT_DIR"
+mkdir -p "$OUTPUT_DIR"
+
+mapfile -t files < <(find "$TLDR_DIR/pages" -iname '*.md' -type f)
+total=${#files[@]}
+count=0
+failed=0
+
+echo "Converting $total tldr pages to .cheat format..."
+
+for f in "${files[@]}"; do
+    ((count++)) || true
+    if export_markdown "$f" 2>/dev/null; then
+        printf "\r[%d/%d] Converted: %s" "$count" "$total" "$(basename "$f" .md)"
+    else
+        ((failed++)) || true
+        printf "\r[%d/%d] Failed: %s\n" "$count" "$total" "$(basename "$f" .md)"
+    fi
 done
 
-# format_markdown_file "./tldr/pages/common/gh-completion.md"
-# format_markdown_file "./tldr/pages/common/2to3.md"
-# format_markdown_file "./tldr/pages/common/apm.md"
+echo
+echo "Done: $((total - failed)) converted, $failed failed"
+echo "Output: $OUTPUT_DIR"

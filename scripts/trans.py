@@ -1,17 +1,21 @@
-#! /usr/bin/env nix-shell
-#! nix-shell -i python
+#!/usr/bin/env python3
 
 import re
 import sys
 
+
 def process_text(text):
     text = re.sub(r"{{/([^}]*)}}", r"{{\1}}", text)
-    def repl(matchobj):
-        s = matchobj.group(1)
-        if not s.startswith("~/"):
-            s = s.replace("/", "_")
-        return "<" + s + ">"
-    return re.sub(r"{{([^}]*)}}", repl, text)
+    
+    def replace_placeholder(match):
+        placeholder = match.group(1)
+        if not placeholder.startswith("~/"):
+            placeholder = placeholder.replace("/", "_")
+        return "<" + placeholder + ">"
+    
+    return re.sub(r"{{([^}]*)}}", replace_placeholder, text)
 
-text = sys.stdin.read()
-print(process_text(text), end='')
+
+if __name__ == "__main__":
+    text = sys.stdin.read()
+    print(process_text(text), end='')

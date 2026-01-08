@@ -78,16 +78,16 @@ Inside your .bashrc or .zshrc add the path to `run` to help you do that you coul
 You could add your own cheatsheets inside the my_cheats folder or in the ~/.cheats folder.
 
 You could also add additional paths to the file `<arsenal_home>/arsenal/modules/config.py`,
-arsenal reads `.md` (MarkDown) and `.rst` (RestructuredText).
+arsenal reads `.md` (MarkDown), `.rst` (RestructuredText), `yml` (yaml), `.cheat`
 
 ```
 CHEATS_PATHS = [
-    join(BASEPATH, "cheats"), # DEFAULT
-    join(HOMEPATH, "docs/my_cheats")
+    join(BASEPATH, "my_cheats"), # DEFAULT
+    join(HOMEPATH, ".cheats")
 ]
 ```
 
-Cheatsheets examples are in `<arsenal_home>/cheats`: `README.md` and `README.rst`
+Cheatsheets examples are in `<arsenal_home>/my_cheats`: `README.md` and `README.rst`
 
 ## Add a prefix commands generated
 
