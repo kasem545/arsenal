@@ -67,6 +67,32 @@ npm audit
 npm audit fix
 
 
+# nvm
+
+% nvm, node, js
+
+#plateform/linux #target/local  #cat/UTILS 
+
+## install a specified version of node
+```
+nvm install <version>
+```
+
+## list available versions
+```
+nvm ls-remote
+```
+
+## use installed node's version
+```
+nvm use <version>
+```
+
+## set a node's version as default
+```
+nvm alias default <version>
+```
+
 # uv
 
 ## uv - Install package from PyPI
