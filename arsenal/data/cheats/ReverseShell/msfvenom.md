@@ -8,6 +8,10 @@
 ```
 msfvenom --list payloads
 ```
+# msfvenom format list
+```
+msfvenom --list formats
+```
 
 ## msfvenom - payload windows x86 meterpeter unstagged
 ```

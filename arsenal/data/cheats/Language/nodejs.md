@@ -22,3 +22,4 @@ grep -rn --include "*.js" -e "^\(.*\s\|\)\(appendFile\|open\|readFile\|WriteFile
 ## unserialize
 ```
 grep -rn --include "*.js" -e "unserialize(" --color
+```
