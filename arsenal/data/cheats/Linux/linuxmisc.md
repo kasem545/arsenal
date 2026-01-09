@@ -24,49 +24,25 @@ echo "<ciphertext>" | tr 'A-Za-z' 'N-ZA-Mn-za-m'
 
 ## mkpasswd - Basic Usage
 ```
-mkpasswd "Password123"
+mkpasswd "<string-to-hash>"
 ```
 
 ## mkpasswd - Generate a SHA-512 hashed password
 ```
-mkpasswd -m sha-512 "Password123"
+mkpasswd -m sha-512 "<string-to-hash>"
 ```
 
 ## mkpasswd - Generate an MD5 hashed password
 ```
-mkpasswd -m md5 "Password123"
+mkpasswd -m md5 "<string-to-hash>"
 ```
 
 ## mkpasswd - Generate a bcrypt hashed password
 ```
-mkpasswd -m bcrypt "Password123"
+mkpasswd -m bcrypt "<string-to-hash>"
 ```
 
 ## mkpasswd - Generate a password with a specific salt
 ```
-mkpasswd -m sha-512 -S <salt> "Password123"
-```
-
-# uv
-
-## uv - Install package from PyPI
-```
-uv tool install <package-name>
-```
-## uv - Install from GitHub
-```
-uv tool install git+<github-repo-url>
-```
-## uv - Upgrade all tools
-```
-uv tool upgrade --all
-```
-## uv - List installed tools
-```
-uv tool list
-```
-
-## uv - inject missing modules
-```
-uv add --script <script-path> <package-name>
+mkpasswd -m sha-512 -S <salt> "<string-to-hash>"
 ```
