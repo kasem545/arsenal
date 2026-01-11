@@ -420,7 +420,7 @@ class CheatslistMenu:
                 self.position = 0
                 self.page_position = 0
             elif c == 5:
-                # Ctrl+E: Edit full command directly
+                # Ctrl+E: Edit command directly
                 if self.selected_cheat() is not None:
                     cheat = self.selected_cheat()
                     cmd_key = cheat.str_title + cheat.name
@@ -692,7 +692,7 @@ class ArgslistMenu:
             # draw description
             self.draw_desc_preview(argprev, padding_text_border, desc_pos, description_lines)
 
-            hint = "[^E:Edit full cmd]"
+            hint = "[^E:Edit cmd]"
             hint_y = nlines - 2
             hint_x = ncols - len(hint) - padding_text_border
             argprev.addstr(hint_y, hint_x, hint, curses.color_pair(Gui.COL2_COLOR))
@@ -764,7 +764,7 @@ class ArgslistMenu:
                 if Gui.cmd.build():
                     break
             elif c == 5:
-                # Ctrl+E: Edit full command directly
+                # Ctrl+E: Edit command directly
                 Gui.cmd.build()
                 editor_menu = CommandEditorMenu(self.previous_menu)
                 editor_menu.cmd_buffer = Gui.cmd.cmdline
