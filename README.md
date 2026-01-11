@@ -56,8 +56,7 @@ arsenal
 ```
 git clone --branch dev https://github.com/kasem545/arsenal.git
 cd arsenal
-python3 -m pip install -r requirements.txt
-./run
+pip install -e .
 ```
 
 Inside your .bashrc or .zshrc add the path to `run` to help you do that you could launch the addalias.sh script
@@ -68,9 +67,9 @@ Inside your .bashrc or .zshrc add the path to `run` to help you do that you coul
 ## Launch in tmux mode
 
 ```
-./run -t # if you launch arsenal in a tmux window with one pane, it will split the window and send the command to the otherpane without quitting arsenal
+arsenal -t # if you launch arsenal in a tmux window with one pane, it will split the window and send the command to the otherpane without quitting arsenal
          # if the window is already split the command will be send to the other pane without quitting arsenal
-./run -t -e # just like the -t mode but with direct execution in the other pane without quitting arsenal
+arsenal -t -e # just like the -t mode but with direct execution in the other pane without quitting arsenal
 ```
 
 ## Add external cheatsheets
