@@ -327,7 +327,7 @@ class CheatslistMenu:
             self.cheats = self.search()
             self.draw(stdscr)
             c = stdscr.getch()
-            if c == curses.KEY_ENTER or c == 10 or c == 13 or c == 5:
+            if c == curses.KEY_ENTER or c == 10 or c == 13:
                 if self.selected_cheat() is not None:
                     cheat = self.selected_cheat()
                     cmd_key = cheat.str_title + cheat.name
@@ -419,6 +419,19 @@ class CheatslistMenu:
                     self.input_buffer = "!history"
                 self.position = 0
                 self.page_position = 0
+            elif c == 5:
+                # Ctrl+E: Edit full command directly
+                if self.selected_cheat() is not None:
+                    cheat = self.selected_cheat()
+                    cmd_key = cheat.str_title + cheat.name
+                    Gui.add_to_history(cmd_key)
+                    Gui.cmd = command.Command(cheat, Gui.arsenalGlobalVars)
+                    editor_menu = CommandEditorMenu(self)
+                    editor_menu.cmd_buffer = cheat.command
+                    editor_menu.run(stdscr)
+                    stdscr.refresh()
+                    if Gui.cmd is not None:
+                        break
             elif 20 <= c < 127:
                 i = self.xcursor - self.x_init
                 self.input_buffer = self.input_buffer[:i] + chr(c) + self.input_buffer[i:]
@@ -657,12 +670,13 @@ class ArgslistMenu:
         cmd_height = 1 + nbpreviewnewlines
         args_height = (2 + Gui.cmd.nb_args) if (Gui.cmd.nb_args > 0) else 0
         desc_height = (len(description_lines) + 1 + 1) if (len(description_lines) > 0) else 0
+        hint_height = 1
 
         cmd_pos = 1
         args_pos = border_height + cmd_height + 1
         desc_pos = args_pos + args_height - 1
 
-        nlines = border_height * 2 + cmd_height + args_height + desc_height
+        nlines = border_height * 2 + cmd_height + args_height + desc_height + hint_height
         if nlines > self.height:
             nlines = self.height
 
@@ -677,6 +691,12 @@ class ArgslistMenu:
 
             # draw description
             self.draw_desc_preview(argprev, padding_text_border, desc_pos, description_lines)
+
+            hint = "[^E:Edit full cmd]"
+            hint_y = nlines - 2
+            hint_x = ncols - len(hint) - padding_text_border
+            argprev.addstr(hint_y, hint_x, hint, curses.color_pair(Gui.COL2_COLOR))
+            argprev.refresh()
 
             if len(Gui.cmd.args) > 0:
                 self.draw_args_list(args_pos)
@@ -740,8 +760,17 @@ class ArgslistMenu:
             stdscr.refresh()
             self.draw(stdscr)
             c = stdscr.getch()
-            if c == curses.KEY_ENTER or c == 10 or c == 13 or c == 5:
+            if c == curses.KEY_ENTER or c == 10 or c == 13:
                 if Gui.cmd.build():
+                    break
+            elif c == 5:
+                # Ctrl+E: Edit full command directly
+                Gui.cmd.build()
+                editor_menu = CommandEditorMenu(self.previous_menu)
+                editor_menu.cmd_buffer = Gui.cmd.cmdline
+                editor_menu.run(stdscr)
+                stdscr.refresh()
+                if Gui.cmd is not None:
                     break
             elif c == curses.KEY_F10 or c == 27:
                 # exit args_menu -> return to cheatslist_menu
@@ -809,6 +838,169 @@ class ArgslistMenu:
                 i = self.xcursor - self.x_init
                 Gui.cmd.args[self.current_arg][1] = Gui.cmd.args[self.current_arg][1][:i] + chr(c) + \
                                                     Gui.cmd.args[self.current_arg][1][i:]
+                self.xcursor += 1
+
+
+class CommandEditorMenu:
+    """
+    Menu for directly editing the full command text
+    """
+    AB_TOP = 0
+    AB_SIDE = 0
+
+    xcursor = None
+    x_init = None
+    y_init = None
+
+    def __init__(self, prev):
+        self.previous_menu = prev
+        self.cmd_buffer = ""
+        self.scroll_offset = 0
+
+    def draw(self, stdscr):
+        """
+        Draw the command editor popup
+        """
+        self.height, self.width = stdscr.getmaxyx()
+        self.AB_SIDE = 3
+        padding = 2
+
+        # Draw background cheatslist menu
+        self.previous_menu.draw(stdscr)
+
+        # Calculate editor dimensions
+        edit_width = self.width - 2 * self.AB_SIDE
+        edit_height = 7
+        self.max_cmd_width = edit_width - 2 * padding - 4  # 4 for "$ " prefix and borders
+
+        self.AB_TOP = (self.height - edit_height) // 2
+        y, x = self.AB_TOP, self.AB_SIDE
+
+        try:
+            editwin = curses.newwin(edit_height, edit_width, y, x)
+            editwin.border()
+
+            # Title
+            title = " Edit Command (Enter: confirm, Esc: cancel) "
+            title_x = (edit_width - len(title)) // 2
+            editwin.addstr(0, title_x, title, curses.color_pair(Gui.INFO_NAME_COLOR))
+
+            # Command prompt
+            editwin.addstr(2, padding, "$ ", curses.color_pair(Gui.BASIC_COLOR))
+
+            # Display command with scrolling if needed
+            visible_cmd = self.cmd_buffer
+            if len(self.cmd_buffer) > self.max_cmd_width:
+                # Calculate visible portion based on cursor position
+                cursor_pos = self.xcursor - self.x_init if self.xcursor and self.x_init else len(self.cmd_buffer)
+                if cursor_pos > self.max_cmd_width - 5:
+                    self.scroll_offset = cursor_pos - self.max_cmd_width + 5
+                else:
+                    self.scroll_offset = 0
+                visible_cmd = self.cmd_buffer[self.scroll_offset:self.scroll_offset + self.max_cmd_width]
+                if self.scroll_offset > 0:
+                    visible_cmd = "<" + visible_cmd[1:]
+
+            editwin.addstr(2, padding + 2, visible_cmd, curses.color_pair(Gui.BASIC_COLOR))
+
+            # Hint
+            hint = "[Ctrl+U: clear line]"
+            editwin.addstr(4, padding, hint, curses.color_pair(Gui.COL2_COLOR))
+
+            editwin.refresh()
+
+            # Set cursor position
+            if self.x_init is None or self.y_init is None or self.xcursor is None:
+                self.y_init = y + 2
+                self.x_init = x + padding + 2
+                self.xcursor = self.x_init + len(self.cmd_buffer) - self.scroll_offset
+
+            # Adjust cursor for scroll
+            visible_cursor = self.x_init + (self.xcursor - self.x_init) - self.scroll_offset
+            if visible_cursor < self.x_init:
+                visible_cursor = self.x_init
+            if visible_cursor > self.x_init + self.max_cmd_width:
+                visible_cursor = self.x_init + self.max_cmd_width
+
+            curses.setsyx(self.y_init, visible_cursor)
+            curses.doupdate()
+
+        except curses.error:
+            pass
+
+    def check_move_cursor(self, n):
+        return self.x_init <= (self.xcursor + n) <= self.x_init + len(self.cmd_buffer)
+
+    def run(self, stdscr):
+        """
+        Command editor processing
+        """
+        Gui.init_colors()
+        stdscr.clear()
+
+        while True:
+            stdscr.refresh()
+            self.draw(stdscr)
+            c = stdscr.getch()
+
+            if c == curses.KEY_ENTER or c == 10 or c == 13:
+                # Confirm - set the edited command
+                Gui.cmd.cmdline = self.cmd_buffer
+                Gui.cmd.args = []
+                Gui.cmd.nb_args = 0
+                break
+
+            elif c == curses.KEY_F10 or c == 27:
+                # Cancel - return to cheatslist menu
+                Gui.cmd = None
+                self.previous_menu.run(stdscr)
+                stdscr.refresh()
+                break
+
+            elif c == curses.KEY_BACKSPACE or c == 127 or c == 8:
+                if self.check_move_cursor(-1):
+                    i = self.xcursor - self.x_init - 1
+                    self.cmd_buffer = self.cmd_buffer[:i] + self.cmd_buffer[i + 1:]
+                    self.xcursor -= 1
+
+            elif c == curses.KEY_DC:
+                # DELETE key
+                if self.xcursor - self.x_init < len(self.cmd_buffer):
+                    i = self.xcursor - self.x_init
+                    self.cmd_buffer = self.cmd_buffer[:i] + self.cmd_buffer[i + 1:]
+
+            elif c == curses.KEY_LEFT:
+                if self.check_move_cursor(-1):
+                    self.xcursor -= 1
+
+            elif c == curses.KEY_RIGHT:
+                if self.check_move_cursor(1):
+                    self.xcursor += 1
+
+            elif c == curses.KEY_HOME or c == curses.KEY_BEG:
+                self.xcursor = self.x_init
+
+            elif c == curses.KEY_END:
+                self.xcursor = self.x_init + len(self.cmd_buffer)
+
+            elif c == 21:
+                # Ctrl+U: clear line
+                self.cmd_buffer = ""
+                self.xcursor = self.x_init
+                self.scroll_offset = 0
+
+            elif c == 25:
+                # Ctrl+Y: Copy to clipboard
+                try:
+                    import pyperclip
+                    pyperclip.copy(self.cmd_buffer)
+                except ImportError:
+                    pass
+
+            elif 32 <= c < 127:
+                # Printable characters
+                i = self.xcursor - self.x_init
+                self.cmd_buffer = self.cmd_buffer[:i] + chr(c) + self.cmd_buffer[i:]
                 self.xcursor += 1
 
 
