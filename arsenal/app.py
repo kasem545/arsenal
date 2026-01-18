@@ -144,62 +144,85 @@ class App:
                     debug_log.write(f"{msg}\n")
                     debug_log.flush()
 
-                def tmux_handler(cmd):
+                def get_all_panes_info(server, current_pane_id):
+                    """Get info about all available tmux panes"""
+                    panes_info = []
+                    for session in server.sessions:
+                        for window in session.windows:
+                            for pane in window.panes:
+                                panes_info.append({
+                                    'pane_id': pane.pane_id,
+                                    'pane': pane,
+                                    'window': window,
+                                    'window_name': window.window_name,
+                                    'window_index': window.window_index,
+                                    'pane_index': pane.pane_index,
+                                    'current_path': pane.pane_current_path,
+                                    'is_current': pane.pane_id == current_pane_id
+                                })
+                    return panes_info
+
+                def tmux_handler(cmd, stdscr):
                     """Handler function to send commands to tmux pane"""
                     try:
                         debug(f"Sending command to tmux: {cmd.cmdline}")
                         server = libtmux.Server()
-                        session = server.sessions[-1]  # Updated API for libtmux >= 0.17
-
-                        # Get the current window where arsenal is running
                         current_pane_id = os.environ.get('TMUX_PANE')
-                        window = None
-                        if current_pane_id:
-                            debug(f"Looking for current pane: {current_pane_id}")
-                            for win in session.windows:
-                                for p in win.panes:
-                                    if p.pane_id == current_pane_id:
-                                        window = win
-                                        debug(f"Found current window: {window.window_id}")
-                                        break
-                                if window:
-                                    break
-
-                        # Fallback to active window if current window not found
-                        if not window:
-                            debug("Current window not found, using active window")
+                        
+                        panes_info = get_all_panes_info(server, current_pane_id)
+                        other_panes = [p for p in panes_info if p['pane_id'] != current_pane_id]
+                        debug(f"Found {len(other_panes)} other panes")
+                        
+                        target_pane = None
+                        
+                        if len(other_panes) == 0:
+                            debug("No other panes, creating new one...")
+                            session = server.sessions[-1]
                             window = session.active_window
-
-                        panes = window.panes
-                        debug(f"Found {len(panes)} panes")
-
-                        if len(panes) == 1:
-                            # split window to get more pane
-                            debug("Splitting window...")
-                            pane = window.split(attach=False)  # Updated API for libtmux >= 0.33
+                            target_pane = window.split(attach=False)
                             time.sleep(0.3)
+                        elif len(other_panes) == 1:
+                            target_pane = other_panes[0]['pane']
+                            debug(f"Only one other pane, using: {target_pane.pane_id}")
                         else:
-                            pane = panes[-1]
-                            debug(f"Using existing pane: {pane.pane_id}")
-
-                        # send command to other pane (Arsenal stays focused)
+                            debug("Multiple panes available, showing selector...")
+                            selector = arsenal_gui.TmuxPaneSelectorMenu(
+                                gui.cheats_menu, 
+                                other_panes, 
+                                current_pane_id
+                            )
+                            result = selector.run(stdscr)
+                            
+                            if result is None:
+                                debug("User cancelled pane selection")
+                                return True
+                            elif result == 'new':
+                                debug("User requested new pane")
+                                session = server.sessions[-1]
+                                window = session.active_window
+                                target_pane = window.split(attach=False)
+                                time.sleep(0.3)
+                            else:
+                                target_pane = result['pane']
+                                debug(f"User selected pane: {target_pane.pane_id}")
+                        
                         if args.exec:
                             debug("Executing command with Enter")
-                            pane.send_keys(cmd.cmdline)
+                            target_pane.send_keys(cmd.cmdline)
                         else:
                             debug("Prefilling command without Enter")
-                            pane.send_keys(cmd.cmdline, enter=False)
+                            target_pane.send_keys(cmd.cmdline, enter=False)
 
                         debug("Command sent successfully")
-                        return True  # Success
+                        return True
                     except libtmux.exc.LibTmuxException as e:
                         debug(f"Arsenal tmux error: {e}")
-                        return False  # Failure
+                        return False
                     except Exception as e:
                         debug(f"Arsenal unexpected error: {e}")
                         import traceback
                         debug(traceback.format_exc())
-                        return False  # Failure
+                        return False
 
                 # Run GUI in continuous mode with wrapper
                 debug("Starting Arsenal in continuous tmux mode...")
