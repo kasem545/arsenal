@@ -692,7 +692,7 @@ class ArgslistMenu:
             # draw description
             self.draw_desc_preview(argprev, padding_text_border, desc_pos, description_lines)
 
-            hint = "[^E:Edit cmd]"
+            hint = "[^E:Edit cmd] [^Y:Copy]"
             hint_y = nlines - 2
             hint_x = ncols - len(hint) - padding_text_border
             argprev.addstr(hint_y, hint_x, hint, curses.color_pair(Gui.COL2_COLOR))
@@ -904,7 +904,7 @@ class CommandEditorMenu:
             editwin.addstr(2, padding + 2, visible_cmd, curses.color_pair(Gui.BASIC_COLOR))
 
             # Hint
-            hint = "[Ctrl+U: clear line]"
+            hint = "[Ctrl+U: clear] [Ctrl+Y: copy]"
             editwin.addstr(4, padding, hint, curses.color_pair(Gui.COL2_COLOR))
 
             editwin.refresh()
