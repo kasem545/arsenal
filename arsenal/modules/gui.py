@@ -1004,6 +1004,107 @@ class CommandEditorMenu:
                 self.xcursor += 1
 
 
+class TmuxPaneSelectorMenu:
+    """
+    Menu for selecting which tmux pane/window to send the command to
+    """
+    def __init__(self, prev, panes_info, current_pane_id=None):
+        self.previous_menu = prev
+        self.panes_info = [p for p in panes_info if p['pane_id'] != current_pane_id]
+        self.current_pane_id = current_pane_id
+        self.position = 0
+        self.selected_pane = None
+        self.total_items = len(self.panes_info) + 1
+
+    def draw(self, stdscr):
+        height, width = stdscr.getmaxyx()
+        
+        self.previous_menu.draw(stdscr)
+        
+        popup_width = min(width - 6, 70)
+        popup_height = min(self.total_items + 6, height - 4)
+        
+        top = (height - popup_height) // 2
+        left = (width - popup_width) // 2
+        
+        try:
+            popup = curses.newwin(popup_height, popup_width, top, left)
+            popup.border()
+            
+            title = " Select Target Pane "
+            title_x = (popup_width - len(title)) // 2
+            if title_x < 1:
+                title_x = 1
+            popup.addstr(0, title_x, title[:popup_width-2], curses.color_pair(Gui.INFO_NAME_COLOR))
+            
+            header = "  {:3} {:15} {:6} {}".format("Win", "Window Name", "Pane", "Path")
+            popup.addstr(2, 2, header[:popup_width-4], curses.color_pair(Gui.COL2_COLOR))
+            
+            row_y = 3
+            new_pane_line = "[+] Create New Pane"
+            if self.position == 0:
+                popup.addstr(row_y, 2, "> ", curses.color_pair(Gui.CURSOR_COLOR_SELECT))
+                popup.addstr(row_y, 4, new_pane_line, curses.color_pair(Gui.ARG_NAME_COLOR))
+            else:
+                popup.addstr(row_y, 2, "  ", curses.color_pair(Gui.BASIC_COLOR))
+                popup.addstr(row_y, 4, new_pane_line, curses.color_pair(Gui.COL2_COLOR))
+            
+            max_visible = popup_height - 6
+            visible_panes = self.panes_info[:max_visible]
+            
+            for i, pane in enumerate(visible_panes):
+                y = 4 + i
+                if y >= popup_height - 2:
+                    break
+                
+                win_idx = str(pane.get('window_index', '?'))
+                win_name = pane.get('window_name', 'unnamed')[:15]
+                pane_idx = str(pane.get('pane_index', '?'))
+                path = pane.get('current_path', '')
+                if len(path) > popup_width - 35:
+                    path = "..." + path[-(popup_width - 38):]
+                
+                line = "{:3} {:15} {:6} {}".format(win_idx, win_name, pane_idx, path)
+                
+                if i + 1 == self.position:
+                    popup.addstr(y, 2, "> ", curses.color_pair(Gui.CURSOR_COLOR_SELECT))
+                    popup.addstr(y, 4, line[:popup_width-6], curses.color_pair(Gui.COL1_COLOR_SELECT))
+                else:
+                    popup.addstr(y, 2, "  ", curses.color_pair(Gui.BASIC_COLOR))
+                    popup.addstr(y, 4, line[:popup_width-6], curses.color_pair(Gui.BASIC_COLOR))
+            
+            popup.refresh()
+            
+        except curses.error:
+            pass
+
+    def run(self, stdscr):
+        Gui.init_colors()
+        
+        while True:
+            stdscr.refresh()
+            self.draw(stdscr)
+            c = stdscr.getch()
+            
+            if c == curses.KEY_ENTER or c == 10 or c == 13:
+                if self.position == 0:
+                    return 'new'
+                else:
+                    self.selected_pane = self.panes_info[self.position - 1]
+                    return self.selected_pane
+                
+            elif c == curses.KEY_F10 or c == 27:
+                return None
+                
+            elif c == curses.KEY_UP:
+                if self.position > 0:
+                    self.position -= 1
+                    
+            elif c == curses.KEY_DOWN:
+                if self.position < self.total_items - 1:
+                    self.position += 1
+
+
 class Gui:
     # result CMD
     cmd = None
@@ -1252,9 +1353,7 @@ class Gui:
                 self.prefix_cmdline_with_prefix()
 
             debug(f"Calling tmux_handler with: {Gui.cmd.cmdline}")
-            # Send command via tmux handler
-            if not tmux_handler(Gui.cmd):
-                # Handler failed, exit loop
+            if not tmux_handler(Gui.cmd, stdscr):
                 debug("tmux_handler returned False, exiting")
                 break
 
