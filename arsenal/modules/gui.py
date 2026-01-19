@@ -1008,21 +1008,44 @@ class TmuxPaneSelectorMenu:
     """
     Menu for selecting which tmux pane/window to send the command to
     """
-    def __init__(self, prev, panes_info, current_pane_id=None):
+    def __init__(self, prev, panes_info, current_pane_id=None, current_window_index=None):
+        """
+        :param prev: previous menu for background drawing
+        :param panes_info: list of dicts with pane info: 
+                          [{'pane_id': str, 'window_name': str, 'pane_index': int, 
+                            'window_index': int, 'current_path': str, 'is_current': bool}]
+        :param current_pane_id: the pane where arsenal is running (to exclude/mark)
+        :param current_window_index: the window index where arsenal is running
+        """
         self.previous_menu = prev
-        self.panes_info = [p for p in panes_info if p['pane_id'] != current_pane_id]
         self.current_pane_id = current_pane_id
+        self.current_window_index = current_window_index
         self.position = 0
         self.selected_pane = None
-        self.total_items = len(self.panes_info) + 1
+        
+        other_panes = [p for p in panes_info if p['pane_id'] != current_pane_id]
+        
+        same_window_panes = [p for p in other_panes if p['window_index'] == current_window_index]
+        other_window_panes = [p for p in other_panes if p['window_index'] != current_window_index]
+        
+        self.options = []
+        
+        for p in same_window_panes:
+            self.options.append({'type': 'pane', 'pane_info': p, 'pane': p['pane']})
+        
+        for p in other_window_panes:
+            self.options.append({'type': 'pane', 'pane_info': p, 'pane': p['pane']})
 
     def draw(self, stdscr):
+        """
+        Draw the pane selector popup
+        """
         height, width = stdscr.getmaxyx()
         
         self.previous_menu.draw(stdscr)
         
         popup_width = min(width - 6, 70)
-        popup_height = min(self.total_items + 6, height - 4)
+        popup_height = min(len(self.options) + 6, height - 4)
         
         top = (height - popup_height) // 2
         left = (width - popup_width) // 2
@@ -1031,47 +1054,42 @@ class TmuxPaneSelectorMenu:
             popup = curses.newwin(popup_height, popup_width, top, left)
             popup.border()
             
-            title = " Select Target Pane "
-            title_x = (popup_width - len(title)) // 2
-            if title_x < 1:
-                title_x = 1
+            title = " Select Target Pane (Enter: select, Esc: cancel) "
+            title_x = max(1, (popup_width - len(title)) // 2)
             popup.addstr(0, title_x, title[:popup_width-2], curses.color_pair(Gui.INFO_NAME_COLOR))
             
             header = "  {:3} {:15} {:6} {}".format("Win", "Window Name", "Pane", "Path")
             popup.addstr(2, 2, header[:popup_width-4], curses.color_pair(Gui.COL2_COLOR))
             
-            row_y = 3
-            new_pane_line = "[+] Create New Pane"
-            if self.position == 0:
-                popup.addstr(row_y, 2, "> ", curses.color_pair(Gui.CURSOR_COLOR_SELECT))
-                popup.addstr(row_y, 4, new_pane_line, curses.color_pair(Gui.ARG_NAME_COLOR))
-            else:
-                popup.addstr(row_y, 2, "  ", curses.color_pair(Gui.BASIC_COLOR))
-                popup.addstr(row_y, 4, new_pane_line, curses.color_pair(Gui.COL2_COLOR))
+            max_visible = popup_height - 5
+            visible_options = self.options[:max_visible]
             
-            max_visible = popup_height - 6
-            visible_panes = self.panes_info[:max_visible]
-            
-            for i, pane in enumerate(visible_panes):
-                y = 4 + i
+            for i, opt in enumerate(visible_options):
+                y = 3 + i
                 if y >= popup_height - 2:
                     break
                 
+                pane = opt['pane_info']
                 win_idx = str(pane.get('window_index', '?'))
                 win_name = pane.get('window_name', 'unnamed')[:15]
                 pane_idx = str(pane.get('pane_index', '?'))
                 path = pane.get('current_path', '')
                 if len(path) > popup_width - 35:
                     path = "..." + path[-(popup_width - 38):]
-                
                 line = "{:3} {:15} {:6} {}".format(win_idx, win_name, pane_idx, path)
                 
-                if i + 1 == self.position:
+                if i == self.position:
                     popup.addstr(y, 2, "> ", curses.color_pair(Gui.CURSOR_COLOR_SELECT))
                     popup.addstr(y, 4, line[:popup_width-6], curses.color_pair(Gui.COL1_COLOR_SELECT))
                 else:
                     popup.addstr(y, 2, "  ", curses.color_pair(Gui.BASIC_COLOR))
                     popup.addstr(y, 4, line[:popup_width-6], curses.color_pair(Gui.BASIC_COLOR))
+            
+            hint = "[p: new sub-pane] [w: new window]"
+            hint_y = popup_height - 2
+            hint_x = popup_width - len(hint) - 2
+            if hint_x > 2:
+                popup.addstr(hint_y, hint_x, hint, curses.color_pair(Gui.COL2_COLOR))
             
             popup.refresh()
             
@@ -1079,6 +1097,10 @@ class TmuxPaneSelectorMenu:
             pass
 
     def run(self, stdscr):
+        """
+        Run the pane selector
+        Returns: selected pane dict or None if cancelled, or 'new' for new pane
+        """
         Gui.init_colors()
         
         while True:
@@ -1087,11 +1109,10 @@ class TmuxPaneSelectorMenu:
             c = stdscr.getch()
             
             if c == curses.KEY_ENTER or c == 10 or c == 13:
-                if self.position == 0:
-                    return 'new'
-                else:
-                    self.selected_pane = self.panes_info[self.position - 1]
-                    return self.selected_pane
+                if self.options:
+                    selected = self.options[self.position]
+                    return {'pane': selected['pane'], 'pane_info': selected.get('pane_info')}
+                return None
                 
             elif c == curses.KEY_F10 or c == 27:
                 return None
@@ -1101,8 +1122,14 @@ class TmuxPaneSelectorMenu:
                     self.position -= 1
                     
             elif c == curses.KEY_DOWN:
-                if self.position < self.total_items - 1:
+                if self.position < len(self.options) - 1:
                     self.position += 1
+                    
+            elif c == ord('p') or c == ord('P'):
+                return 'new_pane'
+                
+            elif c == ord('w') or c == ord('W'):
+                return 'new_window'
 
 
 class Gui:
