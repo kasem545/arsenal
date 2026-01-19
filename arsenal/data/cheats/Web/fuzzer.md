@@ -22,8 +22,7 @@ ffuf -u '<url>?<param>=FUZZ' -w <wordlist> -ac
 ffuf -u '<url>?FUZZ=1' -w <wordlist> -ac
 ```
 
-## ffuf POST parameter fuzzing and filter response code 401
+## ffuf POST parameter fuzzing
 ```
-ffuf -u <url>  -w <wordlist> -X POST -d "<login-post-data>" -ac
+ffuf -X POST -u <url> -d '<post-data>' -w <wordlist> -H 'Content-Type: application/x-www-form-urlencoded' -fr <filter-expression>
 ```
-= wordlist: /opt/SecLists/Discovery/Web-Content/raft-small-words.txt
