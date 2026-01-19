@@ -154,6 +154,7 @@ class App:
                                     'pane_id': pane.pane_id,
                                     'pane': pane,
                                     'window': window,
+                                    'session_name': session.session_name,
                                     'window_name': window.window_name,
                                     'window_index': window.window_index,
                                     'pane_index': pane.pane_index,
@@ -180,12 +181,26 @@ class App:
                                 break
                         
                         target_pane = None
-                        session = server.sessions[-1]
+                        
+                        current_window = None
+                        current_session = None
+                        for p in panes_info:
+                            if p['pane_id'] == current_pane_id:
+                                current_window = p['window']
+                                for sess in server.sessions:
+                                    if sess.session_name == p['session_name']:
+                                        current_session = sess
+                                        break
+                                break
+                        
+                        if not current_session:
+                            current_session = server.sessions[-1]
+                        if not current_window:
+                            current_window = current_session.active_window
                         
                         if len(other_panes) == 0:
                             debug("No other panes, creating new one...")
-                            window = session.active_window
-                            target_pane = window.split(attach=False)
+                            target_pane = current_window.split(attach=False)
                             time.sleep(0.3)
                         else:
                             debug(f"Showing pane selector with {len(other_panes)} panes...")
@@ -200,14 +215,13 @@ class App:
                             if result is None:
                                 debug("User cancelled pane selection")
                                 return True
+                            elif result == 'new_subpane':
+                                debug("User requested new sub-pane")
+                                target_pane = current_window.split(attach=False)
+                                time.sleep(0.3)
                             elif result == 'new_pane':
                                 debug("User requested new pane")
-                                window = session.active_window
-                                target_pane = window.split(attach=False)
-                                time.sleep(0.3)
-                            elif result == 'new_window':
-                                debug("User requested new window")
-                                new_window = session.new_window(attach=False)
+                                new_window = current_session.new_window(attach=False)
                                 target_pane = new_window.active_pane
                                 time.sleep(0.3)
                             else:

@@ -1058,7 +1058,7 @@ class TmuxPaneSelectorMenu:
             title_x = max(1, (popup_width - len(title)) // 2)
             popup.addstr(0, title_x, title[:popup_width-2], curses.color_pair(Gui.INFO_NAME_COLOR))
             
-            header = "  {:3} {:15} {:6} {}".format("Win", "Window Name", "Pane", "Path")
+            header = "  {:10} {:3} {:12} {:4} {}".format("Session", "Win", "Window Name", "Pane", "Path")
             popup.addstr(2, 2, header[:popup_width-4], curses.color_pair(Gui.COL2_COLOR))
             
             max_visible = popup_height - 5
@@ -1070,13 +1070,14 @@ class TmuxPaneSelectorMenu:
                     break
                 
                 pane = opt['pane_info']
+                sess_name = pane.get('session_name', '?')[:10]
                 win_idx = str(pane.get('window_index', '?'))
-                win_name = pane.get('window_name', 'unnamed')[:15]
+                win_name = pane.get('window_name', 'unnamed')[:12]
                 pane_idx = str(pane.get('pane_index', '?'))
                 path = pane.get('current_path', '')
-                if len(path) > popup_width - 35:
-                    path = "..." + path[-(popup_width - 38):]
-                line = "{:3} {:15} {:6} {}".format(win_idx, win_name, pane_idx, path)
+                if len(path) > popup_width - 45:
+                    path = "..." + path[-(popup_width - 48):]
+                line = "{:10} {:3} {:12} {:4} {}".format(sess_name, win_idx, win_name, pane_idx, path)
                 
                 if i == self.position:
                     popup.addstr(y, 2, "> ", curses.color_pair(Gui.CURSOR_COLOR_SELECT))
@@ -1085,7 +1086,7 @@ class TmuxPaneSelectorMenu:
                     popup.addstr(y, 2, "  ", curses.color_pair(Gui.BASIC_COLOR))
                     popup.addstr(y, 4, line[:popup_width-6], curses.color_pair(Gui.BASIC_COLOR))
             
-            hint = "[p: new sub-pane] [w: new window]"
+            hint = "[s: new sub-pane] [p: new pane]"
             hint_y = popup_height - 2
             hint_x = popup_width - len(hint) - 2
             if hint_x > 2:
@@ -1125,11 +1126,11 @@ class TmuxPaneSelectorMenu:
                 if self.position < len(self.options) - 1:
                     self.position += 1
                     
+            elif c == ord('s') or c == ord('S'):
+                return 'new_subpane'
+                
             elif c == ord('p') or c == ord('P'):
                 return 'new_pane'
-                
-            elif c == ord('w') or c == ord('W'):
-                return 'new_window'
 
 
 class Gui:
