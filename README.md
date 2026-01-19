@@ -33,6 +33,7 @@ This project is inspired by navi (<https://github.com/denisidoro/navi>) because 
 
 - New colors
 - Add tmux new pane support (with -t)
+- Add tmux pane selector for multiple panes/windows
 - Add default values in cheatsheets commands with `<argument|default_value>`
 - Support description inside cheatsheets
 - New categories and Tags
@@ -40,6 +41,39 @@ This project is inspired by navi (<https://github.com/denisidoro/navi>) because 
 - Add yml support (thx @0xswitch )
 - Add fzf support with ctrl+t (thx @mgp25)
 - Add prefix to commands generated (with -f)
+
+## Keyboard Shortcuts
+
+### Main Menu (Command Selection)
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl+E` | Edit command directly |
+| `Ctrl+Y` | Copy selected command to clipboard |
+| `Ctrl+R` | Toggle history filter |
+| `Ctrl+F` | Toggle favorites filter |
+| `Ctrl+P` | Pin/unpin command to favorites |
+| `Tab` | Auto-complete command |
+| `Enter` | Select command and fill arguments |
+| `Esc/F10` | Exit arsenal |
+
+### Arguments Menu (Variable Filling)
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl+E` | Edit full command directly |
+| `Ctrl+Y` | Copy command to clipboard |
+| `Ctrl+T` | Fuzzy file selector (requires pyfzf) |
+| `Tab` | Auto-complete argument / Next argument |
+| `↑/↓` | Navigate between arguments |
+| `Enter` | Confirm and execute |
+| `Esc` | Return to command list |
+
+### Command Editor (Ctrl+E)
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl+U` | Clear line |
+| `Ctrl+Y` | Copy command to clipboard |
+| `Enter` | Confirm edited command |
+| `Esc` | Cancel and return |
 
 ## Install & Launch
 - with pipx :
@@ -67,6 +101,31 @@ Inside your .bashrc or .zshrc add the path to `run` to help you do that you coul
 ## Launch in tmux mode
 
 ```
+arsenal -t    # launch arsenal in tmux mode
+arsenal -t -e # tmux mode with direct execution (auto-press Enter)
+```
+
+### Tmux Pane Selector
+
+When running in tmux mode with multiple panes or windows open, arsenal will show a **pane selector** allowing you to choose where to send the command:
+
+```
+  Session    Win Window Name  Pane Path
+> arsenal    0   main         1    /home/user/project
+  dev        0   code         0    /home/user/code
+  dev        1   logs         0    /var/log
+```
+
+**Pane Selector Shortcuts:**
+| Key | Action |
+|-----|--------|
+| `Enter` | Send command to selected pane |
+| `Esc` | Cancel and return to command list |
+| `s` | Create new sub-pane (horizontal split in current window) |
+| `p` | Create new pane (opens new tmux window) |
+| `↑/↓` | Navigate pane list |
+
+If only one other pane exists, the selector is shown so you can choose to send there or create a new pane.
 arsenal -t # if you launch arsenal in a tmux window with one pane, it will split the window and send the command to the otherpane without quitting arsenal
          # if the window is already split the command will be send to the other pane without quitting arsenal
 arsenal -t -e # just like the -t mode but with direct execution in the other pane without quitting arsenal
