@@ -173,34 +173,42 @@ class App:
                         other_panes = [p for p in panes_info if p['pane_id'] != current_pane_id]
                         debug(f"Found {len(other_panes)} other panes")
                         
+                        current_window_index = None
+                        for p in panes_info:
+                            if p['pane_id'] == current_pane_id:
+                                current_window_index = p['window_index']
+                                break
+                        
                         target_pane = None
+                        session = server.sessions[-1]
                         
                         if len(other_panes) == 0:
                             debug("No other panes, creating new one...")
-                            session = server.sessions[-1]
                             window = session.active_window
                             target_pane = window.split(attach=False)
                             time.sleep(0.3)
-                        elif len(other_panes) == 1:
-                            target_pane = other_panes[0]['pane']
-                            debug(f"Only one other pane, using: {target_pane.pane_id}")
                         else:
-                            debug("Multiple panes available, showing selector...")
+                            debug(f"Showing pane selector with {len(other_panes)} panes...")
                             selector = arsenal_gui.TmuxPaneSelectorMenu(
                                 gui.cheats_menu, 
-                                other_panes, 
-                                current_pane_id
+                                panes_info,
+                                current_pane_id,
+                                current_window_index
                             )
                             result = selector.run(stdscr)
                             
                             if result is None:
                                 debug("User cancelled pane selection")
                                 return True
-                            elif result == 'new':
+                            elif result == 'new_pane':
                                 debug("User requested new pane")
-                                session = server.sessions[-1]
                                 window = session.active_window
                                 target_pane = window.split(attach=False)
+                                time.sleep(0.3)
+                            elif result == 'new_window':
+                                debug("User requested new window")
+                                new_window = session.new_window(attach=False)
+                                target_pane = new_window.active_pane
                                 time.sleep(0.3)
                             else:
                                 target_pane = result['pane']
