@@ -6,6 +6,18 @@
 ```
 nbtscan -r <ip_range>
 ```
+## smbclient scan for shares
+#plateform/linux #target/remote #port/445 #protocol/smb #cat/ATTACK/CONNECT 
+```
+smbclient -L \\\\<ip> -N
+```
+
+## smbclient scan for shares authenticated
+#plateform/linux #target/remote #port/445 #protocol/smb #cat/ATTACK/CONNECT 
+```
+smbclient -L \\\\<ip> -U "<user>%<password>"
+```
+
 
 ## smbclient with username and password
 #plateform/linux #target/remote #port/445 #protocol/smb #cat/ATTACK/CONNECT  

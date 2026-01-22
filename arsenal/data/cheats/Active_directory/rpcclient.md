@@ -2,6 +2,12 @@
 
 % rpcclient, rpc, windows
 
+## rpcclient - no auth
+#plateform/linux #target/remote #cat/RECON 
+```
+rpcclient <ip> -U '' -N 
+```
+
 ## rpcclient - enumdomusers
 #plateform/linux #target/remote #cat/RECON 
 ```
