@@ -992,7 +992,7 @@ Enumerate SCCM Primary Site Server and Distribution Points.
 nxc smb <ip> -u <user> -p '<password>' -M sccm-recon6
 ```
 
----
+
 
 ## LDAP Protocol
 
@@ -1402,7 +1402,7 @@ Extract Password Settings Objects (PSO/FGPP).
 netexec ldap <ip> -u <user> -p '<password>' --pso
 ```
 
----
+
 
 ## MSSQL Protocol
 
@@ -1572,7 +1572,7 @@ Rollback MSSQL privilege escalation changes.
 nxc mssql <ip> -u <user> -p '<password>' -M mssql_priv -o ACTION=rollback
 ```
 
----
+
 
 ## WinRM Protocol
 
@@ -1650,7 +1650,7 @@ Retrieve LAPS password via WinRM.
 nxc winrm <ip> -u <user> -p '<password>' --laps
 ```
 
----
+
 
 ## WMI Protocol
 
@@ -1708,7 +1708,7 @@ Execute command using WMI.
 nxc wmi <ip> -u <user> -p '<password>' -x <command>
 ```
 
----
+
 
 ## SSH Protocol
 
@@ -1768,7 +1768,7 @@ Download file using SSH/SCP.
 nxc ssh <ip> -u <user> -p '<password>' --get-file <remote_file> <local_file>
 ```
 
----
+
 
 ## FTP Protocol
 
@@ -1816,7 +1816,7 @@ Upload file to FTP server.
 nxc ftp <ip> -u <user> -p '<password>' --put <local_file> <remote_file>
 ```
 
----
+
 
 ## RDP Protocol
 
@@ -1874,7 +1874,7 @@ Execute via RDP with timing adjustments.
 netexec rdp <ip> -u <user> -p '<password>' -x <command> --cmd-delay <seconds> --clipboard-delay <seconds>
 ```
 
----
+
 
 ## NFS Protocol
 
@@ -1962,7 +1962,7 @@ Upload file using full NFS path.
 nxc nfs <ip> --put-file <local_file> <remote_file>
 ```
 
----
+
 
 ## General Options
 
@@ -2214,7 +2214,7 @@ Log all output to specified file.
 nxc <protocol> <ip> -u <user> -p '<password>' --log <logfile>
 ```
 
----
+
 
 ## Additional SMB Commands
 
@@ -2331,7 +2331,7 @@ Extract DPAPI-protected credentials.
 nxc smb <ip> -u <user> -p '<password>' --dpapi
 ```
 
----
+
 
 ## Additional LDAP Commands
 
@@ -2359,7 +2359,7 @@ Find unconstrained delegation accounts.
 nxc ldap <ip> -u <user> -p '<password>' --trusted-for-delegation
 ```
 
----
+
 
 ## Additional MSSQL Commands
 
@@ -2371,7 +2371,7 @@ MSSQL password spray without bruteforce.
 nxc mssql <ip> -u <userfile> -p <passwordfile> --no-bruteforce
 ```
 
----
+
 
 ## Additional FTP Commands
 
@@ -2391,7 +2391,7 @@ List directory and download file.
 nxc ftp <ip> -u <user> -p '<password>' --ls <directory> --get <filename>
 ```
 
----
+
 
 ## Additional NFS Commands
 
