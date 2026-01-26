@@ -6,7 +6,7 @@
 ## get laps passwords
 #plateform/linux #target/remote #cat/POSTEXPLOIT/CREDS_RECOVER  
 ```
-Get-LAPSPasswords -DomainController <ip_dc> -Credential <domain>\<login> | Format-Table -AutoSize
+impacket-GetLAPSPassword -DomainController <ip_dc> -Credential <domain>\<login> | Format-Table -AutoSize
 ```
 ## get laps passwords nxc
 #plateform/linux #target/remote #cat/POSTEXPLOIT/CREDS_RECOVER  

