@@ -174,7 +174,7 @@ Perform an LDAP search with custom filters.
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get search
 ```
 
-## Get Trusts
+## Get Trusts 
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION
 
@@ -304,7 +304,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove uac 
 
 ## Set Commands
 
-## Set Object
+## Change attributes of an AD object
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/OBJECT_MANAGEMENT
 
@@ -314,7 +314,7 @@ Modify attributes of an AD object.
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set object <target> <attribute> -v <value>
 ```
 
-## Set Owner
+## Change the owner of an AD object
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/OBJECT_MANAGEMENT
 
@@ -324,7 +324,7 @@ Change the owner of an AD object.
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set owner <target> <owner>
 ```
 
-## Set Password
+## Change user or computer password.
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT
 
@@ -334,7 +334,7 @@ Change a user's or computer's password.
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set password <target> '<new_password>'
 ```
 
-## Set Restore
+## Restore deleted object
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/OBJECT_MANAGEMENT
 
