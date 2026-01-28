@@ -23,25 +23,25 @@ responder -I eth0 --wpad
 ## responder http on
 #plateform/linux #target/local #cat/UTILS
 ```
-sed -i 's/HTTP = Off/HTTP = On/g' /etc/responder/Responder.conf && cat /etc/responder/Responder.conf | grep --color=never 'HTTP ='
+sudo sed -i 's/HTTP = Off/HTTP = On/g' /etc/responder/Responder.conf && cat /etc/responder/Responder.conf | grep --color=never 'HTTP ='
 ```
 
 ## responder http off
 #plateform/linux #target/local #cat/UTILS
 ```
-sed -i 's/HTTP = On/HTTP = Off/g' /etc/responder/Responder.conf && cat /etc/responder/Responder.conf | grep --color=never 'HTTP ='
+sudo sed -i 's/HTTP = On/HTTP = Off/g' /etc/responder/Responder.conf && cat /etc/responder/Responder.conf | grep --color=never 'HTTP ='
 ```
 
 ## responder smb on
 #plateform/linux #target/local #cat/UTILS
 ```
-sed -i 's/SMB = Off/SMB = On/g' /etc/responder/Responder.conf && cat /etc/responder/Responder.conf | grep --color=never 'SMB ='
+sudo sed -i 's/SMB = Off/SMB = On/g' /etc/responder/Responder.conf && cat /etc/responder/Responder.conf | grep --color=never 'SMB ='
 ```
 
 ## responder smb off
 #plateform/linux #target/local #cat/UTILS
 ```
-sed -i 's/SMB = On/SMB = Off/g' /etc/responder/Responder.conf && cat /etc/responder/Responder.conf | grep --color=never 'SMB ='
+sudo sed -i 's/SMB = On/SMB = Off/g' /etc/responder/Responder.conf && cat /etc/responder/Responder.conf | grep --color=never 'SMB ='
 ```
 
 ## responder challenge set
@@ -50,13 +50,13 @@ Set the NTLM challenge for cracking
 
 = challenge: 1122334455667788
 ```
-sed -i 's/Challenge =.*$/Challenge = <challenge>/g' /etc/responder/Responder.conf && cat /etc/responder/Responder.conf | grep --color=never 'Challenge ='
+sudo sed -i 's/Challenge =.*$/Challenge = <challenge>/g' /etc/responder/Responder.conf && cat /etc/responder/Responder.conf | grep --color=never 'Challenge ='
 ```
 
 ## responder challenge reset
 #plateform/linux #target/local #cat/UTILS
 ```
-sed -i 's/Challenge =.*$/Challenge = 1122334455667788/g' /etc/responder/Responder.conf && cat /etc/responder/Responder.conf | grep --color=never 'Challenge ='
+sudo sed -i 's/Challenge =.*$/Challenge = 1122334455667788/g' /etc/responder/Responder.conf && cat /etc/responder/Responder.conf | grep --color=never 'Challenge ='
 ```
 
 ## multirelay attack - user filtered (previous disable HTTP and SMB in Responder.conf)
