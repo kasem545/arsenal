@@ -37,7 +37,7 @@ hydra -l <user|root> -e n <ip> ssh
 hydra -L <userlist> -e r <ip> ssh 
 ```
 
-## Hydra - ssh - file "login:pass" format - specify port
+## Hydra - ssh - file 'login:pass' format - specify port
 #plateform/linux #target/remote #protocol/ssh #port/custom #cat/ATTACK/BRUTEFORCE-SPRAY 
 
 ```

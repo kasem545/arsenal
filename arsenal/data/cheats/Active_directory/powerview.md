@@ -13,10 +13,10 @@ https://github.com/PowerShellMafia/PowerSploit/
 
 ## Set alternative creds to use
 #plateform/windows #target/remote  #cat/RECON 
-Example : Use with commands as "-Credential $creds"
+Example : Use with commands as '-Credential $creds'
 
 ```powershell
-$passwd = ConvertTo-SecureString "<password>" -AsPlainText -Force; $creds = New-Object System.Management.Automation.PSCredential ("<domain>\<user>", $passwd)
+$passwd = ConvertTo-SecureString '<password>' -AsPlainText -Force; $creds = New-Object System.Management.Automation.PSCredential ('<domain>\<user>', $passwd)
 ```
 
 ## Get User from SID
@@ -34,7 +34,7 @@ Get-ObjectAcl -Identity <user> -ResolveGUIDs | Foreach-Object {$_ | Add-Member -
 ## Find all domain user ACL
 #plateform/windows #target/remote  #cat/RECON 
 ```powershell
-Get-DomainUser | Get-ObjectAcl -ResolveGUIDs | Foreach-Object {$_ | Add-Member -NotePropertyName Identity -NotePropertyValue (ConvertFrom-SID $_.SecurityIdentifier.value) -Force; $_} | Foreach-Object {if ($_.Identity -eq $("$env:UserDomain\$env:Username")) {$_}}
+Get-DomainUser | Get-ObjectAcl -ResolveGUIDs | Foreach-Object {$_ | Add-Member -NotePropertyName Identity -NotePropertyValue (ConvertFrom-SID $_.SecurityIdentifier.value) -Force; $_} | Foreach-Object {if ($_.Identity -eq $('$env:UserDomain\$env:Username')) {$_}}
 ```
 
 ## Add user DACL
@@ -46,13 +46,13 @@ Add-DomainObjectAcl -TargetIdentity <target> -PrincipalIdentity <current_user> -
 ## Find all groups our current user got access
 #plateform/windows #target/remote  #cat/RECON 
 ```powershell
-Get-DomainGroup | Get-ObjectAcl -ResolveGUIDs | Foreach-Object {$_ | Add-Member -NotePropertyName Identity -NotePropertyValue (ConvertFrom-SID $_.SecurityIdentifier.value) -Force; $_} | Foreach-Object {if ($_.Identity -eq $("$env:UserDomain\$env:Username")) {$_}}
+Get-DomainGroup | Get-ObjectAcl -ResolveGUIDs | Foreach-Object {$_ | Add-Member -NotePropertyName Identity -NotePropertyValue (ConvertFrom-SID $_.SecurityIdentifier.value) -Force; $_} | Foreach-Object {if ($_.Identity -eq $('$env:UserDomain\$env:Username')) {$_}}
 ```
 
 ## Find all users our current user got access
 #plateform/windows #target/remote  #cat/RECON 
 ```powershell
-Get-DomainUser | Get-ObjectAcl -ResolveGUIDs | Foreach-Object {$_ | Add-Member -NotePropertyName Identity -NotePropertyValue (ConvertFrom-SID $_.SecurityIdentifier.value) -Force; $_} | Foreach-Object {if ($_.Identity -eq $("$env:UserDomain\$env:Username")) {$_}}
+Get-DomainUser | Get-ObjectAcl -ResolveGUIDs | Foreach-Object {$_ | Add-Member -NotePropertyName Identity -NotePropertyValue (ConvertFrom-SID $_.SecurityIdentifier.value) -Force; $_} | Foreach-Object {if ($_.Identity -eq $('$env:UserDomain\$env:Username')) {$_}}
 ```
 
 
@@ -76,10 +76,10 @@ Get-DomainTrustMapping
 
 ## Get all members of a a given group
 #plateform/windows #target/remote  #cat/RECON 
-Example: Get-DomainGroupMember "Domain Admins" -Recurse
+Example: Get-DomainGroupMember 'Domain Admins' -Recurse
 
 ```powershell
-Get-DomainGroupMember -Identity "<group|Administrators>" -Domain <domain> -Recurse
+Get-DomainGroupMember -Identity '<group|Administrators>' -Domain <domain> -Recurse
 ```
 
 

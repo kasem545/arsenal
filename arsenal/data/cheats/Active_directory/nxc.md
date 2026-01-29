@@ -1055,7 +1055,7 @@ List members of a specific AD group.
 
 #platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/RECON
 ```bash
-nxc ldap <ip> -u <user> -p '<password>' --groups "<group_name>"
+nxc ldap <ip> -u <user> -p '<password>' --groups '<group_name>'
 ```
 
 ### Kerberos Attacks
@@ -1171,7 +1171,7 @@ Query AD using custom LDAP filter.
 
 #platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/RECON
 ```bash
-nxc ldap <ip> -u <user> -p '<password>' --query "(adminCount=1)" "sAMAccountName"
+nxc ldap <ip> -u <user> -p '<password>' --query '(adminCount=1)' 'sAMAccountName'
 ```
 
 ## nxc - check LDAP signing
@@ -1225,7 +1225,7 @@ Run custom LDAP query returning all attributes.
 
 #platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/RECON
 ```bash
-nxc ldap <ip> -u <user> -p '<password>' --query "<ldap_filter>" ""
+nxc ldap <ip> -u <user> -p '<password>' --query '<ldap_filter>' ''
 ```
 
 ## nxc - custom LDAP query specific attributes
@@ -1233,7 +1233,7 @@ Run custom LDAP query for specific attributes.
 
 #platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/RECON
 ```bash
-nxc ldap <ip> -u <user> -p '<password>' --query "<ldap_filter>" "<attributes>"
+nxc ldap <ip> -u <user> -p '<password>' --query '<ldap_filter>' '<attributes>'
 ```
 
 ### BloodHound

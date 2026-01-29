@@ -63,14 +63,14 @@ impacket-wmiexec -hashes <hash> '<user>'@<ip>
 #plateform/linux #target/remote #port/445 #protocol/smb #cat/ATTACK/CONNECT  
 Using \pipe\atsvc via SMB
 ```
-impacket-atexec <domain>/'<user>':'<password>'@<ip> "command"
+impacket-atexec <domain>/'<user>':'<password>'@<ip> 'command'
 ```
 
 ## atexec pass the hash (pth)
 #plateform/linux #target/remote #port/445 #protocol/smb #cat/ATTACK/CONNECT  
 Execute command view the task scheduler (using \pipe\atsvc via SMB)
 ```
-impacket-atexec -hashes <hash> '<user>'@<ip> "command"
+impacket-atexec -hashes <hash> '<user>'@<ip> 'command'
 ```
 
 # impacket-wmiexec

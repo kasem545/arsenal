@@ -5,13 +5,13 @@
 ## Jwt tool Mode all tests
 #plateform/linux #target/remote #cat/RECON
 ```
-python3 jwt_tool.py -M at -t "<url>" -rh "Authorization: Bearer <JWT_Token>" -rh "<other_header>" -rc "<cookies>"
+python3 jwt_tool.py -M at -t '<url>' -rh 'Authorization: Bearer <JWT_Token>' -rh '<other_header>' -rc '<cookies>'
 ```
 
 ## Jwt tool reuse query id
 #plateform/linux #target/remote #cat/RECON
 ```
-python3 jwt_tool.py -Q "<jwttool_id>"
+python3 jwt_tool.py -Q '<jwttool_id>'
 ```
 
 ## Jwt tool bruteforce key

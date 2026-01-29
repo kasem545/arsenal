@@ -47,7 +47,7 @@ docker logs --tail 100 <container_id> -f
 docker network create <network_name>
 
 # run Image on local storage
-docker run -it --rm -v "$PWD":/<mnt> -w /docker <DOCKER> <IMAGE>
+docker run -it --rm -v '$PWD':/<mnt> -w /docker <DOCKER> <IMAGE>
 
 # run Image on local storage with root directory access
 docker run --rm -it -v /:/host <image> bash

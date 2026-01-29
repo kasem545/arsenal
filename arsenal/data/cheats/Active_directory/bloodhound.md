@@ -45,7 +45,7 @@ https://gitlab.com/kalilinux/packages/bloodhound-ce-python
 
 ```bash
 
-bloodhound-ce-python -d <domain> -u <user> -p <password> -c all -dc <dc-ip> -ns <nameserver> --zip
+bloodhound-ce-python -d <domain> -u <user> -p '<password>' -c all -dc <dc-ip> -ns <nameserver> --zip
 ```
 
 ## bloodhound - collect data auth with hashe
@@ -54,7 +54,7 @@ https://gitlab.com/kalilinux/packages/bloodhound-ce-python
 
 ```bash
 
-bloodhound-ce-python -d <domain> -u <user> --hashes <hash> -c all -dc <dc-ip> -ns <nameserver> --zip
+bloodhound-ce-python -d <domain> -u <user> --hashes '<hash>' -c all -dc <dc-ip> -ns <nameserver> --zip
 ```
 
 ## bloodhound - collect data (alternative)
@@ -63,7 +63,7 @@ https://gitlab.com/kalilinux/packages/bloodhound-ce-python
 
 ```bash
 
-bloodhound-ce-python -d <domain> -u <user> -p <password> -gc <global_catalog> -dc <domain_controler> -c all --zip
+bloodhound-ce-python -d <domain> -u <user> -p '<password>' -gc <global_catalog> -dc <domain_controler> -c all --zip
 ```
 
 ## sharphound - collect bloodhound data

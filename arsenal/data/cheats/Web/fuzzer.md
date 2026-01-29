@@ -9,7 +9,7 @@ ffuf -u '<url>/FUZZ' -w <wordlist> -ac -ic
 
 ## ffuf fuzz Host filter response size
 ```
-ffuf -u <url> -H "Host: FUZZ.domain" -w <wordlist> -ac
+ffuf -u <url> -H 'Host: FUZZ.domain' -w <wordlist> -ac
 ```
 
 ## ffuf GET parameter fuzzing

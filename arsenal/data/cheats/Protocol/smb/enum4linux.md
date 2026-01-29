@@ -16,12 +16,12 @@ enum4linux -v <ip>
 
 ## enum4linux - null access
 ```
-enum4linux -u "" -p "" <ip>
+enum4linux -u '' -p '' <ip>
 ```
 
 ## enum4linux - guest access
 ```
-enum4linux -u "guest" -p "" <ip>
+enum4linux -u 'guest' -p '' <ip>
 ```
 
 ## enum4linux - with authentication

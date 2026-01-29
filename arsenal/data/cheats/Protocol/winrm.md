@@ -13,7 +13,7 @@ Set-Item wsman:\localhost\client\trustedhosts *
 ## Enable winrm (wmic)
 #plateform/windows #target/local #cat/UTILS 
 ```batchfile
-wmic /node:<REMOTE_HOST> process call create "powershell enable-psremoting -force"
+wmic /node:<REMOTE_HOST> process call create 'powershell enable-psremoting -force'
 ```
 
 ## Test target is configure to use winrm (powershell)
@@ -43,7 +43,7 @@ Enter-PSSession -ComputerName <computername> -Credential <domain>\<username>
 ## Enable winrm remotelly from psexec
 #plateform/windows #target/remote #cat/ATTACK/EXPLOIT 
 ```batchfile
-.\PsExec.exe \\<computername> -u <domain>\<username> -p <password> -h -d powershell.exe "enable-psremoting -force"  
+.\PsExec.exe \\<computername> -u <domain>\<username> -p <password> -h -d powershell.exe 'enable-psremoting -force'  
 ```
 
 ## evil-winrm use
