@@ -1243,7 +1243,7 @@ Run BloodHound data collector (all methods).
 
 #platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/RECON
 ```bash
-nxc ldap <ip> -u <user> -p '<password>' --bloodhound --collection All
+nxc ldap <ip> -u <user> -p '<password>' --bloodhound --collection All --dns-server <dns_ip>
 ```
 
 ## nxc - run BloodHound with specific methods
@@ -1251,7 +1251,7 @@ Run BloodHound collector with selected methods.
 
 #platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/RECON
 ```bash
-nxc ldap <ip> -u <user> -p '<password>' --bloodhound --collection <methods>
+nxc ldap <ip> -u <user> -p '<password>' --bloodhound --collection <methods> --dns-server <dns_ip>
 ```
 
 ### ADCS Exploitation
