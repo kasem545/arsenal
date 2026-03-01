@@ -1025,7 +1025,7 @@ Remove an object identified by its DN.
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap delete <dn>
 ```
 
-## MSLDAP delspn
+## MSLDAP delete spn
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/COMPUTER_MANAGEMENT #experimental
 
@@ -1036,7 +1036,7 @@ user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap delspn <user_dn> <spn>
 ```
 
-## MSLDAP deluser
+## MSLDAP delete user
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT #experimental
 
@@ -1047,7 +1047,7 @@ user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap deluser <user_dn>
 ```
 
-## MSLDAP deluserfromgroup
+## MSLDAP delete user from group
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT #experimental
 
@@ -1059,7 +1059,7 @@ user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap deluserfromgroup <user_dn> <group_dn>
 ```
 
-## MSLDAP disableuser
+## MSLDAP disable user
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT #experimental
 
@@ -1090,7 +1090,7 @@ Set the delegated MSA state of a DMSA.
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dmsasetdelegatedmsastate <dn> <delegatedmsastate>
 ```
 
-## MSLDAP dnsadd
+## MSLDAP add dns
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/DNS_MANAGEMENT #experimental
 
@@ -1100,7 +1100,7 @@ Add a DNS record for a given target.
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsadd <target> <ip>
 ```
 
-## MSLDAP dnsdelete
+## MSLDAP delete dns
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/DNS_MANAGEMENT #experimental
 
@@ -1110,7 +1110,7 @@ Delete a DNS record for a given target.
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsdelete <target>
 ```
 
-## MSLDAP dnsgetserial
+## MSLDAP getserial dns 
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/DNS_MANAGEMENT #experimental
 
@@ -1120,7 +1120,7 @@ Get the serial number of a DNS record for a given zone.
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsgetserial
 ```
 
-## MSLDAP dnsmodify
+## MSLDAP modify dns
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/DNS_MANAGEMENT #experimental
 
@@ -1130,7 +1130,7 @@ Modify a DNS record for a given target.
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsmodify <target> <ip>
 ```
 
-## MSLDAP dnsquery
+## MSLDAP query dns
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/DNS_MANAGEMENT #experimental
 
@@ -1140,7 +1140,7 @@ Query a DNS record for a given target.
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsquery <target>
 ```
 
-## MSLDAP dnsqueryall
+## MSLDAP queryall dns
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/DNS_MANAGEMENT #experimental
 
@@ -1150,7 +1150,7 @@ Query all DNS records for a given zone.
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsqueryall
 ```
 
-## MSLDAP dnsremove
+## MSLDAP remove dns
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/DNS_MANAGEMENT #experimental
 
@@ -1160,7 +1160,7 @@ Remove a DNS record for a given target (tombstones the record).
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnsremove <target> <ip>
 ```
 
-## MSLDAP dnsrestore
+## MSLDAP restore dns
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/DNS_MANAGEMENT #experimental
 
@@ -1190,7 +1190,7 @@ List all DNS zones.
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap dnszones
 ```
 
-## MSLDAP enableuser
+## MSLDAP enable user
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/USER_MANAGEMENT #experimental
 
@@ -1201,7 +1201,7 @@ user_dn: CN=target_user,CN=Users,DC=domain,DC=com
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap enableuser <user_dn>
 ```
 
-## MSLDAP enrollmentservices
+## MSLDAP enrollment services
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/CERTIFICATE #experimental
 
@@ -1221,7 +1221,7 @@ Fetch all LAPS passwords.
 bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' msldap laps
 ```
 
-## MSLDAP lapstarget
+## MSLDAP laps target
 
 #platform/Windows #target/REMOTE #protocol/LDAP #cat/CREDENTIAL_ACCESS #experimental
 
