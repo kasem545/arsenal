@@ -3,7 +3,7 @@
 ## string to ntlm hash
 Convert string password to NTLM Hash
 ```bash
-iconv -f ASCII -t UTF-16LE <(printf '<PASSWORD>') | openssl dgst -md4
+printf '<PASSWORD>' | iconv -f ASCII -t UTF-16LE | openssl dgst -md4 -provider legacy
 ```
 
 ## convert file to base64 one line
