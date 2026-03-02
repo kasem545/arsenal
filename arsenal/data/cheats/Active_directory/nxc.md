@@ -1040,6 +1040,14 @@ Extract user description fields from AD.
 nxc ldap <ip> -u <user> -p '<password>' -M get-desc-users
 ```
 
+## nxc - pre2k Identifying Pre-Created Computer Accounts
+Identifying Pre-Created Computer Accounts
+
+#platform/windows #target/remote
+```bash
+nxc ldap <ip> -u <user> -p '<password>' -M pre2k
+```
+
 ### Group Enumeration
 
 ## nxc - enumerate all LDAP groups
