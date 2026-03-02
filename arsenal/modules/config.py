@@ -39,6 +39,16 @@ else:
     savevarfile = join(HOMEPATH, ".arsenal.json")
     historyfile = join(HOMEPATH, ".arsenal_history.json")
     favoritesfile = join(HOMEPATH, ".arsenal_favorites.json")
+    toolsfile = join(HOMEPATH, ".arsenal_tools.json")
 
 PREFIX_GLOBALVAR_NAME = "arsenal_prefix_cmd"
 MAX_HISTORY_SIZE = 50
+
+# Tool detection cache timeout (in seconds)
+TOOL_DETECTION_CACHE_TTL = 86400  # 24 hours
+MAX_HISTORY_SIZE = 50
+
+# Impacket format override (for users with both impacket and py installed)
+# Set to 'impacket', 'py', or None (auto-detect)
+# Usage: export ARSENAL_IMPACKET_FORMAT=py
+IMPACKET_FORMAT_OVERRIDE = os.environ.get('ARSENAL_IMPACKET_FORMAT', None)
