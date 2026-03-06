@@ -26,7 +26,7 @@ crunch <min> <max> -f /usr/share/crunch/charset.lst <charset|mixalpha-numeric> -
 crunch 8 8 -t <pattern|,@@@%%%^> -o <output.txt>
 ```
 
-## crunch - generate wordlist contain "password", 2 numbers and 1 special char
+## crunch - generate wordlist contain 'password', 2 numbers and 1 special char
 #plateform/linux #target/local #cat/UTILS 
 ```bash
 crunch 8 8 -t password%%^ -o <output.txt>

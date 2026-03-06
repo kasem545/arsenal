@@ -25,7 +25,7 @@ systemctl disable <service_enabled>
 
 ## Restart service
 ```
-systemctl restart <service>
+systemctl restart <SERVICE>
 ```
 
 ## Reload service
@@ -35,7 +35,7 @@ systemctl reload <service_active>
 
 ## Service status
 ```
-systemctl status <service>
+systemctl status <SERVICE>
 ```
 
 ## List running services

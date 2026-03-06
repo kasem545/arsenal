@@ -18,7 +18,7 @@ objection explore
 objection explore -s <command>
 
 ## Launch explore without default ssl pinning bypass
-objection explore -s "android sslpinning disable"
+objection explore -s 'android sslpinning disable'
 
 ## Launch explore with startup script
 objection explore -S <patch_to_script>

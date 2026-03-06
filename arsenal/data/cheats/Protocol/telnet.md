@@ -6,5 +6,5 @@
 ## nmap - telnet
 #cat/RECON 
 ```
-nmap -n -sV -Pn --script "*telnet* and safe" -p 23 <ip>
+nmap -n -sV -Pn --script '*telnet* and safe' -p 23 <ip>
 ```

@@ -107,19 +107,19 @@ nmap -sV -p 53 --script dns-nsid <ip>
 ## nmap dns tcp
 #plateform/linux  #target/remote  #cat/RECON
 ```
-nmap -n -sV --script "(*dns* and (default or (discovery and safe))) or dns-random-txid or dns-random-srcport" -p 53 <ip>
+nmap -n -sV --script '(*dns* and (default or (discovery and safe))) or dns-random-txid or dns-random-srcport' -p 53 <ip>
 ``` 
 
 ## nmap dns udp
 #plateform/linux  #target/remote  #cat/RECON
 ```
-nmap -n -sV -sU --script ""(*dns* and (default or (discovery and safe))) or dns-random-txid or dns-random-srcport" -p 53 <ip>
+nmap -n -sV -sU --script ''(*dns* and (default or (discovery and safe))) or dns-random-txid or dns-random-srcport' -p 53 <ip>
 ``` 
 
 ## nmap activedirectory enum
 #plateform/linux  #target/remote  #cat/RECON
 ```
-nmap --script dns-srv-enum --script-args "dns-srv-enum.domain='<domain>'"
+nmap --script dns-srv-enum --script-args 'dns-srv-enum.domain='<domain>''
 ```
 
 ## nmap dnssec 
@@ -133,7 +133,7 @@ nmap -sSU -p53 --script dns-nsec-enum --script-args dns-nsec-enum.domains=<domai
 ## dns metasploit enumeration
 #plateform/linux  #target/remote  #cat/RECON
 ```
-msfconsole -x "use auxiliary/gather/enum_dns; set domain <domain>; set ns <dns_server>; exploit"
+msfconsole -x 'use auxiliary/gather/enum_dns; set domain <domain>; set ns <dns_server>; exploit'
 ```
 
 % dns, sublist3r , 53

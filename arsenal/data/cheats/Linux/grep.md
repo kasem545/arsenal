@@ -19,12 +19,12 @@ grep <word> <file> -H
 
 ## grep recursive on extension
 ```
-grep -rn --include "*.<extension>" <word>
+grep -rn --include '*.<extension>' <word>
 ```
 
 ## grep word A or B
 ```
-grep -e "\(<word_A>\|<word_B>\)" <file>
+grep -e '\(<word_A>\|<word_B>\)' <file>
 ```
 
 # grep hash
@@ -53,22 +53,22 @@ egrep -oE '(^|[^a-fA-F0-9])[a-fA-F0-9]{128}([^a-fA-F0-9]|$)' *.txt | egrep -o '[
 
 ## Extract valid MySQL-Old hashes
 ```
-grep -e "[0-7][0-9a-f]{7}[0-7][0-9a-f]{7}" *.txt > mysql-old-hashes.txt
+grep -e '[0-7][0-9a-f]{7}[0-7][0-9a-f]{7}' *.txt > mysql-old-hashes.txt
 ```
 
 ## Extract blowfish hashes
 ```
-grep -e "$2a\$\08\$(.){75}" *.txt > blowfish-hashes.txt
+grep -e '$2a\$\08\$(.){75}' *.txt > blowfish-hashes.txt
 ```
 
 ## Extract Joomla hashes
 ```
-egrep -o "([0-9a-zA-Z]{32}):(w{16,32})" *.txt > joomla.txt
+egrep -o '([0-9a-zA-Z]{32}):(w{16,32})' *.txt > joomla.txt
 ```
 
 ## Extract VBulletin hashes
 ```
-egrep -o "([0-9a-zA-Z]{32}):(S{3,32})" *.txt > vbulletin.txt
+egrep -o '([0-9a-zA-Z]{32}):(S{3,32})' *.txt > vbulletin.txt
 ```
 
 ## Extract phpBB3-MD5
@@ -108,27 +108,27 @@ egrep -o '$6$w{8}S{86}' *.txt > sha512crypt.txt
 
 ## Extract emails from file
 ```
-grep -E -o "\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b" <file>
+grep -E -o '\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b' <file>
 ```
 
 ## Extract valid IP addresses
 ```
-grep -E -o "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)" <file>
+grep -E -o '(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)' <file>
 ```
 
 ## Extract passwords
 ```
-grep -i "pwd\|passw" <file>
+grep -i 'pwd\|passw' <file>
 ```
 
 ## Extract users
 ```
-grep -i "user\|invalid\|authentication\|login" <file>
+grep -i 'user\|invalid\|authentication\|login' <file>
 ```
 
 ## Extract HTTP URLS
 ```
-grep -i http | grep -shoP 'http.*?[" >]' <file> > http-urls.txt
+grep -i http | grep -shoP 'http.*?[' >]' <file> > http-urls.txt
 ```
 
 = file: file.txt

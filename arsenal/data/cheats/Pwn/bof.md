@@ -42,12 +42,12 @@ ROPgadget --binary <binary> --string <string> --range <start_address>-<end_addre
 
 ## ropgadget - Only show specific instructions
 ```
-ROPgadget --binary <binary> --only="<instructions>"
+ROPgadget --binary <binary> --only='<instructions>'
 ```
 
 ## ropgadget - Suppress specific mnemonics
 ```
-ROPgadget --binary <binary> --filter="<instructions>"
+ROPgadget --binary <binary> --filter='<instructions>'
 ```
 
 % bof, mona
@@ -84,7 +84,7 @@ ROPgadget --binary <binary> --filter="<instructions>"
 
 ## mona - Find bytes in memory (ex: eggs)
 ```
-!mona find -s <pattern_value|"w00tw00t">
+!mona find -s <pattern_value|'w00tw00t'>
 ```
 
 ## mona - Find pointers that will allow you to jump to a register (without null bytes)
@@ -117,7 +117,7 @@ ROPgadget --binary <binary> --filter="<instructions>"
 !mona bytearray -cpb <excluded_bytes|'\x00\x0a\x0d'>
 ```
 
-## mona - Badchar hunting step 3 - compare until "!!! Hooray, normal shellcode unmodified !!!" message
+## mona - Badchar hunting step 3 - compare until '!!! Hooray, normal shellcode unmodified !!!' message
 ```
 !mona compare -f <input_file|C:\BadChars\bytearray.bin> -a <bytesarray_address|esp>
 ```

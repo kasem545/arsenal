@@ -4,6 +4,15 @@ import re
 import curses
 import textwrap
 
+# Import tool detection for impacket command transformation
+try:
+    from . import tools
+    IMPACKET_TOOLS_AVAILABLE = True
+except ImportError:
+    IMPACKET_TOOLS_AVAILABLE = False
+import curses
+import textwrap
+
 
 class Command:
     cmdline = ""
@@ -90,8 +99,49 @@ class Command:
                     self.cmdline += cmdparts[i // 2]
                 else:
                     self.cmdline += argsval[(i - 1) // 2]
+            
+            if IMPACKET_TOOLS_AVAILABLE:
+                self.cmdline = self._transform_impacket_commands(self.cmdline)
             # Note: Removed curses.endwin() to allow GUI to restart in tmux mode
             # The wrapper() function handles cleanup when Arsenal actually exits
 
         # build ok ?
         return "" not in argsval
+
+    def _transform_impacket_commands(self, cmdline):
+      
+        impacket_format = tools.detect_impacket_format()
+        
+        if impacket_format is None:
+            # No impacket tools detected, leave command unchanged
+            return cmdline
+        
+        # List of impacket tools to transform
+        impacket_tools = [
+            'psexec', 'smbexec', 'wmiexec', 'atexec',
+            'secretsdump', 'samrdump',
+            'GetNPUsers', 'GetUserSPNs', 'GetADUsers',
+            'getTGT', 'getST', 'ticketer', 'ticketConverter', 'describeTicket',
+            'ntlmrelayx', 'smbserver', 'smbclient', 'mssqlclient',
+            'rpcdump', 'lookupsid', 'reg', 'services',
+            'rbcd', 'goldenPac', 'netview', 'getArch', 'changepasswd',
+            'Get-GPPPassword', 'GetLAPSPassword'
+        ]
+        
+        if impacket_format == 'py':
+            # Transform: impacket-TOOL → TOOL.py
+            for tool in impacket_tools:
+                # Match impacket-tool as a whole word (with word boundaries)
+                pattern = r'\bimpacket-' + re.escape(tool) + r'\b'
+                replacement = tool + '.py'
+                cmdline = re.sub(pattern, replacement, cmdline)
+        
+        elif impacket_format == 'impacket':
+            # Transform: TOOL.py → impacket-TOOL
+            for tool in impacket_tools:
+                # Match tool.py as a whole word
+                pattern = r'\b' + re.escape(tool) + r'\.py\b'
+                replacement = 'impacket-' + tool
+                cmdline = re.sub(pattern, replacement, cmdline)
+        
+        return cmdline

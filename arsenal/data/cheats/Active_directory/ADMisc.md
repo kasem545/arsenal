@@ -1,16 +1,16 @@
 # convert to NTLM
 
 ## string to ntlm hash
-Convert Plaintext password to NTLM Hash
+Convert string password to NTLM Hash
 ```bash
-iconv -f ASCII -t UTF-16LE <(printf '<PASSWORD>') | openssl dgst -md4
+printf '<PASSWORD>' | iconv -f ASCII -t UTF-16LE | openssl dgst -md4 -provider legacy
 ```
 
 ## convert file to base64 one line
 #plateform/linux #target/local #cat/UTILS 
 
 ```bash
-iconv -f ASCII -t UTF-16LE <file_to_convert> | base64 | tr -d "\n"
+iconv -f ASCII -t UTF-16LE <file_to_convert> | base64 | tr -d '\n'
 ```
 
 ## convert string to base64 one line
