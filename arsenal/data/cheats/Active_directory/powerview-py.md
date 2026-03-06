@@ -12,7 +12,7 @@ powerview <DOMAIN>/<USERNAME>:'<PASSWORD>'@<IP> <METHOD>
 ## Start web interface
 
 ```
-powerview <DOMAIN>/<USERNAME>:'<PASSWORD>'@<IP> --web --web-host <host|0.0.0.0> --web-port <port|3000> --web-auth <user|>:<password1234|>
+powerview <DOMAIN>/<USERNAME>:'<PASSWORD>'@<IP> --web --web-host <host|0.0.0.0> --web-port <port|3000> --web-auth <user>:<password>
 ```
 
 ## Connect with pfx
