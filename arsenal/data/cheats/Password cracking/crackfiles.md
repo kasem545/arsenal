@@ -4,46 +4,106 @@
 
 #plateform/linux  #target/local  #cat/CRACKING/PASSWORD 
 
-## ZIP - fcrackzip
-```
-fcrackzip -u -D -p <wordlist> <file>.zip
-```
+# John the Ripper *2john Cheatsheet
 
 ## ZIP - john
 ```
-zip2john <file>.zip > zip.john;
-john zip.john
+zip2john <zip_file> > <output_file|hash>
 ```
 
-## 7z - 7za
+## RAR - john
 ```
-cat <wordlist> | 7za t <file>.7z
-```
-
-## 7z - john
-```
-./7z2john.pl <file>.7z > 7zhash.john;
-john 7zhash.john
+rar2john <rar_file> > <output_file|hash>
 ```
 
-## PDF - pdfcrack
+## 7-Zip - john
 ```
-pdfcrack <file>.pdf -w <wordlist>
-```
-
-## PDF decrypt - qpdf
-```
-qpdf --password=<PASSWORD> --decrypt <encrypted_pdf>.pdf <plaintext_pdf>.pdf
+7z2john <7z_file> > <output_file|hash>
 ```
 
-## keepass kdbx - john
+## TAR - john
 ```
-keepass2john <file>.kdbx > out.kbdx.hashes && john --wordlist <wordlist> out.kbdx.hashes
+tar2john <tar_file> > <output_file|hash>
 ```
 
-## XLS PPT DOC - john
+## PDF - john
 ```
-python3 <path_to_john>/run/office2john.py <file>.xls > out.hash && john --wordlist <wordlist> out.hash
+pdf2john <pdf_file> > <output_file|hash>
+```
+
+## Microsoft Office (Modern) - john
+```
+office2john <docx|xlsx|pptx_file> > <output_file|hash>
+```
+
+## TrueCrypt - john
+```
+truecrypt2john <container_file> > <output_file|hash>
+```
+
+## BitLocker - john
+```
+bitlocker2john -i <image_file> > <output_file|hash>
+```
+
+## LUKS - john
+```
+luks2john <luks_image> > <output_file|hash>
+```
+
+## WPA/WPA2 Capture - john
+```
+hccap2john <capture_file> > <output_file|hash>
+```
+
+## PCAP Capture - john
+```
+pcap2john <pcap_file> > <output_file|hash>
+```
+
+## SSH Private Key - john
+```
+ssh2john <id_rsa> > <output_file|hash>
+```
+
+## PuTTY Key - john
+```
+putty2john <ppk_file> > <output_file|hash>
+```
+
+## PKCS#12 Certificate - john
+```
+pfx2john <pfx_file> > <output_file|hash>
+```
+
+## KeePass Database - john
+```
+keepass2john <database.kdbx> > <output_file|hash>
+```
+
+## Password Safe - john
+```
+pwsafe2john <database.psafe3> > <output_file|hash>
+```
+
+## LastPass Export - john
+```
+lastpass2john <lastpass_export> > <output_file|hash>
+```
+
+## macOS DMG - john
+```
+dmg2john <image.dmg> > <output_file|hash>
+```
+
+## Bitcoin Wallet - john
+```
+bitcoin2john <wallet.dat> > <output_file|hash>
+```
+
+## Ethereum Wallet - john
+```
+ethereum2john <wallet.json> > <output_file|hash>
 ```
 
 = wordlist: /usr/share/wordlists/rockyou.txt
