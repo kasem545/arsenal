@@ -4,6 +4,11 @@
 
 #plateform/linux  #target/local  #cat/CRACKING/PASSWORD 
 
+## hashcat - wordlist generation
+```
+hashcat -r <rule_file> --stdout <wordlist> > <outfile>
+```
+
 ## hashcat - md5 - wordlist
 ```
 hashcat -m 0 <hash_file> <wordlist>
