@@ -1062,13 +1062,11 @@ class VarsMenu:
         self.x_init = None
         self.y_init = None
 
-        # Collect unique arg names from all loaded cheatsheets
+        # Collect arg names that appear as <placeholder> in cheatsheet commands
         var_names: set[str] = set()
         for cheat in all_cheats:
             for name in re.findall(r'<([^<>| ]+)', cheat.command):
                 var_names.add(name)
-        # Always include any vars already saved by the user
-        var_names |= set(Gui.arsenalGlobalVars.keys())
         self.var_names: list[str] = sorted(var_names)
 
     # ------------------------------------------------------------------
