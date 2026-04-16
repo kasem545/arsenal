@@ -52,11 +52,16 @@ class Command:
 
     def get_args(self, cheat, gvars):
         """
-        Process cmdline from the cheatsheet to get args names
+        Process cmdline from the cheatsheet to get args names.
+
+        gvars lookup is case-insensitive: <IP> and <ip> resolve to the
+        same saved variable.
         """
         self.args = []
+        # Build a lowercase-keyed view of gvars for case-insensitive lookup
+        gvars_lower = {k.lower(): v for k, v in gvars.items()}
         # Use a list of tuples here instead of dict in case
-        # the cmd has multiple args with the same name..
+        # the cmd has multiple args with the same name.
         for arg_name in re.findall(r'<([^ <>]+)>', cheat.command):
             if "|" in arg_name:  # Format <name|default_value>
                 name, var = arg_name.split("|")[:2]
@@ -64,8 +69,8 @@ class Command:
                 # Variable has been added to cheat variables before, remove it
                 cheat.command = cheat.command.replace(arg_name, name)
                 self.cmdline = cheat.command
-            elif arg_name in gvars:
-                self.args.append([arg_name, gvars[arg_name]])
+            elif arg_name.lower() in gvars_lower:
+                self.args.append([arg_name, gvars_lower[arg_name.lower()]])
             elif arg_name in cheat.variables:
                 self.args.append([arg_name, cheat.variables[arg_name]])
             else:

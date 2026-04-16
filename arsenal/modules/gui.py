@@ -1051,23 +1051,58 @@ class VarsMenu:
     """
     Persistent variables manager — pre-fill common <arg> placeholders once,
     reuse them automatically across all commands.
+
+    All placeholder names are normalised to lowercase so <IP> and <ip>
+    are treated as the same variable.
+    A fuzzy search bar at the top filters the list while browsing.
     """
+
+    SEARCH_ROW = 2   # row inside popup for the search input
+    HEADER_ROW = 4   # row for the column header
+    LIST_START  = 6  # first row of variable entries
 
     def __init__(self, prev, all_cheats):
         self.previous_menu = prev
         self.position = 0
+
+        # search-mode state
+        self.search_buffer = ""
+
+        # edit-mode state
         self.editing = False
         self.edit_buffer = ""
-        self.xcursor = None
-        self.x_init = None
-        self.y_init = None
+        self.edit_xcursor = None
+        self.edit_x_init = None
+        self.edit_y_init = None
 
-        # Collect arg names that appear as <placeholder> in cheatsheet commands
+        # Collect unique placeholder names (normalised to lowercase)
         var_names: set[str] = set()
         for cheat in all_cheats:
             for name in re.findall(r'<([^<>| ]+)', cheat.command):
-                var_names.add(name)
-        self.var_names: list[str] = sorted(var_names)
+                var_names.add(name.lower())
+        self.all_var_names: list[str] = sorted(var_names)
+
+    # ------------------------------------------------------------------
+    # Helpers
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _fuzzy(query: str, text: str) -> bool:
+        """Return True if every char of query appears in text in order."""
+        it = iter(text)
+        return all(c in it for c in query)
+
+    def _filtered(self) -> list[str]:
+        q = self.search_buffer.lower()
+        if not q:
+            return self.all_var_names
+        return [n for n in self.all_var_names if self._fuzzy(q, n)]
+
+    def _selected_name(self) -> str | None:
+        filtered = self._filtered()
+        if not filtered or self.position >= len(filtered):
+            return None
+        return filtered[self.position]
 
     # ------------------------------------------------------------------
     # Drawing
@@ -1075,19 +1110,20 @@ class VarsMenu:
 
     def draw(self, stdscr):
         self.height, self.width = stdscr.getmaxyx()
-        side = 4
-        padding = 2
+        side      = 4
+        padding   = 2
         name_col_w = 22
-        sep = "  =  "
-        val_col_x = padding + name_col_w + len(sep)
+        sep        = "  =  "
+        val_col_x  = padding + 2 + name_col_w + len(sep)  # +2 for "> " prefix
 
-        popup_width = min(self.width - 2 * side, 72)
-        max_visible = max(1, self.height - 12)
-        max_visible = min(max_visible, len(self.var_names)) if self.var_names else 1
-        popup_height = max_visible + 6
+        popup_width  = min(self.width - 2 * side, 74)
+        filtered     = self._filtered()
+        max_visible  = max(1, self.height - self.LIST_START - 3)
+        max_visible  = min(max_visible, len(filtered)) if filtered else 1
+        popup_height = self.LIST_START + max_visible + 1
 
-        top = (self.height - popup_height) // 2
-        left = side
+        top  = (self.height - popup_height) // 2
+        left = (self.width - popup_width) // 2
 
         self.previous_menu.draw(stdscr)
 
@@ -1095,28 +1131,47 @@ class VarsMenu:
             popup = curses.newwin(popup_height, popup_width, top, left)
             popup.border()
 
-            title = " Variables  (Enter/Type: edit  Del: clear  Esc: close) "
+            title = " Variables  (Enter: edit  Del: clear  Esc: close) "
             title_x = max(1, (popup_width - len(title)) // 2)
             popup.addstr(0, title_x, title[:popup_width - 2],
                          curses.color_pair(Gui.INFO_NAME_COLOR))
 
-            header = "  {:<{w}}{}Value".format("Variable", sep, w=name_col_w)
-            popup.addstr(2, padding, header[:popup_width - padding - 1],
-                         curses.color_pair(Gui.COL2_COLOR))
-            popup.addstr(3, padding, "-" * (popup_width - padding * 2),
+            # ---- search row ----
+            search_prompt = ">> "
+            popup.addstr(self.SEARCH_ROW, padding,
+                         search_prompt, curses.color_pair(Gui.COL2_COLOR))
+            max_search_w = popup_width - padding - len(search_prompt) - 2
+            search_display = self.search_buffer[-max_search_w:] \
+                if len(self.search_buffer) > max_search_w else self.search_buffer
+            popup.addstr(self.SEARCH_ROW, padding + len(search_prompt),
+                         search_display + " " * (max_search_w - len(search_display)),
                          curses.color_pair(Gui.BASIC_COLOR))
 
-            # Scrolling window
+            popup.addstr(self.SEARCH_ROW + 1, padding,
+                         "-" * (popup_width - padding * 2),
+                         curses.color_pair(Gui.BASIC_COLOR))
+
+            # ---- column header ----
+            header = "  {:<{w}}{}Value".format("Variable", sep, w=name_col_w)
+            popup.addstr(self.HEADER_ROW, padding,
+                         header[:popup_width - padding - 1],
+                         curses.color_pair(Gui.COL2_COLOR))
+            popup.addstr(self.HEADER_ROW + 1, padding,
+                         "-" * (popup_width - padding * 2),
+                         curses.color_pair(Gui.BASIC_COLOR))
+
+            # ---- variable rows ----
             scroll = max(0, self.position - max_visible + 1)
-            for idx, name in enumerate(self.var_names[scroll:scroll + max_visible]):
+            max_val_w = popup_width - val_col_x - 1
+
+            for idx, name in enumerate(filtered[scroll:scroll + max_visible]):
                 real_idx = scroll + idx
-                row_y = 4 + idx
+                row_y    = self.LIST_START + idx
                 if row_y >= popup_height - 1:
                     break
 
-                val = Gui.arsenalGlobalVars.get(name, "")
+                val      = Gui.arsenalGlobalVars.get(name, "")
                 selected = real_idx == self.position
-                max_val_w = popup_width - val_col_x - padding - 1
 
                 if selected:
                     popup.addstr(row_y, padding, "> ",
@@ -1129,13 +1184,14 @@ class VarsMenu:
                     if self.editing:
                         display = self.edit_buffer[-max_val_w:] \
                             if len(self.edit_buffer) > max_val_w else self.edit_buffer
-                        popup.addstr(row_y, val_col_x, display,
+                        popup.addstr(row_y, val_col_x,
+                                     display + " " * (max_val_w - len(display)),
                                      curses.color_pair(Gui.ARG_NAME_COLOR))
                     else:
                         display = val[:max_val_w] if val else "(empty)"
-                        color = Gui.ARG_NAME_COLOR if val else Gui.COL3_COLOR
-                        popup.addstr(row_y, val_col_x, display,
-                                     curses.color_pair(color))
+                        color   = Gui.ARG_NAME_COLOR if val else Gui.COL3_COLOR
+                        popup.addstr(row_y, val_col_x,
+                                     display, curses.color_pair(color))
                 else:
                     popup.addstr(row_y, padding, "  ",
                                  curses.color_pair(Gui.BASIC_COLOR))
@@ -1145,22 +1201,27 @@ class VarsMenu:
                     popup.addstr(row_y, padding + 2 + name_col_w, sep,
                                  curses.color_pair(Gui.BASIC_COLOR))
                     display = val[:max_val_w] if val else "(empty)"
-                    color = Gui.BASIC_COLOR if val else Gui.COL3_COLOR
-                    popup.addstr(row_y, val_col_x, display, curses.color_pair(color))
+                    color   = Gui.BASIC_COLOR if val else Gui.COL3_COLOR
+                    popup.addstr(row_y, val_col_x,
+                                 display, curses.color_pair(color))
 
             popup.refresh()
 
-            # Position curses cursor on the edit field
-            if self.editing and self.var_names:
+            # ---- cursor positioning ----
+            if self.editing:
                 vis_pos = self.position - scroll
-                cur_row = top + 4 + vis_pos
-                cur_col = left + val_col_x + min(len(self.edit_buffer), max_val_w)
-                if self.x_init is None:
-                    self.y_init = cur_row
-                    self.x_init = left + val_col_x
-                self.xcursor = self.x_init + min(len(self.edit_buffer), max_val_w)
-                curses.setsyx(self.y_init, self.xcursor)
-                curses.doupdate()
+                if self.edit_x_init is None:
+                    self.edit_y_init  = top + self.LIST_START + vis_pos
+                    self.edit_x_init  = left + val_col_x
+                clamped = min(len(self.edit_buffer), max_val_w)
+                self.edit_xcursor = self.edit_x_init + clamped
+                curses.setsyx(self.edit_y_init, self.edit_xcursor)
+            else:
+                # cursor sits at end of search input
+                search_cursor_x = left + padding + len(search_prompt) + \
+                    min(len(self.search_buffer), max_search_w)
+                curses.setsyx(top + self.SEARCH_ROW, search_cursor_x)
+            curses.doupdate()
 
         except curses.error:
             pass
@@ -1175,31 +1236,39 @@ class VarsMenu:
             f.write(_json.dumps(Gui.arsenalGlobalVars))
 
     def _commit_edit(self):
-        """Save edit_buffer into arsenalGlobalVars for the selected variable."""
-        if not self.var_names:
+        name = self._selected_name()
+        if name is None:
             return
-        name = self.var_names[self.position]
         if self.edit_buffer:
             Gui.arsenalGlobalVars[name] = self.edit_buffer
         elif name in Gui.arsenalGlobalVars:
             del Gui.arsenalGlobalVars[name]
         self._save()
         self.editing = False
-        self.xcursor = self.x_init = self.y_init = None
+        self.edit_xcursor = self.edit_x_init = self.edit_y_init = None
 
     def _cancel_edit(self):
         self.editing = False
         self.edit_buffer = ""
-        self.xcursor = self.x_init = self.y_init = None
+        self.edit_xcursor = self.edit_x_init = self.edit_y_init = None
 
-    def _start_edit(self, initial_char=""):
-        if not self.var_names:
+    def _start_edit(self, initial_char: str = ""):
+        name = self._selected_name()
+        if name is None:
             return
-        name = self.var_names[self.position]
-        self.edit_buffer = (Gui.arsenalGlobalVars.get(name, "") + initial_char) \
-            if not initial_char else initial_char
+        self.edit_buffer = initial_char if initial_char \
+            else Gui.arsenalGlobalVars.get(name, "")
         self.editing = True
-        self.xcursor = self.x_init = self.y_init = None
+        self.edit_xcursor = self.edit_x_init = self.edit_y_init = None
+
+    @staticmethod
+    def _delete_word(buf: str) -> str:
+        i = len(buf)
+        while i > 0 and buf[i - 1] == ' ':
+            i -= 1
+        while i > 0 and buf[i - 1] != ' ':
+            i -= 1
+        return buf[:i]
 
     # ------------------------------------------------------------------
     # Event loop
@@ -1222,17 +1291,12 @@ class VarsMenu:
                 elif c in (curses.KEY_BACKSPACE, 127, 8):
                     self.edit_buffer = self.edit_buffer[:-1]
                 elif c == 23:
-                    # Ctrl+W: delete word
-                    i = len(self.edit_buffer)
-                    while i > 0 and self.edit_buffer[i - 1] == ' ':
-                        i -= 1
-                    while i > 0 and self.edit_buffer[i - 1] != ' ':
-                        i -= 1
-                    self.edit_buffer = self.edit_buffer[:i]
+                    self.edit_buffer = self._delete_word(self.edit_buffer)
                 elif 32 <= c < 127:
                     self.edit_buffer += chr(c)
 
             else:
+                filtered = self._filtered()
                 if c in (curses.KEY_F10, 27):
                     break
                 elif c in (curses.KEY_ENTER, 10, 13):
@@ -1241,18 +1305,22 @@ class VarsMenu:
                     if self.position > 0:
                         self.position -= 1
                 elif c == curses.KEY_DOWN:
-                    if self.position < len(self.var_names) - 1:
+                    if self.position < len(filtered) - 1:
                         self.position += 1
                 elif c == curses.KEY_DC:
-                    # Delete/clear the selected variable value
-                    if self.var_names:
-                        name = self.var_names[self.position]
-                        if name in Gui.arsenalGlobalVars:
-                            del Gui.arsenalGlobalVars[name]
-                            self._save()
+                    name = self._selected_name()
+                    if name and name in Gui.arsenalGlobalVars:
+                        del Gui.arsenalGlobalVars[name]
+                        self._save()
+                elif c in (curses.KEY_BACKSPACE, 127, 8):
+                    self.search_buffer = self.search_buffer[:-1]
+                    self.position = 0
+                elif c == 23:
+                    self.search_buffer = self._delete_word(self.search_buffer)
+                    self.position = 0
                 elif 32 <= c < 127:
-                    # Start typing immediately — replaces existing value
-                    self._start_edit(initial_char=chr(c))
+                    self.search_buffer += chr(c)
+                    self.position = 0
 
 
 class TmuxPaneSelectorMenu:
