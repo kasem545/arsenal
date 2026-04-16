@@ -1078,7 +1078,7 @@ class VarsMenu:
         # Collect unique placeholder names (normalised to lowercase)
         var_names: set[str] = set()
         for cheat in all_cheats:
-            for name in re.findall(r'<([^<>| ]+)', cheat.command):
+            for name in re.findall(r'<([a-zA-Z0-9][^<>| ]*)', cheat.command):
                 var_names.add(name.lower())
         self.all_var_names: list[str] = sorted(var_names)
 

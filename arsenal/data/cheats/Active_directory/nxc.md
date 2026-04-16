@@ -1952,28 +1952,12 @@ Target a single host by IP address.
 nxc <protocol> <ip>
 ```
 
-## nxc - target multiple IPs
-Target multiple hosts by IP addresses.
-
-#platform/any #target/remote #protocol/any #cat/USAGE
-```bash
-nxc <protocol> <ip1> <ip2> <ip3>
-```
-
 ## nxc - target CIDR range
 Target entire subnet using CIDR notation.
 
 #platform/any #target/remote #protocol/any #cat/USAGE
 ```bash
 nxc <protocol> <ip>/24
-```
-
-## nxc - target IP range
-Target IP address range.
-
-#platform/any #target/remote #protocol/any #cat/USAGE
-```bash
-nxc <protocol> <start_ip>-<end_ip>
 ```
 
 ## nxc - target from file
