@@ -167,7 +167,7 @@ class CheatslistMenu:
         nbinfowin.addstr(info, curses.color_pair(Gui.BASIC_COLOR))
         nbinfowin.refresh()
 
-        hotkey_hint = "[^E:Edit ^Y:Copy ^R:History ^F:Favorites ^P:Pin]"
+        hotkey_hint = "[^E:Edit ^Y:Copy ^R:History ^F:Favorites ^P:Pin ^V:Vars]"
         hint_x = (self.width - len(hotkey_hint)) // 2
         if hint_x > len(info) and self.width > 60:
             hintwin = curses.newwin(nlines, len(hotkey_hint) + 1, y, hint_x)
@@ -432,6 +432,11 @@ class CheatslistMenu:
                     self.input_buffer = "!history"
                 self.position = 0
                 self.page_position = 0
+            elif c == 22:
+                # Ctrl+V: Open Variables manager
+                vars_menu = VarsMenu(self, self.globalcheats)
+                vars_menu.run(stdscr)
+                stdscr.clear()
             elif c == 5:
                 # Ctrl+E: Edit command directly
                 if self.selected_cheat() is not None:
@@ -1040,6 +1045,216 @@ class CommandEditorMenu:
                 i = self.xcursor - self.x_init
                 self.cmd_buffer = self.cmd_buffer[:i] + chr(c) + self.cmd_buffer[i:]
                 self.xcursor += 1
+
+
+class VarsMenu:
+    """
+    Persistent variables manager — pre-fill common <arg> placeholders once,
+    reuse them automatically across all commands.
+    """
+
+    def __init__(self, prev, all_cheats):
+        self.previous_menu = prev
+        self.position = 0
+        self.editing = False
+        self.edit_buffer = ""
+        self.xcursor = None
+        self.x_init = None
+        self.y_init = None
+
+        # Collect unique arg names from all loaded cheatsheets
+        var_names: set[str] = set()
+        for cheat in all_cheats:
+            for name in re.findall(r'<([^<>| ]+)', cheat.command):
+                var_names.add(name)
+        # Always include any vars already saved by the user
+        var_names |= set(Gui.arsenalGlobalVars.keys())
+        self.var_names: list[str] = sorted(var_names)
+
+    # ------------------------------------------------------------------
+    # Drawing
+    # ------------------------------------------------------------------
+
+    def draw(self, stdscr):
+        self.height, self.width = stdscr.getmaxyx()
+        side = 4
+        padding = 2
+        name_col_w = 22
+        sep = "  =  "
+        val_col_x = padding + name_col_w + len(sep)
+
+        popup_width = min(self.width - 2 * side, 72)
+        max_visible = max(1, self.height - 12)
+        max_visible = min(max_visible, len(self.var_names)) if self.var_names else 1
+        popup_height = max_visible + 6
+
+        top = (self.height - popup_height) // 2
+        left = side
+
+        self.previous_menu.draw(stdscr)
+
+        try:
+            popup = curses.newwin(popup_height, popup_width, top, left)
+            popup.border()
+
+            title = " Variables  (Enter/Type: edit  Del: clear  Esc: close) "
+            title_x = max(1, (popup_width - len(title)) // 2)
+            popup.addstr(0, title_x, title[:popup_width - 2],
+                         curses.color_pair(Gui.INFO_NAME_COLOR))
+
+            header = "  {:<{w}}{}Value".format("Variable", sep, w=name_col_w)
+            popup.addstr(2, padding, header[:popup_width - padding - 1],
+                         curses.color_pair(Gui.COL2_COLOR))
+            popup.addstr(3, padding, "-" * (popup_width - padding * 2),
+                         curses.color_pair(Gui.BASIC_COLOR))
+
+            # Scrolling window
+            scroll = max(0, self.position - max_visible + 1)
+            for idx, name in enumerate(self.var_names[scroll:scroll + max_visible]):
+                real_idx = scroll + idx
+                row_y = 4 + idx
+                if row_y >= popup_height - 1:
+                    break
+
+                val = Gui.arsenalGlobalVars.get(name, "")
+                selected = real_idx == self.position
+                max_val_w = popup_width - val_col_x - padding - 1
+
+                if selected:
+                    popup.addstr(row_y, padding, "> ",
+                                 curses.color_pair(Gui.CURSOR_COLOR_SELECT))
+                    popup.addstr(row_y, padding + 2,
+                                 "{:<{w}}".format(name[:name_col_w], w=name_col_w),
+                                 curses.color_pair(Gui.COL1_COLOR_SELECT))
+                    popup.addstr(row_y, padding + 2 + name_col_w, sep,
+                                 curses.color_pair(Gui.BASIC_COLOR))
+                    if self.editing:
+                        display = self.edit_buffer[-max_val_w:] \
+                            if len(self.edit_buffer) > max_val_w else self.edit_buffer
+                        popup.addstr(row_y, val_col_x, display,
+                                     curses.color_pair(Gui.ARG_NAME_COLOR))
+                    else:
+                        display = val[:max_val_w] if val else "(empty)"
+                        color = Gui.ARG_NAME_COLOR if val else Gui.COL3_COLOR
+                        popup.addstr(row_y, val_col_x, display,
+                                     curses.color_pair(color))
+                else:
+                    popup.addstr(row_y, padding, "  ",
+                                 curses.color_pair(Gui.BASIC_COLOR))
+                    popup.addstr(row_y, padding + 2,
+                                 "{:<{w}}".format(name[:name_col_w], w=name_col_w),
+                                 curses.color_pair(Gui.COL2_COLOR))
+                    popup.addstr(row_y, padding + 2 + name_col_w, sep,
+                                 curses.color_pair(Gui.BASIC_COLOR))
+                    display = val[:max_val_w] if val else "(empty)"
+                    color = Gui.BASIC_COLOR if val else Gui.COL3_COLOR
+                    popup.addstr(row_y, val_col_x, display, curses.color_pair(color))
+
+            popup.refresh()
+
+            # Position curses cursor on the edit field
+            if self.editing and self.var_names:
+                vis_pos = self.position - scroll
+                cur_row = top + 4 + vis_pos
+                cur_col = left + val_col_x + min(len(self.edit_buffer), max_val_w)
+                if self.x_init is None:
+                    self.y_init = cur_row
+                    self.x_init = left + val_col_x
+                self.xcursor = self.x_init + min(len(self.edit_buffer), max_val_w)
+                curses.setsyx(self.y_init, self.xcursor)
+                curses.doupdate()
+
+        except curses.error:
+            pass
+
+    # ------------------------------------------------------------------
+    # Persistence
+    # ------------------------------------------------------------------
+
+    def _save(self):
+        import json as _json
+        with open(config.savevarfile, "w") as f:
+            f.write(_json.dumps(Gui.arsenalGlobalVars))
+
+    def _commit_edit(self):
+        """Save edit_buffer into arsenalGlobalVars for the selected variable."""
+        if not self.var_names:
+            return
+        name = self.var_names[self.position]
+        if self.edit_buffer:
+            Gui.arsenalGlobalVars[name] = self.edit_buffer
+        elif name in Gui.arsenalGlobalVars:
+            del Gui.arsenalGlobalVars[name]
+        self._save()
+        self.editing = False
+        self.xcursor = self.x_init = self.y_init = None
+
+    def _cancel_edit(self):
+        self.editing = False
+        self.edit_buffer = ""
+        self.xcursor = self.x_init = self.y_init = None
+
+    def _start_edit(self, initial_char=""):
+        if not self.var_names:
+            return
+        name = self.var_names[self.position]
+        self.edit_buffer = (Gui.arsenalGlobalVars.get(name, "") + initial_char) \
+            if not initial_char else initial_char
+        self.editing = True
+        self.xcursor = self.x_init = self.y_init = None
+
+    # ------------------------------------------------------------------
+    # Event loop
+    # ------------------------------------------------------------------
+
+    def run(self, stdscr):
+        Gui.init_colors()
+        stdscr.clear()
+
+        while True:
+            stdscr.refresh()
+            self.draw(stdscr)
+            c = stdscr.getch()
+
+            if self.editing:
+                if c in (curses.KEY_ENTER, 10, 13):
+                    self._commit_edit()
+                elif c in (curses.KEY_F10, 27):
+                    self._cancel_edit()
+                elif c in (curses.KEY_BACKSPACE, 127, 8):
+                    self.edit_buffer = self.edit_buffer[:-1]
+                elif c == 23:
+                    # Ctrl+W: delete word
+                    i = len(self.edit_buffer)
+                    while i > 0 and self.edit_buffer[i - 1] == ' ':
+                        i -= 1
+                    while i > 0 and self.edit_buffer[i - 1] != ' ':
+                        i -= 1
+                    self.edit_buffer = self.edit_buffer[:i]
+                elif 32 <= c < 127:
+                    self.edit_buffer += chr(c)
+
+            else:
+                if c in (curses.KEY_F10, 27):
+                    break
+                elif c in (curses.KEY_ENTER, 10, 13):
+                    self._start_edit()
+                elif c == curses.KEY_UP:
+                    if self.position > 0:
+                        self.position -= 1
+                elif c == curses.KEY_DOWN:
+                    if self.position < len(self.var_names) - 1:
+                        self.position += 1
+                elif c == curses.KEY_DC:
+                    # Delete/clear the selected variable value
+                    if self.var_names:
+                        name = self.var_names[self.position]
+                        if name in Gui.arsenalGlobalVars:
+                            del Gui.arsenalGlobalVars[name]
+                            self._save()
+                elif 32 <= c < 127:
+                    # Start typing immediately — replaces existing value
+                    self._start_edit(initial_char=chr(c))
 
 
 class TmuxPaneSelectorMenu:
