@@ -6,11 +6,11 @@
 
 ## drupwn classic
 ```
-drupwn --users --nodes --modules --dfiles --themes enum <url>
+drupwn --users --nodes --modules --dfiles --themes enum <URL>
 ```
 
 ## drupwn, docker
 ```
-sudo docker run --rm -it immunit/drupwn --users --nodes --modules --dfiles --themes enum <url>
+sudo docker run --rm -it immunit/drupwn --users --nodes --modules --dfiles --themes enum <URL>
 ```
 

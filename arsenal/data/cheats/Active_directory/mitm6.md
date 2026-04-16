@@ -5,5 +5,5 @@
 ## run mitm6 (to run with impacket-ntlmrelayx)
 #plateform/linux #target/remote #cat/ATTACK/MITM 
 ```
-mitm6 -d <domain>
+mitm6 -d <DOMAIN>
 ```

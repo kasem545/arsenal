@@ -29,7 +29,7 @@ airodump-ng <wlanmon_interface>
 
 ## airodump - listen to specific SSID
 ```
-airodump-ng --bssid <mac_address> -c <channel> -w <output_file> <wlanmon_interface>
+airodump-ng --bssid <mac_address> -c <channel> -w <OUTFILE> <wlanmon_interface>
 ```
 
 ## aireplay - deauth client

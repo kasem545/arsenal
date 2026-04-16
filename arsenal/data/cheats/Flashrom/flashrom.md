@@ -4,22 +4,22 @@
 
 ## Read from linux (e.g. Raspberry Pi)
 ```
-flashrom -p linux_spi:dev=<spidev>,spispeed=<spispeed> -r <output_file>
+flashrom -p linux_spi:dev=<spidev>,spispeed=<spispeed> -r <OUTFILE>
 ```
 
 ## Force read from linux (e.g. Raspberry Pi)
 ```
-flashrom -p linux_spi:dev=<spidev>,spispeed=<spispeed> -r <output_file> -f -c <chipname>
+flashrom -p linux_spi:dev=<spidev>,spispeed=<spispeed> -r <OUTFILE> -f -c <chipname>
 ```
 
 ## Read from BusPirate
 ```
-flashrom -p buspirate_spi:dev=<buspirate>,spispeed=<spispeed> -r <output_file>
+flashrom -p buspirate_spi:dev=<buspirate>,spispeed=<spispeed> -r <OUTFILE>
 ```
 
 ## Force read from BusPirate
 ```
-flashrom -p buspirate_spi:dev=<buspirate>,spispeed=<spispeed> -r <output_file> -f -c <chipname>
+flashrom -p buspirate_spi:dev=<buspirate>,spispeed=<spispeed> -r <OUTFILE> -f -c <chipname>
 ```
 
 = spidev: /dev/spidev0.0

@@ -36,7 +36,7 @@ kubectl get namespaces
 
 ## Get pods from namespace (add option '-o wide' for details)
 ```
-kubectl get pods -n <namespace>
+kubectl get pods -n <NAMESPACE>
 ```
 
 ## Get pods from all namespace (add option '-o wide' for details)
@@ -46,42 +46,42 @@ kubectl get pods --all-namespaces
 
 ## Get services from namespace
 ```
-kubectl get services -n <namespace>
+kubectl get services -n <NAMESPACE>
 ```
 
 ## Get details from resource on namespace
 ```
-kubectl describe <resource>/<name> -n <namespace>
+kubectl describe <resource>/<NAME> -n <NAMESPACE>
 ```
 
 ## Print logs from namespace
 ```
-kubectl logs -f pods/<name> -n <namespace>
+kubectl logs -f pods/<NAME> -n <NAMESPACE>
 ```
 
 ## Get deployments
 ```
-kubectl get deployments -n <namespace>
+kubectl get deployments -n <NAMESPACE>
 ```
 
 ## Edit deployments
 ```
-kubectl edit deployment/<name> -n <namespace>
+kubectl edit deployment/<NAME> -n <NAMESPACE>
 ```
 
 ## Drain node in preparation for maintenance
 ```
-kubectl drain <name>
+kubectl drain <NAME>
 ```
 
 ## Mark node as schedulable
 ```
-kubectl uncordon <name>
+kubectl uncordon <NAME>
 ```
 
 ## Mark node as unschedulable
 ```
-kubectl cordon <name>
+kubectl cordon <NAME>
 ```
 
 ## Display resource (cpu/memory/storage) usage

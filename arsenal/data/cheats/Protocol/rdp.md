@@ -23,7 +23,7 @@ Remove-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Lsa' -Name Dis
 
 ## rdp from console
 ```
-sharprdp.exe computername=<computer> command='<command>' username=<domain>\<user> password=<password>
+sharprdp.exe computername=<computer> command='<COMMAND>' username=<DOMAIN>\<USER> password=<PASSWORD>
 ```
 
 ## Add firewall authorisation RDP
@@ -38,12 +38,12 @@ netsh.exe advfirewall firewall add rule name='Remote Desktop - User Mode (TCP-In
 
 ## rdesktop - classic
 ```
-rdesktop -g 90% <ip> -u <user> -p <password> -d <domain>
+rdesktop -g 90% <IP> -u <USER> -p <PASSWORD> -d <DOMAIN>
 ```
 
 ## rdesktop - with share
 ```
-rdesktop -g 90% <ip> -u <user> -p <password> -d <domain> -r disk:share=<share>
+rdesktop -g 90% <IP> -u <USER> -p <PASSWORD> -d <DOMAIN> -r disk:share=<share>
 ```
 
 # xfreerdp3
@@ -53,15 +53,15 @@ rdesktop -g 90% <ip> -u <user> -p <password> -d <domain> -r disk:share=<share>
 
 ## xfreerdp3 - classic
 ```
-xfreerdp3 /u:<user> /p:<password> /d:<domain> /v:<ip> /size:1800x924
+xfreerdp3 /u:<USER> /p:<PASSWORD> /d:<DOMAIN> /v:<IP> /size:1800x924
 ```
 
 ## xfreerdp3 - with share
 ```
-xfreerdp3 /u:<user> /p:<password> /d:<domain> /v:<ip> /size:1800x924 /drive:share,<share>
+xfreerdp3 /u:<USER> /p:<PASSWORD> /d:<DOMAIN> /v:<IP> /size:1800x924 /drive:share,<share>
 ```
 
 ## xfreerdp3 - pass the hash
 ```
-xfreerdp3 /u:<user> /pth:<hash> /d:<domain> /v:<ip>
+xfreerdp3 /u:<USER> /pth:<HASH> /d:<DOMAIN> /v:<IP>
 ```

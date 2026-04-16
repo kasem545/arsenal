@@ -5,13 +5,13 @@
 ## python3 Simple HTTP server
 #plateform/linux #target/serve  #cat/ATTACK/LISTEN-SERVE 
 ```bash
-python3 -m http.server <lport>
+python3 -m http.server <LPORT>
 ```
 
 ## php Simple builtin server
 #plateform/linux #target/serve  #cat/ATTACK/LISTEN-SERVE 
 ```
-php -S 0.0.0.0:<lport>
+php -S 0.0.0.0:<LPORT>
 ```
 
-= lport : 8080
+= LPORT : 8080

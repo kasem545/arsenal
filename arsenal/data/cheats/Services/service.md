@@ -9,20 +9,20 @@ service --status-all
 
 ## Status of  a service
 ```
-service <service_name> status
+service <SERVICE> status
 ```
 
 ## Start a service
 ```
-service <service_name> start
+service <SERVICE> start
 ```
 
 ## Stop a service
 ```
-service <service_name> stop
+service <SERVICE> stop
 ```
 
 ## Restart a service
 ```
-service <service_name> restart
+service <SERVICE> restart
 ```

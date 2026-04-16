@@ -5,10 +5,10 @@
 
 ## Compress dir to rar file
 ```
-rar a <dir>
+rar a <PATH>
 ```
 
 ## Decompress rar file
 ```
-unrar x <file>.rar
+unrar x <FILE>.rar
 ```

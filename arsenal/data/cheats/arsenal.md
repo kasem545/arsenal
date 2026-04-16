@@ -30,12 +30,12 @@ bash tools-install-v2.sh
 
 ## Set user and password
 ```
->set user=<user> password=<password>
+>set user=<USER> password=<PASSWORD>
 ```
 
 ## Set ip global variable
 ```
->set ip=<ip>
+>set ip=<IP>
 ```
 
 ## Set wordlist
@@ -49,7 +49,7 @@ wordlists (nbline):
 /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt (220K)
 
 ```
->set wordlist=<wordlist>
+>set wordlist=<WORDLIST>
 ```
 ## Set custom global variable
 ```

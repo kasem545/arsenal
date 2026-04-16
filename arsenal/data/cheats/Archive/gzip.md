@@ -5,10 +5,10 @@
 
 ## Compress file and appends .gz to its name
 ```
-gzip <path>
+gzip <PATH>
 ```
 
 ## Decompress compressed file
 ```
-gzip -d <gz_file>
+gzip -d <FILE>
 ```

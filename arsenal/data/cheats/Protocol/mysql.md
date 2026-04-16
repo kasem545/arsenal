@@ -5,29 +5,29 @@
 ## connect
 #cat/ATTACK/CONNECT 
 ```
-mysql -u <user> -p<password> -h <hostname> <database>
+mysql -u <USER> -p<PASSWORD> -h <hostname> <database>
 ```
 
 ## Create database
 #cat/UTILS 
 ```
-mysql -u <user> -p -e 'create database <database> character set UTF8mb4 collate utf8mb4_bin'
+mysql -u <USER> -p -e 'create database <database> character set UTF8mb4 collate utf8mb4_bin'
 ```
 
 ## Export database
 #cat/UTILS 
 ```
-mysqldump -u <user> -p <database> > <path>
+mysqldump -u <USER> -p <database> > <PATH>
 ```
 
 ## Import database
 #cat/UTILS 
 ```
-mysql -u <user> -p <database> <path>
+mysql -u <USER> -p <database> <PATH>
 ```
 
 ## nmap - mysql enumeration
 #cat/RECON 
 ```
-nmap -sV -p 3306 --script mysql-audit,mysql-databases,mysql-dump-hashes,mysql-empty-password,mysql-enum,mysql-info,mysql-query,mysql-users,mysql-variables,mysql-vuln-cve2012-2122 <ip>
+nmap -sV -p 3306 --script mysql-audit,mysql-databases,mysql-dump-hashes,mysql-empty-password,mysql-enum,mysql-info,mysql-query,mysql-users,mysql-variables,mysql-vuln-cve2012-2122 <IP>
 ```

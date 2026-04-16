@@ -1052,7 +1052,7 @@ class VarsMenu:
     Persistent variables manager — pre-fill common <arg> placeholders once,
     reuse them automatically across all commands.
 
-    All placeholder names are normalised to lowercase so <IP> and <ip>
+    All placeholder names are normalised to lowercase so <IP> and <IP>
     are treated as the same variable.
     A fuzzy search bar at the top filters the list while browsing.
     """

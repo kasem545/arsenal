@@ -4,27 +4,27 @@
 
 ## grep classic
 ```
-grep <word> <file>
+grep <WORD> <FILE>
 ```
 
 ## grep without case
 ```
-grep -i <word> <file>
+grep -i <WORD> <FILE>
 ```
 
 ## grep with file found
 ```
-grep <word> <file> -H
+grep <WORD> <FILE> -H
 ```
 
 ## grep recursive on extension
 ```
-grep -rn --include '*.<extension>' <word>
+grep -rn --include '*.<extension>' <WORD>
 ```
 
 ## grep word A or B
 ```
-grep -e '\(<word_A>\|<word_B>\)' <file>
+grep -e '\(<WORD_A>\|<WORD_B>\)' <FILE>
 ```
 
 # grep hash
@@ -108,27 +108,27 @@ egrep -o '$6$w{8}S{86}' *.txt > sha512crypt.txt
 
 ## Extract emails from file
 ```
-grep -E -o '\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b' <file>
+grep -E -o '\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b' <FILE>
 ```
 
 ## Extract valid IP addresses
 ```
-grep -E -o '(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)' <file>
+grep -E -o '(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)' <FILE>
 ```
 
 ## Extract passwords
 ```
-grep -i 'pwd\|passw' <file>
+grep -i 'pwd\|passw' <FILE>
 ```
 
 ## Extract users
 ```
-grep -i 'user\|invalid\|authentication\|login' <file>
+grep -i 'user\|invalid\|authentication\|login' <FILE>
 ```
 
 ## Extract HTTP URLS
 ```
-grep -i http | grep -shoP 'http.*?[' >]' <file> > http-urls.txt
+grep -i http | grep -shoP 'http.*?[' >]' <FILE> > http-urls.txt
 ```
 
-= file: file.txt
+= FILE: file.txt

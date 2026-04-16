@@ -10,35 +10,35 @@ nbtscan -r <ip_range>
 ## smbclient with username and password
 #plateform/linux #target/remote #port/445 #protocol/smb #cat/ATTACK/CONNECT  
 ```
-smbclient \\\\<ip>\\<share> -U '<user>%<password>'
+smbclient \\\\<IP>\\<share> -U '<USER>%<PASSWORD>'
 ```
 
 ## smbclient with domain username and password
 #plateform/linux #target/remote #port/445 #protocol/smb #cat/ATTACK/CONNECT  
 ```
-smbclient \\\\<ip>\\<share> -U '<domain>/<user>%<password>'
+smbclient \\\\<IP>\\<share> -U '<DOMAIN>/<USER>%<PASSWORD>'
 ```
 
 ## smbclient sessions without password
 #plateform/linux #target/remote #port/445 #protocol/smb #cat/ATTACK/CONNECT  
 ```
-smbclient \\\\<ip>\\<share> -U '<user>%'
+smbclient \\\\<IP>\\<share> -U '<USER>%'
 ```
 
 ## smbclient null session
 #plateform/linux #target/remote #port/445 #protocol/smb #cat/ATTACK/CONNECT  
 ```
-smbclient \\\\<ip>\\<share> -U '%'
+smbclient \\\\<IP>\\<share> -U '%'
 ```
 
 ## smb - find not signed  smb
 #plateform/linux #target/remote #port/445 #protocol/smb #cat/RECON 
 ```
-nmap -Pn -sS -T4 --open --script smb-security-mode -p445 <ip>
+nmap -Pn -sS -T4 --open --script smb-security-mode -p445 <IP>
 ```
 
 ## smb mount folder
 #plateform/linux #target/remote #port/445 #protocol/smb #cat/ATTACK/CONNECT  
 ```
-mount -t cifs //<ip>/C\$ /tmp/mnttarget/ -o username=<user> -o domain=<domain>
+mount -t cifs //<IP>/C\$ /tmp/mnttarget/ -o username=<USER> -o domain=<DOMAIN>
 ```

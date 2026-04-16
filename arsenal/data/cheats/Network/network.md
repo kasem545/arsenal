@@ -5,7 +5,7 @@
 ## ip infos (hostname / city / country / isp )
 #plateform/linux  #target/remote  #cat/UTILS  
 ```
-curl https://ipinfo.io/<ip>
+curl https://ipinfo.io/<IP>
 ```
 
 ## what is my ip
@@ -19,11 +19,11 @@ curl https://ipinfo.io/ip
 ## test an internet port out allow - curl (no 445)
 #plateform/linux  #target/remote  #cat/UTILS 
 ```
-curl portquiz.net:<port>
+curl portquiz.net:<PORT>
 ```
 
 ## test an internet port out allow - nc (no 445)
 #plateform/linux  #target/remote  #cat/UTILS 
 ```
-nc -v portquiz.net <port>
+nc -v portquiz.net <PORT>
 ```

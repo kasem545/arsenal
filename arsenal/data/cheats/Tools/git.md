@@ -4,12 +4,12 @@
 
 ## Set global git user name
 ```
-git config --global user.name <name>
+git config --global user.name <NAME>
 ```
 
 ## Set global git user email
 ```
-git config --global user.email <email>
+git config --global user.email <EMAIL>
 ```
 
 ## Initializes a git repository
@@ -18,12 +18,12 @@ git init
 ```
 ## Clone a git repository
 ```
-git clone <repository>
+git clone <REPO>
 ```
 
 ## Clone a git repository branch
 ```
-git clone -b <branch_name> <repository> <clone_directory>
+git clone -b <BRANCH> <REPO> <OUTFOLDER>
 ```
 
 ## View all available remote for a git repository
@@ -48,7 +48,7 @@ git remote remove <remote_name>
 
 ## Checkout to branch
 ```
-git checkout <branch>
+git checkout <BRANCH>
 ```
 
 ## Displays the current status of a git repository
@@ -78,7 +78,7 @@ git commit -m <message>
 
 ## Pushes committed changes to remote repository
 ```
-git push -u <remote_name> <branch_name>
+git push -u <remote_name> <BRANCH>
 ```
 
 ## Pushes changes to a remote repository overwriting another branch
@@ -88,7 +88,7 @@ git push <remote_name> <branch>:<branch_to_overwrite>
 
 ## Overwrites remote branch with local branch changes
 ```
-git push <remote_name> <branch_name> -f
+git push <remote_name> <BRANCH> -f
 ```
 
 ## Pulls changes to a remote repo to the local repo
@@ -98,7 +98,7 @@ git pull --ff-only
 
 ## Merges changes on one branch into current branch
 ```
-git merge <branch_name>
+git merge <BRANCH>
 ```
 
 ## Abort the current conflict resolution process, and try to reconstruct the pre-merge state.
@@ -133,7 +133,7 @@ git fetch origin pull/<pr_number>/head:pr/<pr_number> && git checkout pr/<pr_num
 
 ## Add a new module
 ```
-git submodule add <repository> <path>
+git submodule add <REPO> <PATH>
 ```
 
 ## Update module
@@ -168,12 +168,12 @@ git checkout -b <new_branch_name>
 
 ## pull remote branch and switch to it
 ```
-git checkout -b <new_branch_name> <remote>/<branch_name>
+git checkout -b <new_branch_name> <remote>/<BRANCH>
 ```
 
 ## git dump
 ```
-gitdumper <url>/.git/ <destination_dir>
+gitdumper <URL>/.git/ <destination_dir>
 ```
 
 = remote: origin

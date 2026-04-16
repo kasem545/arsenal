@@ -6,23 +6,23 @@
 ## nfs showmount
 #cat/RECON 
 ```
-showmount -e <ip>
+showmount -e <IP>
 ```
 
 ## nfs - nmap showmount
 #cat/RECON 
 ```
-nmap -sV --script=nfs-showmount <ip>
+nmap -sV --script=nfs-showmount <IP>
 ```
 
 ## nfs - mount
 #cat/ATTACK/CONNECT 
 ```
-mount -t nfs <ip>:<shared_folder> <mount_point> -o nolock
+mount -t nfs <IP>:<shared_folder> <mount_point> -o nolock
 ```
 
 ## nfs - mount with v2 (no authenrt=)
 #cat/ATTACK/CONNECT 
 ```
-mount -t nfs -o vers=2 <ip>:<shared_folder> <mount_point> -o nolock
+mount -t nfs -o vers=2 <IP>:<shared_folder> <mount_point> -o nolock
 ```

@@ -5,10 +5,10 @@
 
 ## weevely web shell generation with output file
 ```
-weevely generate <password> <output_file|web_shell.php>
+weevely generate <PASSWORD> <OUTFILE|web_shell.php>
 ```
 
 ## weevely web shell connection
 ```
-weevely <url> <password>
+weevely <URL> <PASSWORD>
 ```

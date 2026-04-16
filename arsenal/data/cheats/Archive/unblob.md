@@ -6,7 +6,7 @@
 
 ## Extract files from a firmware
 ```
-unblob <firmware_file>
+unblob <FILE>
 ```
 
 ## Show external dependencies

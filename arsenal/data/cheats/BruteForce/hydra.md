@@ -6,84 +6,84 @@
 #plateform/linux #target/remote #protocol/ssh #port/22 #cat/ATTACK/BRUTEFORCE-SPRAY 
 
 ```bash
-hydra -L <userlist> -P <passlist> <ip> ssh 
+hydra -L <USER_FILE> -P <PASS_FILE> <IP> ssh 
 ```
 
 ## Hydra - ssh - user and password  - 22
 #plateform/linux #target/remote #protocol/ssh #port/22 #cat/ATTACK/BRUTEFORCE-SPRAY 
 
 ```bash
-hydra -l <user|root> -p <password|root> <ip> ssh 
+hydra -l <user|root> -p <password|root> <IP> ssh 
 ```
 
 ## Hydra - ssh - user=password - 22
 #plateform/linux #target/remote #protocol/ssh #port/22 #cat/ATTACK/BRUTEFORCE-SPRAY 
 
 ```
-hydra -L <userlist> -e s <ip> ssh 
+hydra -L <USER_FILE> -e s <IP> ssh 
 ```
 
 ## Hydra - ssh - null password - 22
 #plateform/linux #target/remote #protocol/ssh #port/22 #cat/ATTACK/BRUTEFORCE-SPRAY 
 
 ```
-hydra -l <user|root> -e n <ip> ssh 
+hydra -l <user|root> -e n <IP> ssh 
 ```
 
 ## Hydra - ssh - password=reverseuser - 22
 #plateform/linux #target/remote #protocol/ssh #port/22 #cat/ATTACK/BRUTEFORCE-SPRAY 
 
 ```
-hydra -L <userlist> -e r <ip> ssh 
+hydra -L <USER_FILE> -e r <IP> ssh 
 ```
 
 ## Hydra - ssh - file 'login:pass' format - specify port
 #plateform/linux #target/remote #protocol/ssh #port/custom #cat/ATTACK/BRUTEFORCE-SPRAY 
 
 ```
-hydra -t 4 -s <port> -C <file_login_pass> <ip> ssh 
+hydra -t 4 -s <PORT> -C <file_login_pass> <IP> ssh 
 ```
 
 ## Hydra - ftp - 21 
 #protocol/ftp #port/21 #plateform/linux #target/remote  #cat/ATTACK/BRUTEFORCE-SPRAY 
 
 ```
-hydra -L <userlist> -P <passlist> <ip> ftp 
+hydra -L <USER_FILE> -P <PASS_FILE> <IP> ftp 
 ```
 
 ## Hydra - smb - 445
 #protocol/smb #port/445 #plateform/linux #target/remote #cat/ATTACK/BRUTEFORCE-SPRAY 
 
 ```
-hydra -L <userlist> -P <passlist> <ip> smb
+hydra -L <USER_FILE> -P <PASS_FILE> <IP> smb
 ```
 
 ## Hydra - mysql - 3306
 #protocol/mysql #port/3306 #plateform/linux #target/remote #cat/ATTACK/BRUTEFORCE-SPRAY 
 
 ```
-hydra -L <userlist> -P <passlist> <ip> mysql 
+hydra -L <USER_FILE> -P <PASS_FILE> <IP> mysql 
 ```
 
 ## Hydra - vnc - 5900
 #protocol/vnc #port/5900 #plateform/linux #target/remote #cat/ATTACK/BRUTEFORCE-SPRAY 
 
 ```
-hydra -L <userlist> -P <passlist> <ip> vnc 
+hydra -L <USER_FILE> -P <PASS_FILE> <IP> vnc 
 ```
 
 ## Hydra - postgres - 5432
 #protocol/postgres #port/5432 #plateform/linux #target/remote #cat/ATTACK/BRUTEFORCE-SPRAY 
 
 ```
-hydra -L <userlist> -P <passlist> <ip> postgres
+hydra -L <USER_FILE> -P <PASS_FILE> <IP> postgres
 ```
 
 ## Hydra - telnet - 23
 #protocol/telnet #port/23 #plateform/linux #target/remote #cat/ATTACK/BRUTEFORCE-SPRAY 
 
 ```
-hydra -L <userlist> -P <passlist> <ip> telnet 
+hydra -L <USER_FILE> -P <PASS_FILE> <IP> telnet 
 ```
 
 = userlist: users.txt

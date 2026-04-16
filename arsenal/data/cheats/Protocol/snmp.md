@@ -7,37 +7,37 @@
 ## nmap, snmp scan
 #cat/RECON
 ```
-nmap -sU --open -p 161 -sC -sV <ip>
+nmap -sU --open -p 161 -sC -sV <IP>
 ```
 
 ## nmap, snmp brute
 #cat/ATTACK/BRUTEFORCE-SPRAY 
 ```
-nmap -sU --open -p 161 --script=snmp-brute <ip> --script-args snmp-brute.communitiesdb=<snmp_community_strings_file>
+nmap -sU --open -p 161 --script=snmp-brute <IP> --script-args snmp-brute.communitiesdb=<snmp_community_strings_file>
 ```
 
 ## snmp - onesixtyone
 #cat/RECON 
 ```
-onesixtyone -c <wordlist> <target>
+onesixtyone -c <WORDLIST> <target>
 ```
 
 ## snmpwalk entire tree
 #cat/RECON 
 ```
-snmpwalk -c public -v1 <ip>
+snmpwalk -c public -v1 <IP>
 ```
 
 ## snmpwalk - list running processes
 #cat/RECON 
 ```
-snmpwalk -c private -v1 <ip> 1.3.6.1.2.1.25.4.2.1.2
+snmpwalk -c private -v1 <IP> 1.3.6.1.2.1.25.4.2.1.2
 ```
 
 ## snmp-check - check snmp service on specified port (default:162)
 #cat/RECON 
 ```
-snmp-check -t <ip> -c public -p 162
+snmp-check -t <IP> -c public -p 162
 ```
 
 

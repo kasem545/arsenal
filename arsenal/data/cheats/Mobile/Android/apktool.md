@@ -3,8 +3,8 @@
 % android, reverse, jadx
 #plateform/linux #target/local #cat/ANDROID
 ## Decompress an app 
-apktool d <apk>
+apktool d <FILE>
 
 
 ## Build an app 
-apktool b <apk>
+apktool b <FILE>

@@ -6,17 +6,17 @@
 
 ## Create veracrypt volume for Linux
 ```
-veracrypt -t --create <file> --hash sha512 --encryption AES --filesystem ext4 --volume-type normal -k '' --pim 0 --size <size>
+veracrypt -t --create <FILE> --hash sha512 --encryption AES --filesystem ext4 --volume-type normal -k '' --pim 0 --size <size>
 ```
 
 ## Open veracrypt volume
 ```
-veracrypt <file> <mount>
+veracrypt <FILE> <mount>
 ```
 
 ## Lock veracrypt volume
 ```
-veracrypt -d <file>
+veracrypt -d <FILE>
 ```
 
 

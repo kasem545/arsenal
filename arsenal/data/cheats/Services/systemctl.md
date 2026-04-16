@@ -5,7 +5,7 @@
 
 ## Start service
 ```
-systemctl start <service_inactive>
+systemctl start <SERVICE>
 ```
 
 ## Stop service
@@ -15,12 +15,12 @@ systemctl stop <service_active>
 
 ## Enable service
 ```
-systemctl enable <service_disabled>
+systemctl enable <SERVICE>
 ```
 
 ## Disable service
 ```
-systemctl disable <service_enabled>
+systemctl disable <SERVICE>
 ```
 
 ## Restart service
@@ -30,7 +30,7 @@ systemctl restart <SERVICE>
 
 ## Reload service
 ```
-systemctl reload <service_active>
+systemctl reload <SERVICE>
 ```
 
 ## Service status

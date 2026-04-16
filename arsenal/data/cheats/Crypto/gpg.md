@@ -21,45 +21,45 @@ gpg --list-keys
 
 ## distribute public key to key server
 ```
-gpg --keyserver <key_server> --send-keys <public_key>
+gpg --keyserver <KEY_SERVER> --send-keys <PUBLIC_KEY>
 ```
 
 ## export public key
 ```
-gpg --output <filename_gpg> --export <key_name>
+gpg --output <FILE> --export <key_name>
 ```
 
 ## import public key
 ```
-gpg --import <filename_gpg>
+gpg --import <FILE>
 ```
 
 ## encrypt document
 ```
-gpg --output <output_filename_gpg> --encrypt --recipient <public_key> <input_filename>
+gpg --output <OUTFILE> --encrypt --recipient <PUBLIC_KEY> <input_filename>
 ```
 
 ## decrypt document
 ```
-gpg --output <filename> --decrypt <filename_gpg>
+gpg --output <FILE> --decrypt <FILE>
 ```
 
 ## make a signature
 ```
-gpg --output <filename_sig> --sign <filename>
+gpg --output <FILE> --sign <FILE>
 ```
 
 ## verify signature
 ```
-gpg --output <filename> <filename> --decrypt <filename_sig>
+gpg --output <FILE> <FILE> --decrypt <FILE>
 ```
 
 ## clearsign documents
 ```
-gpg --clearsign <filename>
+gpg --clearsign <FILE>
 ```
 
 ## detach signature
 ```
-gpg --output <filename_sig> --detach-sig <filename>
+gpg --output <FILE> --detach-sig <FILE>
 ```

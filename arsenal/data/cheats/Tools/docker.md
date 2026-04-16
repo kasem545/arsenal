@@ -47,10 +47,10 @@ docker logs --tail 100 <container_id> -f
 docker network create <network_name>
 
 # run Image on local storage
-docker run -it --rm -v '$PWD':/<mnt> -w /docker <DOCKER> <IMAGE>
+docker run -it --rm -v '$PWD':/<PATH> -w /docker <DOCKER> <IMAGE>
 
 # run Image on local storage with root directory access
-docker run --rm -it -v /:/host <image> bash
+docker run --rm -it -v /:/host <IMAGE> bash
 
 $ image_id: docker images --- --headers 1 --column 3
 $ container_id: docker ps --- --headers 1 --column 1
@@ -66,16 +66,16 @@ docker-compose up
 docker-compose up -d
 
 # Builds, (re)creates, starts, and attaches to containers for a service
-docker-compose up -d <service_name>
+docker-compose up -d <SERVICE>
 
 # Builds, (re)creates, starts, and detaches to containers for a service
-docker-compose up -d <service_name>
+docker-compose up -d <SERVICE>
 
 # Print the last lines of a service’s logs
-docker-compose logs --tail 100 <service_name> | less
+docker-compose logs --tail 100 <SERVICE> | less
 
 # Print the last lines of a service's logs and following its logs
-docker-compose logs -f --tail 100 <service_name>
+docker-compose logs -f --tail 100 <SERVICE>
 
 # Stops containers and removes containers, networks created by up
 docker-compose down

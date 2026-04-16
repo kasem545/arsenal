@@ -6,7 +6,7 @@
 
 ## Create a tar containing files
 ```
-tar cf <name>.tar <files>
+tar cf <NAME>.tar <PATH>
 ```
 
 ## Extract the files from a tar
@@ -16,10 +16,10 @@ tar xf <tar_file>
 
 ## Create a tar with Gzip compression
 ```
-tar czf <name>.tar.gz <files> 
+tar czf <NAME>.tar.gz <PATH>
 ```
 
 ## Extract a tar using Gzip
 ```
-tar xzf <targz_file>
+tar xzf <FILE>
 ```

