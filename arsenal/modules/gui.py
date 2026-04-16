@@ -360,6 +360,19 @@ class CheatslistMenu:
                     self.xcursor -= 1
                     self.position = 0
                     self.page_position = 0
+            elif c == 23:
+                # Ctrl+Backspace / Ctrl+W: delete whole word before cursor
+                cursor_idx = self.xcursor - self.x_init
+                if cursor_idx > 0:
+                    i = cursor_idx
+                    while i > 0 and self.input_buffer[i - 1] == ' ':
+                        i -= 1
+                    while i > 0 and self.input_buffer[i - 1] != ' ':
+                        i -= 1
+                    self.input_buffer = self.input_buffer[:i] + self.input_buffer[cursor_idx:]
+                    self.xcursor = self.x_init + i
+                    self.position = 0
+                    self.page_position = 0
             elif c == curses.KEY_DC or c == 127:
                 if self.check_move_cursor(1):
                     i = self.xcursor - self.x_init - 1
@@ -816,6 +829,19 @@ class ArgslistMenu:
                     Gui.cmd.args[self.current_arg][1] = Gui.cmd.args[self.current_arg][1][:i] + \
                                                         Gui.cmd.args[self.current_arg][1][i + 1:]
                     self.xcursor -= 1
+            elif c == 23:
+                # Ctrl+Backspace / Ctrl+W: delete whole word before cursor
+                if Gui.cmd.nb_args > 0:
+                    cursor_idx = self.xcursor - self.x_init
+                    if cursor_idx > 0:
+                        val = Gui.cmd.args[self.current_arg][1]
+                        i = cursor_idx
+                        while i > 0 and val[i - 1] == ' ':
+                            i -= 1
+                        while i > 0 and val[i - 1] != ' ':
+                            i -= 1
+                        Gui.cmd.args[self.current_arg][1] = val[:i] + val[cursor_idx:]
+                        self.xcursor = self.x_init + i
             elif c == curses.KEY_DC or c == 127:
                 # DELETE key
                 if self.check_move_cursor(1):
@@ -962,6 +988,18 @@ class CommandEditorMenu:
                     i = self.xcursor - self.x_init - 1
                     self.cmd_buffer = self.cmd_buffer[:i] + self.cmd_buffer[i + 1:]
                     self.xcursor -= 1
+
+            elif c == 23:
+                # Ctrl+Backspace / Ctrl+W: delete whole word before cursor
+                cursor_idx = self.xcursor - self.x_init
+                if cursor_idx > 0:
+                    i = cursor_idx
+                    while i > 0 and self.cmd_buffer[i - 1] == ' ':
+                        i -= 1
+                    while i > 0 and self.cmd_buffer[i - 1] != ' ':
+                        i -= 1
+                    self.cmd_buffer = self.cmd_buffer[:i] + self.cmd_buffer[cursor_idx:]
+                    self.xcursor = self.x_init + i
 
             elif c == curses.KEY_DC:
                 # DELETE key
